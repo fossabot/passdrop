@@ -1,14 +1,14 @@
 //
-//  DropBoxBrowserController.m
+//  DropboxBrowserController.m
 //  PassDrop
 //
 //  Created by Rudis Muiznieks on 2/5/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "DropBoxBrowserController.h"
+#import "DropboxBrowserController.h"
 
-@implementation DropBoxBrowserController
+@implementation DropboxBrowserController
 
 @synthesize restClient;
 @synthesize myPath;
@@ -120,11 +120,11 @@ static int networkIndicatorReq;
 }
 
 - (void)alertError:(NSError*)error {
-	NSString *msg = @"DropBox reported an unknown error.";
+	NSString *msg = @"Dropbox reported an unknown error.";
 	if(error != nil && [error userInfo] != nil && [[error userInfo] objectForKey:@"error"] != nil){
 		msg = [[error userInfo] objectForKey:@"error"];
 	}
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DropBox Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dropbox Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[alert show];
 	[alert release];
 }
@@ -234,7 +234,7 @@ static int networkIndicatorReq;
 	DBMetadata *cellData = [dirContents objectAtIndex:[indexPath row]];
 	if(cellData.isDirectory){
 		if([dirBrowsers objectForKey:cellData.path] == nil){
-			DropBoxBrowserController *dirBrowser = [[[DropBoxBrowserController alloc] initWithPath:cellData.path] autorelease];
+			DropboxBrowserController *dirBrowser = [[[DropboxBrowserController alloc] initWithPath:cellData.path] autorelease];
 			dirBrowser.dbManager = dbManager;
 			dirBrowser.title = [cellData.path lastPathComponent];
 			[dirBrowsers setValue:dirBrowser forKey:cellData.path];
@@ -256,7 +256,7 @@ static int networkIndicatorReq;
 }
 
 #pragma mark -
-#pragma mark DropBox/RestClient
+#pragma mark Dropbox/RestClient
 
 - (void)setWorking:(BOOL)working {
     self.view.userInteractionEnabled = !working;

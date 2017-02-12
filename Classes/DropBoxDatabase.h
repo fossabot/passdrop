@@ -1,5 +1,5 @@
 //
-//  DropBoxDatabase.h
+//  DropboxDatabase.h
 //  PassDrop
 //
 //  Created by Rudis Muiznieks on 2/5/11.
@@ -18,7 +18,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "DatabaseManager.h"
 
-@interface DropBoxDatabase : NSObject<Database, DBRestClientDelegate> {
+@interface DropboxDatabase : NSObject<Database, DBRestClientDelegate> {
 	DBRestClient *restClient;
 	NSString *localPath;
 	NSString *identifier;

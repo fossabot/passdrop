@@ -74,12 +74,12 @@
 		if([dbManager.databases count] == 0){
             if(![[DBSession sharedSession] isLinked]){
                 alertMode = 1;
-                UIAlertView *helpView = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:@"Welcome to PassDrop! Since this is your first time using PassDrop, you will need enter your DropBox credentials on the settings screen." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings", nil];
+                UIAlertView *helpView = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:@"Welcome to PassDrop! Since this is your first time using PassDrop, you will need enter your Dropbox credentials on the settings screen." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings", nil];
                 [helpView show];
                 [helpView release];
             } else {
                 alertMode = 2;
-                UIAlertView *helpView = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:@"Now that you have linked your DropBox account, you need to create or choose a KeePass 1.x database to use with PassDrop." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"DropBox", nil];
+                UIAlertView *helpView = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:@"Now that you have linked your Dropbox account, you need to create or choose a KeePass 1.x database to use with PassDrop." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Dropbox", nil];
                 [helpView show];
                 [helpView release];
 			}
@@ -154,17 +154,17 @@
 	[[self navigationController] pushViewController:settingsView animated:YES];
 }
 
-- (void)gotoDropBox {
+- (void)gotoDropbox {
 	if(![[DBSession sharedSession] isLinked]){
         alertMode = 1;
-		UIAlertView *notLinked = [[UIAlertView alloc] initWithTitle:@"DropBox Not Linked" message:@"Before you can add databases, you must link your DropBox account from the settings screen. Do you want to do that now?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings",nil];
+		UIAlertView *notLinked = [[UIAlertView alloc] initWithTitle:@"Dropbox Not Linked" message:@"Before you can add databases, you must link your Dropbox account from the settings screen. Do you want to do that now?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings",nil];
 		[notLinked show];
 		[notLinked release];
 	} else {
 		if(dbRootView == nil){
-			dbRootView = [[DropBoxBrowserController alloc] initWithPath:@"/"];
+			dbRootView = [[DropboxBrowserController alloc] initWithPath:@"/"];
 			dbRootView.dbManager = dbManager;
-			dbRootView.title = @"DropBox";
+			dbRootView.title = @"Dropbox";
 		}
 		[[self navigationController] pushViewController:dbRootView animated:YES];
 	}
@@ -193,7 +193,7 @@
         tutorialShown = NO;
 	} else if(alertMode == 2 && buttonIndex == 1){
         // clicked the dropbox button
-        [self gotoDropBox];
+        [self gotoDropbox];
         tutorialShown = NO;
     } else if(alertMode == 3 && buttonIndex == 1){
         if([[alertView textFieldAtIndex:0].text length] > 0){
@@ -305,7 +305,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         if([dbManager getDatabaseAtIndex:indexPath.row].isDirty){
-            UIActionSheet *deleteSheet = [[UIActionSheet alloc] initWithTitle:@"You have unsaved changes to this database that haven't been synced to DropBox yet. Are you sure you want to delete it?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
+            UIActionSheet *deleteSheet = [[UIActionSheet alloc] initWithTitle:@"You have unsaved changes to this database that haven't been synced to Dropbox yet. Are you sure you want to delete it?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
             deleteSheet.tag = 100 + indexPath.row;
             [deleteSheet showInView:self.view];
             [deleteSheet release];
@@ -315,7 +315,7 @@
         }
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        [self gotoDropBox];
+        [self gotoDropbox];
     }
 }
 
@@ -352,7 +352,7 @@
             [self.navigationController pushViewController:detailViewController animated:YES];
             [detailViewController release];
         } else {
-            [self gotoDropBox];
+            [self gotoDropbox];
         }
     } else {
         PassDropAppDelegate *app = (PassDropAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -436,14 +436,14 @@
     [self networkRequestStopped];
     alertMode = 4;
     unlocking = database;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Cancelled" message:@"The database on DropBox has changes that would overwrite changes in your local copy. Open the database in writable mode and use the sync button to choose which copy to keep." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Cancelled" message:@"The database on Dropbox has changes that would overwrite changes in your local copy. Open the database in writable mode and use the sync button to choose which copy to keep." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
 	[alert show];
 	[alert release];
 }
 
 - (void)databaseWasDeleted:(id <Database>)database {
 	[self networkRequestStopped];
-	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"This database has been deleted from your DropBox account. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Open Local Copy", nil];
+	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"This database has been deleted from your Dropbox account. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Open Local Copy", nil];
 	sheet.tag = 4;
 	int row = [dbManager getIndexOfDatabase:database];
     if(row >= 0){

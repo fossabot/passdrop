@@ -204,7 +204,7 @@
 - (void)databaseSyncWouldOverwriteChanges:(id<Database>)db {
     [self networkRequestStopped];
     // show sliding alert asking if they want to overwrite remote changes
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database on DropBox has already been modified. Do you want to overwrite the newer file with this one?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Upload to DropBox" otherButtonTitles:nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database on Dropbox has already been modified. Do you want to overwrite the newer file with this one?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Upload to Dropbox" otherButtonTitles:nil];
     [sheet showInView:self.view];
     [sheet release];
 }
@@ -212,7 +212,7 @@
 - (void)databaseWasDeleted:(id<Database>)db {
     [self networkRequestStopped];
     // show sliding alert asking if they want to upload it
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database has been deleted from your DropBox account. Do you want to upload this file anyway?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Upload to DropBox", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database has been deleted from your Dropbox account. Do you want to upload this file anyway?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Upload to Dropbox", nil];
     [sheet showInView:self.view];
     [sheet release];
 }
@@ -222,7 +222,7 @@
         [self networkRequestStarted];
         [database syncWithForce:YES];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Cancelled" message:@"The password on your local copy has been changed, but has not yet been synced to DropBox." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Cancelled" message:@"The password on your local copy has been changed, but has not yet been synced to Dropbox." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
         [alert release];
         [self.navigationController popViewControllerAnimated:YES];

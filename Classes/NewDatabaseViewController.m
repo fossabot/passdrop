@@ -83,11 +83,11 @@
 }
 
 - (void)alertError:(NSError*)error {
-	NSString *msg = @"DropBox reported an unknown error.";
+	NSString *msg = @"Dropbox reported an unknown error.";
 	if(error != nil && [error userInfo] != nil && [[error userInfo] objectForKey:@"error"] != nil){
 		msg = [[error userInfo] objectForKey:@"error"];
 	}
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DropBox Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dropbox Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[alert show];
 	[alert release];
 }

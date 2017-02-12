@@ -133,7 +133,7 @@ static PassDropAppDelegate *app;
 }
 
 - (void)syncButtonClicked:(id)sender {
-    UIActionSheet *syncSheet = [[UIActionSheet alloc] initWithTitle:@"You have local changes that haven't been synced to DropBox yet." delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Discard Changes" otherButtonTitles:@"Upload to DropBox", nil];
+    UIActionSheet *syncSheet = [[UIActionSheet alloc] initWithTitle:@"You have local changes that haven't been synced to Dropbox yet." delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Discard Changes" otherButtonTitles:@"Upload to Dropbox", nil];
     syncSheet.tag = 1;
     //[syncSheet showInView:self.view];
     [syncSheet showFromBarButtonItem:(UIBarButtonItem*)sender animated:YES];
@@ -145,7 +145,7 @@ static PassDropAppDelegate *app;
     if(actionSheet.tag == 1){
         switch(buttonIndex){
             case 0: // revert
-                confirm = [[UIAlertView alloc] initWithTitle:@"Revert Changes" message:@"The database will now close. The next time you open it, a fresh copy will be retrieved from DropBox. Continue?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", nil];
+                confirm = [[UIAlertView alloc] initWithTitle:@"Revert Changes" message:@"The database will now close. The next time you open it, a fresh copy will be retrieved from Dropbox. Continue?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", nil];
                 confirm.tag = 2;
                 [confirm show];
                 [confirm release];
@@ -457,7 +457,7 @@ static PassDropAppDelegate *app;
 - (void)databaseSyncWouldOverwriteChanges:(id<Database>)db {
     [self networkRequestStopped];
     // show sliding alert asking if they want to overwrite remote changes
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database on DropBox has already been modified. Do you want to overwrite the newer file with this one?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Upload to DropBox" otherButtonTitles:nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database on Dropbox has already been modified. Do you want to overwrite the newer file with this one?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Upload to Dropbox" otherButtonTitles:nil];
     sheet.tag = 2;
     //[sheet showInView:self.view];
     [sheet showFromBarButtonItem:(UIBarButtonItem*)[self.toolbarItems objectAtIndex:1] animated:YES];
@@ -467,7 +467,7 @@ static PassDropAppDelegate *app;
 - (void)databaseWasDeleted:(id<Database>)db {
     [self networkRequestStopped];
     // show sliding alert asking if they want to upload it
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database has been deleted from your DropBox account. Do you want to upload this file anyway?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Upload to DropBox", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"The database has been deleted from your Dropbox account. Do you want to upload this file anyway?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Upload to Dropbox", nil];
     sheet.tag = 2;
     //[sheet showInView:self.view];
     [sheet showFromBarButtonItem:(UIBarButtonItem*)[self.toolbarItems objectAtIndex:1] animated:YES];

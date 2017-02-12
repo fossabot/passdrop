@@ -124,7 +124,7 @@
 - (id<Database>) getDatabaseAtIndex:(int)index {
 	// only supports dropbox for now, in future move this to a factory
 	NSMutableDictionary *dbData = [databases objectAtIndex:index];
-	id<Database> database = [[[DropBoxDatabase alloc] init] autorelease];
+	id<Database> database = [[[DropboxDatabase alloc] init] autorelease];
 	database.identifier = [NSString stringWithString:[dbData objectForKey:kDatabaseId]];
 	database.name = [NSString stringWithString:[dbData objectForKey:kDatabaseName]];
 	database.localPath = [dataPath stringByAppendingPathComponent:[[NSString stringWithString:[dbData objectForKey:kDatabaseLocalPath]] lastPathComponent]];

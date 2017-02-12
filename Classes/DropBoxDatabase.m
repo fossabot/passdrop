@@ -1,15 +1,15 @@
 //
-//  DropBoxDatabase.m
+//  DropboxDatabase.m
 //  PassDrop
 //
 //  Created by Rudis Muiznieks on 2/5/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "DropBoxDatabase.h"
+#import "DropboxDatabase.h"
 
 
-@implementation DropBoxDatabase
+@implementation DropboxDatabase
 
 @synthesize localPath;
 @synthesize identifier;
@@ -271,7 +271,7 @@ DBMetadata *tempMeta;
 		}
 		[savingDelegate database:self syncFailedWithReason:msg];
     } else if(mode == UPDATING_DB_REVISION){
-        NSString *msg = @"The database was uploaded to DropBox, but there was an error retrieving the revision number afterwards.";
+        NSString *msg = @"The database was uploaded to Dropbox, but there was an error retrieving the revision number afterwards.";
         if(error != nil && [error userInfo] != nil && [[error userInfo] objectForKey:@"error"] != nil){
 			msg = [[error userInfo] objectForKey:@"error"];
 		}

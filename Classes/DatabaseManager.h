@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Database.h"
-#import "DropBoxDatabase.h"
+#import "DropboxDatabase.h"
 
 #define kDatabaseName @"name"
 #define kDatabaseId @"id"

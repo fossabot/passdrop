@@ -1,5 +1,5 @@
 //
-//  DropBoxBrowserController.h
+//  DropboxBrowserController.h
 //  PassDrop
 //
 //  Created by Rudis Muiznieks on 2/5/11.
@@ -14,7 +14,7 @@
 #import "NewDatabaseViewController.h"
 
 
-@interface DropBoxBrowserController : UIPullToReloadTableViewController<DBRestClientDelegate, NewDatabaseDelegate> {
+@interface DropboxBrowserController : UIPullToReloadTableViewController<DBRestClientDelegate, NewDatabaseDelegate> {
 	DBRestClient *restClient;
 	NSString *myPath;
 	BOOL isLoaded;

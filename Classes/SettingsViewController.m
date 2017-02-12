@@ -70,7 +70,7 @@ int pickerViewMode;
 
 - (IBAction)dbButtonClicked {
 	if([[DBSession sharedSession] isLinked]){
-		UIAlertView *unlinkConfirm = [[UIAlertView alloc] initWithTitle:@"Unlink DropBox" message:@"Are you sure you want to unlink your DropBox account? This will also remove all databases from your device." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Unlink",nil];
+		UIAlertView *unlinkConfirm = [[UIAlertView alloc] initWithTitle:@"Unlink Dropbox" message:@"Are you sure you want to unlink your Dropbox account? This will also remove all databases from your device." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Unlink",nil];
 		[unlinkConfirm show];
 		[unlinkConfirm release];
 	} else {
@@ -223,7 +223,7 @@ int pickerViewMode;
         }
         cell.accessoryType = UITableViewCellAccessoryNone;
         if(indexPath.section == 0){
-            cell.textLabel.text = @"DropBox";
+            cell.textLabel.text = @"Dropbox";
             if([[DBSession sharedSession] isLinked]){
                 cell.detailTextLabel.text = @"Linked";
             } else {

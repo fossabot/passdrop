@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DatabaseManager.h"
 #import <DropboxSDK/DropboxSDK.h>
-#import "DropBoxBrowserController.h"
+#import "DropboxBrowserController.h"
 #import "SettingsViewController.h"
 #import "EditDatabaseViewController.h"
 #import "KdbGroupViewController.h"
@@ -21,7 +21,7 @@
 @interface RootViewController : NetworkActivityViewController<DatabaseManagerDelegate, DatabaseDelegate, UIActionSheetDelegate, UIAlertViewDelegate> {
 	SettingsViewController *settingsView;
 	DatabaseManager *dbManager;
-	DropBoxBrowserController *dbRootView;
+	DropboxBrowserController *dbRootView;
 	int extraRows;
 	id<Database> loadingDb;
     int alertMode;
@@ -31,7 +31,7 @@
 
 @property (nonatomic, retain) SettingsViewController *settingsView;
 @property (nonatomic, retain) DatabaseManager *dbManager;
-@property (nonatomic, retain) DropBoxBrowserController *dbRootView;
+@property (nonatomic, retain) DropboxBrowserController *dbRootView;
 @property (nonatomic) int extraRows;
 @property (nonatomic, retain) id<Database> loadingDb;
 
@@ -39,7 +39,7 @@
 - (void) dropboxWasReset;
 //- (void) dismissHelp;
 //- (void) closeHelp;
-- (void) gotoDropBox;
+- (void) gotoDropbox;
 - (UITableView*) tableView;
 - (void) completeLoad;
 - (void) removeLock:(id<Database>)database;
