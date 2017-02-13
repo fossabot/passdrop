@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <DropboxSDK/DropboxSDK.h>
 #import "PassDropAppDelegate.h"
-#import "AboutViewController.h"
 
 
 @interface SettingsViewController : UIViewController<UITableViewDelegate, UIActionSheetDelegate> {

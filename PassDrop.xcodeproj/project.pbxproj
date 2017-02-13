@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		024185C51E5239F6005167DE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024185C41E5239F6005167DE /* AboutViewController.swift */; };
 		1D3623260D0F684500981E51 /* PassDropAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* PassDropAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -198,7 +199,6 @@
 		A2A2151512FF06BD007E055A /* EditDatabaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2151312FF06BD007E055A /* EditDatabaseViewController.m */; };
 		A2A2151612FF06BD007E055A /* EditDatabaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2A2151412FF06BD007E055A /* EditDatabaseViewController.xib */; };
 		A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = A2ADED3412FCD6F60082EEA4 /* AppPrefs.m */; };
-		A2ADED9E12FCED9E0082EEA4 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2ADED9C12FCED9E0082EEA4 /* AboutViewController.m */; };
 		A2ADED9F12FCED9E0082EEA4 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2ADED9D12FCED9E0082EEA4 /* AboutViewController.xib */; };
 		A2ADEDD212FCF99D0082EEA4 /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2ADEDD112FCF99D0082EEA4 /* DatabaseManager.m */; };
 		A2B6A20315E00E6C00E29EC3 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2B6A20215E00E6C00E29EC3 /* MainWindow-iPad.xib */; };
@@ -239,6 +239,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		024185C41E5239F6005167DE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* PassDropAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDropAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* PassDropAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassDropAppDelegate.m; sourceTree = "<group>"; };
@@ -466,8 +467,6 @@
 		A2A2151412FF06BD007E055A /* EditDatabaseViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = EditDatabaseViewController.xib; path = Classes/EditDatabaseViewController.xib; sourceTree = "<group>"; };
 		A2ADED3312FCD6F60082EEA4 /* AppPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppPrefs.h; sourceTree = "<group>"; };
 		A2ADED3412FCD6F60082EEA4 /* AppPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPrefs.m; sourceTree = "<group>"; };
-		A2ADED9B12FCED9E0082EEA4 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
-		A2ADED9C12FCED9E0082EEA4 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		A2ADED9D12FCED9E0082EEA4 /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AboutViewController.xib; path = Classes/AboutViewController.xib; sourceTree = "<group>"; };
 		A2ADEDD012FCF99D0082EEA4 /* DatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseManager.h; sourceTree = "<group>"; };
 		A2ADEDD112FCF99D0082EEA4 /* DatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseManager.m; sourceTree = "<group>"; };
@@ -888,24 +887,23 @@
 				A24790EF13EDBE380017574E /* Edit */,
 				A24790EE13EDBE2E0017574E /* View */,
 				A204B4D112FDD33600A4D656 /* PullToReload */,
-				A24F3B3C1306CB3800A4AF66 /* NetworkActivityViewController.h */,
-				A24F3B3D1306CB3900A4AF66 /* NetworkActivityViewController.m */,
-				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
-				28C286E00D94DF7D0034E888 /* RootViewController.m */,
-				A28D44A612F5C73D00A16865 /* SettingsViewController.h */,
-				A28D44A712F5C73D00A16865 /* SettingsViewController.m */,
-				A2E5364A15DFFC2F00A2008E /* LoadingView.h */,
-				A2E5364B15DFFC2F00A2008E /* LoadingView.m */,
-				A2ADED9B12FCED9E0082EEA4 /* AboutViewController.h */,
-				A2ADED9C12FCED9E0082EEA4 /* AboutViewController.m */,
+				024185C41E5239F6005167DE /* AboutViewController.swift */,
 				A204B32B12FD81C200A4D656 /* DropboxBrowserController.h */,
 				A204B32C12FD81C200A4D656 /* DropboxBrowserController.m */,
 				A2A2151212FF06BD007E055A /* EditDatabaseViewController.h */,
 				A2A2151312FF06BD007E055A /* EditDatabaseViewController.m */,
-				A2961320141D8C39004E538E /* SyncButtonView.h */,
-				A2961321141D8C3A004E538E /* SyncButtonView.m */,
+				A2E5364A15DFFC2F00A2008E /* LoadingView.h */,
+				A2E5364B15DFFC2F00A2008E /* LoadingView.m */,
+				A24F3B3C1306CB3800A4AF66 /* NetworkActivityViewController.h */,
+				A24F3B3D1306CB3900A4AF66 /* NetworkActivityViewController.m */,
 				A24C3661141E3F9B001BB5D3 /* NewDatabaseViewController.h */,
 				A24C3662141E3F9B001BB5D3 /* NewDatabaseViewController.m */,
+				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
+				28C286E00D94DF7D0034E888 /* RootViewController.m */,
+				A28D44A612F5C73D00A16865 /* SettingsViewController.h */,
+				A28D44A712F5C73D00A16865 /* SettingsViewController.m */,
+				A2961320141D8C39004E538E /* SyncButtonView.h */,
+				A2961321141D8C3A004E538E /* SyncButtonView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1238,7 +1236,6 @@
 				28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */,
 				A28D44A912F5C73D00A16865 /* SettingsViewController.m in Sources */,
 				A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */,
-				A2ADED9E12FCED9E0082EEA4 /* AboutViewController.m in Sources */,
 				A2ADEDD212FCF99D0082EEA4 /* DatabaseManager.m in Sources */,
 				A204B32E12FD81C200A4D656 /* DropboxBrowserController.m in Sources */,
 				A204B47812FDD08B00A4D656 /* UIPullToReloadHeaderView.m in Sources */,
@@ -1254,6 +1251,7 @@
 				A24F3DD71312206000A4AF66 /* EditGroupViewController.m in Sources */,
 				A26CC63F131A96CB0029A767 /* KdbEntryViewController.m in Sources */,
 				A2001E8413C0C6DC00DD42EA /* ParentGroupPicker.m in Sources */,
+				024185C51E5239F6005167DE /* AboutViewController.swift in Sources */,
 				A24790F413EE3EF20017574E /* IconPicker.m in Sources */,
 				A24790F713EF2C480017574E /* KdbWriter.m in Sources */,
 				A20B81B6140DB8FE004E3449 /* EditEntryViewController.m in Sources */,

@@ -1,0 +1,36 @@
+import UIKit
+
+let HOMEPAGE_URL = "https://github.com/chadaustin/passdrop"
+
+class AboutViewController: UIViewController {
+    @IBOutlet var homepage: UIButton?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.edgesForExtendedLayout = []
+
+        homepage?.setTitle(HOMEPAGE_URL, for: .normal)
+    }
+
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
+    @IBAction
+    func handleEvent(_ sender: AnyObject) {
+        guard let button = sender as? UIButton else {
+            return
+        }
+        if button == homepage {
+            UIApplication.shared.openURL(URL(string: HOMEPAGE_URL)!)
+        }
+    }
+}
