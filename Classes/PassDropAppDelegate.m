@@ -74,7 +74,7 @@
                     [[details objectAtIndex:1] hideKeyboard];
                 }
             }
-            [splitController presentModalViewController:hide animated:NO];
+            [splitController presentViewController:hide animated:NO];
         } else {
             [navigationController dismissModalViewControllerAnimated:NO];
             [navigationController pushViewController:hide animated:NO];

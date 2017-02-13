@@ -255,6 +255,7 @@
 	return CGSizeMake(width, height);
 }
 
+static BOOL DEBUGGING = NO;
 
 - (void)layoutSubviewsForInterfaceOrientation:(UIInterfaceOrientation)theOrientation withAnimation:(BOOL)animate
 {
@@ -268,8 +269,8 @@
 	float width = fullSize.width;
 	float height = fullSize.height;
 	
-	if (NO) { // Just for debugging.
-		NSLog(@"Target orientation is %@, dimensions will be %.0f x %.0f", 
+	if (DEBUGGING) { // Just for debugging.
+		NSLog(@"Target orientation is %@, dimensions will be %.0f x %.0f",
 			  [self nameOfInterfaceOrientation:theOrientation], width, height);
 	}
 	

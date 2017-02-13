@@ -60,12 +60,13 @@ double rad2Deg(double radians)
 #pragma mark -
 #pragma mark Drawing
 
+static BOOL DEBUGGING = NO;
 
 - (void)drawRect:(CGRect)rect
 {
 	// Draw two appropriate corners, with cornerBackgroundColor behind them.
 	if (cornerRadius > 0) {
-		if (NO) { // just for debugging.
+		if (DEBUGGING) { // just for debugging.
 			[[UIColor redColor] set];
 			UIRectFill(self.bounds);
 		}

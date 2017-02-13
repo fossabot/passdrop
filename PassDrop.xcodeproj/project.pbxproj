@@ -28,7 +28,7 @@
 		A204B60B12FE029600A4D656 /* folder_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A204B60A12FE029600A4D656 /* folder_icon@2x.png */; };
 		A204B61A12FE058700A4D656 /* keepass_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A204B61812FE058700A4D656 /* keepass_icon@2x.png */; };
 		A204B61B12FE058700A4D656 /* unknown_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A204B61912FE058700A4D656 /* unknown_icon@2x.png */; };
-		A204B64312FE0C1600A4D656 /* DropBoxDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A204B64212FE0C1600A4D656 /* DropBoxDatabase.m */; };
+		A204B64312FE0C1600A4D656 /* DropboxDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A204B64212FE0C1600A4D656 /* DropboxDatabase.m */; };
 		A20B81B6140DB8FE004E3449 /* EditEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A20B81B5140DB8FE004E3449 /* EditEntryViewController.m */; };
 		A213BFF712FA6D2B00F37B28 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A213BFF612FA6D2B00F37B28 /* SettingsViewController.xib */; };
 		A24790F413EE3EF20017574E /* IconPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A24790F313EE3EF10017574E /* IconPicker.m */; };
@@ -270,8 +270,8 @@
 		A204B60A12FE029600A4D656 /* folder_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "folder_icon@2x.png"; path = "Classes/folder_icon@2x.png"; sourceTree = "<group>"; };
 		A204B61812FE058700A4D656 /* keepass_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "keepass_icon@2x.png"; path = "Classes/keepass_icon@2x.png"; sourceTree = "<group>"; };
 		A204B61912FE058700A4D656 /* unknown_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unknown_icon@2x.png"; path = "Classes/unknown_icon@2x.png"; sourceTree = "<group>"; };
-		A204B64112FE0C1600A4D656 /* DropBoxDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DropBoxDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		A204B64212FE0C1600A4D656 /* DropBoxDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DropBoxDatabase.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		A204B64112FE0C1600A4D656 /* DropboxDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DropboxDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		A204B64212FE0C1600A4D656 /* DropboxDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DropboxDatabase.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		A204B64412FE0CBA00A4D656 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		A20B81B4140DB8FE004E3449 /* EditEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditEntryViewController.h; sourceTree = "<group>"; };
 		A20B81B5140DB8FE004E3449 /* EditEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditEntryViewController.m; sourceTree = "<group>"; };
@@ -541,8 +541,8 @@
 				A2ADED3412FCD6F60082EEA4 /* AppPrefs.m */,
 				A2ADEDD012FCF99D0082EEA4 /* DatabaseManager.h */,
 				A2ADEDD112FCF99D0082EEA4 /* DatabaseManager.m */,
-				A204B64112FE0C1600A4D656 /* DropBoxDatabase.h */,
-				A204B64212FE0C1600A4D656 /* DropBoxDatabase.m */,
+				A204B64112FE0C1600A4D656 /* DropboxDatabase.h */,
+				A204B64212FE0C1600A4D656 /* DropboxDatabase.m */,
 				A204B64412FE0CBA00A4D656 /* Database.h */,
 				A2620E9C15F3134900C27040 /* HideViewController.h */,
 				A2620E9D15F3134900C27040 /* HideViewController.m */,
@@ -1243,7 +1243,7 @@
 				A204B32E12FD81C200A4D656 /* DropboxBrowserController.m in Sources */,
 				A204B47812FDD08B00A4D656 /* UIPullToReloadHeaderView.m in Sources */,
 				A204B47912FDD08B00A4D656 /* UIPullToReloadTableViewController.m in Sources */,
-				A204B64312FE0C1600A4D656 /* DropBoxDatabase.m in Sources */,
+				A204B64312FE0C1600A4D656 /* DropboxDatabase.m in Sources */,
 				A2A2151512FF06BD007E055A /* EditDatabaseViewController.m in Sources */,
 				A2806B281300C5E600BF5C02 /* KdbGroupViewController.m in Sources */,
 				A2806FE91302198A00BF5C02 /* KdbReader.m in Sources */,
