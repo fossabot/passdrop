@@ -353,7 +353,7 @@ DBMetadata *tempMeta;
 
 - (NSDate*)parseDate:(uint8_t*)dtime {
 	NSDateComponents *comps = [[NSDateComponents alloc] init];
-	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 	
 	int year = (dtime[0] << 6) | (dtime[1] >> 2);
 	int mon = ((dtime[1] & 3) << 2) | (dtime[2] >> 6);
