@@ -173,7 +173,7 @@
     kpEntry->notes = malloc(sizeof(char) * [notes length]+1);
     strcpy(kpEntry->notes, [notes cStringUsingEncoding:NSUTF8StringEncoding]);
     
-    NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:expires];
+    NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:expires];
     if([comps year] == 2999){
         uint8_t never[5] = {0x2E, 0xDF, 0x39, 0x7E, 0xFB};
         memcpy(kpEntry->etime, never, 5);

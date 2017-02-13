@@ -10,7 +10,6 @@
 
 #import <UIKit/UIKit.h>
 #import "KdbGroup.h"
-#import "DatabaseManager.h"
 #import "ParentGroupPicker.h"
 #import "IconPicker.h"
 #import "NetworkActivityViewController.h"

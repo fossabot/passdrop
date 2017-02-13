@@ -3,7 +3,9 @@
 //
 
 #import "AppPrefs.h"
-#import "DatabaseManager.h"
 #import "MGSplitViewController.h"
 #import "HideViewController.h"
-#import "RootViewController.h"
+#import "Database.h"
+#import "DropboxDatabase.h"
+
+#import <DropboxSDK/DropboxSDK.h>

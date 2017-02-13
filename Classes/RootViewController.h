@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DatabaseManager.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "DropboxBrowserController.h"
 #import "SettingsViewController.h"
@@ -17,6 +16,7 @@
 #import "KdbGroup.h"
 #import "NetworkActivityViewController.h"
 #import "SettingsViewController.h"
+#import "PassDrop-Swift.h"
 
 @interface RootViewController : NetworkActivityViewController<DatabaseManagerDelegate, DatabaseDelegate, UIActionSheetDelegate, UIAlertViewDelegate> {
 	SettingsViewController *settingsView;

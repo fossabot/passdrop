@@ -7,6 +7,7 @@
 //
 
 #import "DropboxBrowserController.h"
+#import "PassDrop-Swift.h"
 
 @implementation DropboxBrowserController
 

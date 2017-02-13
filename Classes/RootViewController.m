@@ -104,7 +104,7 @@
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAll;
 }
 
@@ -242,6 +242,8 @@
     return [dbManager.databases count] + extraRows;
 }
 
+// kill when porting to swift
+#define kDatabaseName @"name"
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

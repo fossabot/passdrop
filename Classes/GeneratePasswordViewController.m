@@ -488,7 +488,7 @@
         field = (UITextField*)cell.accessoryView;
         
         field.font = [UIFont boldSystemFontOfSize:17];
-        field.textAlignment = UITextAlignmentRight;
+        field.textAlignment = NSTextAlignmentRight;
         field.adjustsFontSizeToFitWidth = NO;
         field.keyboardType = UIKeyboardTypeNumberPad;
         field.returnKeyType = UIReturnKeyDone;

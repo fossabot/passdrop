@@ -7,7 +7,7 @@
 //
 
 #import "KdbGroupViewController.h"
-
+#import "PassDrop-Swift.h"
 
 @implementation KdbGroupViewController
 
@@ -79,7 +79,7 @@ static PassDropAppDelegate *app;
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAll;
 }
 

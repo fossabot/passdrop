@@ -52,7 +52,7 @@
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAll;
 }
 
@@ -314,7 +314,7 @@
 		CGFloat maxHeight = 9999;
 		CGSize maximumLabelSize = CGSizeMake(maxWidth,maxHeight);
 		
-		CGSize expectedLabelSize = [kdbEntry.entryNotes sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+		CGSize expectedLabelSize = [kdbEntry.entryNotes sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:maximumLabelSize lineBreakMode:NSLineBreakByWordWrapping];
 		return expectedLabelSize.height + 13;
 	}
 	return 44;

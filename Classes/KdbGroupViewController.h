@@ -10,7 +10,6 @@
 #import "KdbGroup.h"
 #import "NetworkActivityViewController.h"
 #import "KdbEntryViewController.h"
-#import "DatabaseManager.h"
 #import "EditGroupViewController.h"
 #import "EditEntryViewController.h"
 

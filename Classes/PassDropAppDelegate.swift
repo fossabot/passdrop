@@ -16,7 +16,7 @@ class PassDropAppDelegate2: NSObject, UIApplicationDelegate, UIAlertViewDelegate
     */
 
     //let hide: HideViewController
-    @IBOutlet var rootView: RootViewController?
+    //@IBOutlet var rootView: RootViewController?
     
     //let settingsView: SettingsViewController
 }

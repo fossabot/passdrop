@@ -42,7 +42,7 @@ UIToolbar *dateBar;
 PassDropAppDelegate *app;
 
 - (NSDate*)neverExpires {
-    NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian] autorelease];
     NSDateComponents *date = [[NSDateComponents alloc] init];
     [date setCalendar:gregorian];
     [date setDay:31];

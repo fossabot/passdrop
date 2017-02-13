@@ -106,7 +106,7 @@ static PassDropAppDelegate *app;
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAll;
 }
 

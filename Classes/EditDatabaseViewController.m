@@ -7,7 +7,7 @@
 //
 
 #import "EditDatabaseViewController.h"
-
+#import "PassDrop-Swift.h"
 
 @implementation EditDatabaseViewController
 
@@ -116,7 +116,7 @@
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAll;
 }
 

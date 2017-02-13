@@ -16,7 +16,6 @@
 #import "KdbReader.h"
 #import "KdbWriter.h"
 #import <DropboxSDK/DropboxSDK.h>
-#import "DatabaseManager.h"
 
 @interface DropboxDatabase : NSObject<Database, DBRestClientDelegate> {
 	DBRestClient *restClient;

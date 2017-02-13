@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <DropboxSDK/DropboxSDK.h>
 #import "AppPrefs.h"
-#import "DatabaseManager.h"
 #import "MGSplitViewController.h"
 #import "HideViewController.h"
 
+@class DatabaseManager;
 @class SettingsViewController;
 @class RootViewController;
 
