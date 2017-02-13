@@ -377,8 +377,8 @@ DBMetadata *tempMeta;
 }
 
 -(void)packDate:(NSDate *)date toBuffer:(uint8_t *)buffer{
-    NSCalendar *cal = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDateComponents *com = [cal components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
+    NSCalendar *cal = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian] autorelease];
+    NSDateComponents *com = [cal components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:date];
     int y = com.year, mon = com.month, d=com.day, h=com.hour, min=com.minute, s=com.second;
     buffer[0] = (uint8_t)(((uint32_t)y >> 6) & 0x0000003F);
     buffer[1] = (uint8_t)((((uint32_t)y & 0x0000003F) << 2) | (((uint32_t)mon >> 2) & 0x00000003));
