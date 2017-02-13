@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		024185C51E5239F6005167DE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024185C41E5239F6005167DE /* AboutViewController.swift */; };
+		024185DF1E524BCF005167DE /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024185DE1E524BCF005167DE /* Global.swift */; };
 		1D3623260D0F684500981E51 /* PassDropAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* PassDropAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -240,6 +241,7 @@
 
 /* Begin PBXFileReference section */
 		024185C41E5239F6005167DE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		024185DE1E524BCF005167DE /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* PassDropAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDropAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* PassDropAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassDropAppDelegate.m; sourceTree = "<group>"; };
@@ -452,7 +454,6 @@
 		A28D448F12F5BD6F00A16865 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A28D44A612F5C73D00A16865 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		A28D44A712F5C73D00A16865 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		A28D451812F5E5AB00A16865 /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		A2961320141D8C39004E538E /* SyncButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncButtonView.h; sourceTree = "<group>"; };
 		A2961321141D8C3A004E538E /* SyncButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncButtonView.m; sourceTree = "<group>"; };
 		A29BB6F114230A0D00F110C6 /* 42@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "42@2x.png"; sourceTree = "<group>"; };
@@ -579,7 +580,7 @@
 			children = (
 				28A0AAE50D9B0CCF005BE974 /* PassDrop_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
-				A28D451812F5E5AB00A16865 /* Global.h */,
+				024185DE1E524BCF005167DE /* Global.swift */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -1242,6 +1243,7 @@
 				A204B47912FDD08B00A4D656 /* UIPullToReloadTableViewController.m in Sources */,
 				A204B64312FE0C1600A4D656 /* DropboxDatabase.m in Sources */,
 				A2A2151512FF06BD007E055A /* EditDatabaseViewController.m in Sources */,
+				024185DF1E524BCF005167DE /* Global.swift in Sources */,
 				A2806B281300C5E600BF5C02 /* KdbGroupViewController.m in Sources */,
 				A2806FE91302198A00BF5C02 /* KdbReader.m in Sources */,
 				A2806FF713021AF400BF5C02 /* kpass.c in Sources */,

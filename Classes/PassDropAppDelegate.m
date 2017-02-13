@@ -7,9 +7,9 @@
 //
 
 #import "PassDropAppDelegate.h"
-#import "Global.h"
 #import "RootViewController.h"
 #import "SettingsViewController.h"
+#import "PassDrop-Swift.h"
 
 @implementation PassDropAppDelegate
 
@@ -30,8 +30,11 @@
     // Override point for customization after application launch.
 	prefs = [[AppPrefs alloc] init];
 	[prefs loadPrefs];
-	
-	dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_KEY appSecret:DROPBOX_SECRET root:kDBRootDropbox];
+
+    NSString* appKey = [Globals DROPBOX_KEY];
+    NSString* appSecret = [Globals DROPBOX_SECRET];
+
+	dbSession = [[DBSession alloc] initWithAppKey:appKey appSecret:appSecret root:kDBRootDropbox];
 	[DBSession setSharedSession:dbSession];
 	[dbSession release];
 	

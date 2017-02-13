@@ -7,7 +7,6 @@
 //
 
 #import "SettingsViewController.h"
-#import "Global.h"
 #import <DropboxSDK/DropboxSDK.h>
 #include "PassDrop-Swift.h"
 
