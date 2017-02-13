@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutViewController">
             <connections>
                 <outlet property="homepage" destination="10" id="12"/>
+                <outlet property="version" destination="3iP-K7-lLP" id="NVJ-YP-z3S"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -49,8 +50,8 @@ For news and updates:</string>
                         <action selector="handleEvent:" destination="-1" eventType="touchUpInside" id="15"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3iP-K7-lLP">
-                    <rect key="frame" x="20" y="60.000000000000007" width="374" height="20.666666666666679"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version x.y" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3iP-K7-lLP">
+                    <rect key="frame" x="20" y="60" width="374" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
