@@ -326,7 +326,7 @@ static int networkIndicatorReq;
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error {
 	isLoaded = NO;
 	[self alertError:error];
-	self.dirContents = [[[NSArray alloc] initWithObjects:nil] autorelease];
+	self.dirContents = [[[NSArray alloc] init] autorelease];
 	[self.tableView reloadData];
 	[self networkRequestStopped];
 }

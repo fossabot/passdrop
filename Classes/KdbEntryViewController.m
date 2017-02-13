@@ -293,7 +293,7 @@
             case 3: // expires
                 cell.textLabel.text = @"Expires";
                 NSDate *edate = [kdbEntry expireDate];
-                NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:edate];
+                NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:edate];
                 if([comps year] == 2999){
                     cell.detailTextLabel.text = @"Never";
                 } else {

@@ -64,7 +64,7 @@
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
-    BOOL isHidden = [navigationController topViewController] == hide || splitController.modalViewController == hide;
+    BOOL isHidden = [navigationController topViewController] == hide || splitController.presentedViewController == hide;
     if(!isHidden && dbManager.activeDatabase != nil && prefs.lockInBackgroundSeconds >= 0){
         bgTimer = [[NSDate date] retain];
         if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
@@ -74,9 +74,9 @@
                     [[details objectAtIndex:1] hideKeyboard];
                 }
             }
-            [splitController presentViewController:hide animated:NO];
+            [splitController presentViewController:hide animated:NO completion:nil];
         } else {
-            [navigationController dismissModalViewControllerAnimated:NO];
+            [navigationController dismissViewControllerAnimated:NO completion:nil];
             [navigationController pushViewController:hide animated:NO];
             [navigationController setNavigationBarHidden:YES];
         }
@@ -125,7 +125,7 @@
 
 - (void)userUnlockedDatabase:(id<Database>)database {
     if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
-        [splitController dismissModalViewControllerAnimated:NO];
+        [splitController dismissViewControllerAnimated:NO completion:nil];
     } else {
         if([navigationController topViewController] == hide){
             [navigationController popViewControllerAnimated:NO];
@@ -139,7 +139,7 @@
         [(UINavigationController*)splitController.detailViewController popToRootViewControllerAnimated:NO];
         [rootView.navigationController popToRootViewControllerAnimated:NO];
         [rootView.navigationController.view setAlpha:1.0f];
-        [splitController dismissModalViewControllerAnimated:NO];
+        [splitController dismissViewControllerAnimated:NO completion:nil];
         dbManager.activeDatabase = nil;
         [rootView removeLock:database];
     } else {
@@ -182,7 +182,7 @@
                 [dialog release];
             } else {
                 if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
-                    [splitController dismissModalViewControllerAnimated:NO];
+                    [splitController dismissViewControllerAnimated:NO completion:nil];
                 } else {
                     if([navigationController topViewController] == hide){
                         [navigationController popViewControllerAnimated:NO];
