@@ -1,11 +1,3 @@
-//
-//  DropboxDatabase.h
-//  PassDrop
-//
-//  Created by Rudis Muiznieks on 2/5/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
 fileprivate enum Mode: Int {
     case none = 0
     case loadingLockFile = 1
