@@ -7,6 +7,18 @@ let kDatabaseRevision = "rev"
 
 @objc
 class DatabaseManager: NSObject {
+
+    static var dataPath: String {
+        // for saving state between simulator runs/devices?
+        /*
+        #if TARGET_IPHONE_SIMULATOR
+            return "/Users/rudism/Documents/PassDrop"
+        #else
+         */
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask, true)
+        return paths[0].appendingPathComponent("PassDrop")
+    }
+
     let dataPath: String
     let configFile: String
     var databases: [[String: Any]] = []
@@ -15,16 +27,12 @@ class DatabaseManager: NSObject {
 
     override init() {
         let fileManager = FileManager()
-        #if TARGET_IPHONE_SIMULATOR
-            self.dataPath = "/Users/rudism/Documents/PassDrop";
-        #else
-            let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true);
-            self.dataPath = (paths[0] as NSString).appendingPathComponent("PassDrop")
+        dataPath = DatabaseManager.dataPath
 
-            if fileManager.fileExists(atPath: dataPath) {
-                try? fileManager.createDirectory(atPath: dataPath, withIntermediateDirectories: true, attributes: nil)
-            }
-        #endif
+        if !fileManager.fileExists(atPath: dataPath) {
+            try? fileManager.createDirectory(atPath: dataPath, withIntermediateDirectories: true, attributes: nil)
+        }
+
         configFile = (dataPath as NSString).appendingPathComponent("databases.archive")
 
         super.init()

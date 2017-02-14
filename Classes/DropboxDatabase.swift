@@ -89,14 +89,8 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     }
 
     func uploadLockFile() {
-        let dataPath: String
+        let dataPath = DatabaseManager.dataPath
         let fileManager = FileManager()
-        #if TARGET_IPHONE_SIMULATOR
-            dataPath = "/Users/rudism/Documents/PassDrop"
-        #else
-            let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask, true)
-            dataPath = paths[0].appendingPathComponent("PassDrop")
-        #endif
         let fname = location().lastPathComponent + ".lock"
         let localLock = dataPath.appendingPathComponent("lock")
         if !fileManager.fileExists(atPath: localLock) {
