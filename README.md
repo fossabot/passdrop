@@ -13,8 +13,6 @@ If you are experiencing issues or need help using PassDrop, please check out the
 ## Current Features (2.0)
 
 - Strong emphasis on clean, simple, intuitive user interface
-- Fully optimized for all devices including retina iPhones and iPads
-- Built for iOS 10
 - Load, create, and edit multiple KeePass 1.x databases in your Dropbox account
 - Open KeePass 1.x databases with any file extension
 - Fully integrated two-way syncing to Dropbox, with collision detection
@@ -23,8 +21,8 @@ If you are experiencing issues or need help using PassDrop, please check out the
 - View, create, move, sort, and edit all groups and entries nested to any level
 - Password generator to automatically create random strong passwords for entries
 - Entry search capabilities at global and group-specific levels
-- Copy logins, passwords, urls, or notes to your clipboard
-- Automatically open urls in Safari while PassDrop remains open in the background
+- Copy logins, passwords, URLs, or notes to your clipboard
+- Automatically open URLs in Safari while PassDrop remains open in the background
 - Optionally clear clipboard whenever PassDrop is re-activated
 - "Lock in background" option to auto-lock your database after a customizable amount of time
 - Hide "Backup" group results when searching entries
