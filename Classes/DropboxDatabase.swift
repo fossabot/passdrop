@@ -14,6 +14,12 @@ fileprivate enum Mode: Int {
     case updatingDBRevision = 4
 }
 
+extension Error {
+    public var errorMsg: String? {
+        return (self as NSError).userInfo["error"] as? String
+    }
+}
+
 class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     let restClient: DBRestClient
     var localPath: String!
@@ -248,26 +254,25 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     }
 
     func restClient(_ client: DBRestClient!, loadMetadataFailedWithError error: Error!) {
-        let error = error as NSError
-
+        let err = error as NSError
         switch mode {
         case .none:
             break
         case .loadingLockFile:
-            if error.code == 404 {
+            if err.code == 404 {
                 self.uploadLockFile()
             } else {
-                let msg = (error.userInfo["error"] as? String) ?? "There was an error locking the database."
+                let msg = error.errorMsg ?? "There was an error locking the database."
                 delegate.database?(self, failedToLockWithReason: msg)
             }
         case .loadingDBFile:
-            let msg = (error.userInfo["error"] as? String) ?? "There was an error updating the database."
+            let msg = error.errorMsg ?? "There was an error updating the database."
             delegate.database?(self, updateFailedWithReason: msg)
         case .sendingDBFile:
-            let msg = (error.userInfo["error"] as? String) ?? "There was an error uploading the database."
+            let msg = error.errorMsg ?? "There was an error uploading the database."
             savingDelegate.database?(self, syncFailedWithReason: msg)
         case .updatingDBRevision:
-            let msg = (error.userInfo["error"] as? String) ?? "The database was uploaded to Dropbox, but there was an error retrieving the revision number afterwards.";
+            let msg = error.errorMsg ?? "The database was uploaded to Dropbox, but there was an error retrieving the revision number afterwards.";
             savingDelegate.database?(self, syncFailedWithReason: msg)
         }
     }
@@ -295,62 +300,47 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
         }
     }
 
-    /*
-
-    - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
-        if(mode == LOADING_LOCK_FILE){
-            NSString *msg = @"There was an error uploading the lock file.";
-            if(error != nil && [error userInfo] != nil && [[error userInfo] objectForKey:@"error"] != nil){
-                msg = [[error userInfo] objectForKey:@"error"];
-            }
-            [delegate database:self failedToLockWithReason:msg];
-        } else if(mode == SENDING_DB_FILE){
-            NSString *msg = @"There was an error uploading the database file.";
-            if(error != nil && [error userInfo] != nil && [[error userInfo] objectForKey:@"error"] != nil){
-                msg = [[error userInfo] objectForKey:@"error"];
-            }
-            [savingDelegate database:self syncFailedWithReason:msg];
+    func restClient(_ client: DBRestClient!, uploadFileFailedWithError error: Error!) {
+        switch mode {
+        case .loadingLockFile:
+            let msg = error.errorMsg ?? "There was an error uploading the lock file."
+            delegate.database?(self, failedToLockWithReason: msg)
+        case .sendingDBFile:
+            let msg = error.errorMsg ?? "There was an error uploading the database file."
+            savingDelegate.database?(self, syncFailedWithReason: msg)
+        default:
+            break
         }
     }
 
-    - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path {
-        [delegate databaseLockWasRemoved:self];
+    func restClient(_ client: DBRestClient!, deletedPath path: String!) {
+        delegate.databaseLockWasRemoved?(self)
     }
 
-    - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error {
-        NSString *msg = @"There was an error removing the lock file.";
-        if(error != nil && [error userInfo] != nil && [[error userInfo] objectForKey:@"error"] != nil){
-            msg = [[error userInfo] objectForKey:@"error"];
-        }
-        [delegate database:self failedToRemoveLockWithReason:msg];
+    func restClient(_ client: DBRestClient!, deletePathFailedWithError error: Error!) {
+        let msg = error.errorMsg ?? "There was an error removing the lock file."
+        delegate.database?(self, failedToRemoveLockWithReason: msg)
     }
 
-    - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath {
-        if(mode == LOADING_DB_FILE){ // loading latest revision
-            
+    func restClient(_ client: DBRestClient!, loadedFile destPath: String!) {
+        if mode == .loadingDBFile {
             // update local metadata
-            self.revision = tempMeta.revision;
-            self.rev = tempMeta.rev;
-            self.lastModified = [[tempMeta.lastModifiedDate copy] autorelease];
-            self.lastSynced = [[NSDate new] autorelease];
-            [tempMeta release];
-            [dbManager updateDatabase:self];
-            
-            [delegate databaseUpdateComplete:self];
+            self.revision = tempMeta.revision
+            self.rev = tempMeta.rev
+            self.lastModified = tempMeta.lastModifiedDate
+            self.lastSynced = Date()
+            dbManager.updateDatabase(self)
+            delegate.databaseUpdateComplete?(self)
         }
     }
 
-    - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
-        if(mode == LOADING_DB_FILE){ // loading latest revision
-            [tempMeta release];
-            NSString *msg = @"There was an error removing the lock file.";
-            if(error != nil && [error userInfo] != nil && [[error userInfo] objectForKey:@"error"] != nil){
-                msg = [[error userInfo] objectForKey:@"error"];
-            }
-            [delegate database:self updateFailedWithReason:msg];
+    func restClient(_ client: DBRestClient!, loadFileFailedWithError error: Error!) {
+        if mode == .loadingDBFile { // loading latest revision
+            tempMeta = nil
+            let msg = error.errorMsg ?? "There was an error removing the lock file."
+            delegate.database?(self, updateFailedWithReason: msg)
         }
     }
-*/
 
     // MARK: utility stuff needs to be moved
 
