@@ -6,6 +6,8 @@
 #import "MGSplitViewController.h"
 #import "HideViewController.h"
 #import "Database.h"
-#import "DropboxDatabase.h"
+#import "KdbGroup.h"
+#import "KdbReader.h"
+#import "KdbWriter.h"
 
 #import <DropboxSDK/DropboxSDK.h>
