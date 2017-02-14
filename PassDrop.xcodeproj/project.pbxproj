@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0205B0461E536FFB009DECC7 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 0205B0451E536FFB009DECC7 /* Podfile */; };
 		024185C51E5239F6005167DE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024185C41E5239F6005167DE /* AboutViewController.swift */; };
 		024185DF1E524BCF005167DE /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024185DE1E524BCF005167DE /* Global.swift */; };
 		02647BB91E5262A5009051F8 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02647BB81E5262A5009051F8 /* DatabaseManager.swift */; };
@@ -190,7 +191,6 @@
 		A2806B291300C5E600BF5C02 /* KdbGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2806B271300C5E600BF5C02 /* KdbGroupViewController.xib */; };
 		A2806FE91302198A00BF5C02 /* KdbReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A2806FE81302198A00BF5C02 /* KdbReader.m */; };
 		A2806FF713021AF400BF5C02 /* kpass.c in Sources */ = {isa = PBXBuildFile; fileRef = A2806FF513021AF400BF5C02 /* kpass.c */; };
-		A28070031302234400BF5C02 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A28070011302234400BF5C02 /* libcrypto.a */; };
 		A286D2D214198B9200B30F79 /* GeneratePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A286D2D114198B9200B30F79 /* GeneratePasswordViewController.m */; };
 		A28D419012F5B99E00A16865 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A28D418F12F5B99E00A16865 /* Security.framework */; };
 		A28D44A912F5C73D00A16865 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28D44A712F5C73D00A16865 /* SettingsViewController.m */; };
@@ -240,12 +240,24 @@
 		A2EEC64418EF46E2005F91F4 /* passdrop_76.png in Resources */ = {isa = PBXBuildFile; fileRef = A2EEC63818EF46E2005F91F4 /* passdrop_76.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		02F7DBCA1E537F270035879B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F7DBC61E537F270035879B /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1DEAA807E6094CAA905855B59AABB016;
+			remoteInfo = "Pods-PassDrop";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0205B0451E536FFB009DECC7 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		024185C41E5239F6005167DE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		024185DE1E524BCF005167DE /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		02647BB81E5262A5009051F8 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		02647BBA1E527B3B009051F8 /* DropboxDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxDatabase.swift; sourceTree = "<group>"; };
 		02647BBC1E5289FC009051F8 /* String+NSString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSString.swift"; sourceTree = "<group>"; };
+		02F7DBC61E537F270035879B /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* PassDropAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDropAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* PassDropAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassDropAppDelegate.m; sourceTree = "<group>"; };
@@ -259,6 +271,7 @@
 		630886D81E50EE7400C68EAE /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
 		630886DE1E50F81B00C68EAE /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
+		6DD326A21A9D5B6DDFFAF4F6 /* Pods-PassDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PassDrop.release.xcconfig"; path = "Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* PassDrop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PassDrop-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A2001E8213C0C6DB00DD42EA /* ParentGroupPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentGroupPicker.h; sourceTree = "<group>"; };
 		A2001E8313C0C6DC00DD42EA /* ParentGroupPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentGroupPicker.m; sourceTree = "<group>"; };
@@ -448,7 +461,6 @@
 		A2806FE81302198A00BF5C02 /* KdbReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KdbReader.m; sourceTree = "<group>"; };
 		A2806FF513021AF400BF5C02 /* kpass.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kpass.c; path = "libkpass-3/src/kpass.c"; sourceTree = SOURCE_ROOT; };
 		A2806FF613021AF400BF5C02 /* kpass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kpass.h; path = "libkpass-3/src/kpass.h"; sourceTree = SOURCE_ROOT; };
-		A28070011302234400BF5C02 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = openssl/libcrypto.a; sourceTree = "<group>"; };
 		A286D2D014198B9200B30F79 /* GeneratePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneratePasswordViewController.h; sourceTree = "<group>"; };
 		A286D2D114198B9200B30F79 /* GeneratePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePasswordViewController.m; sourceTree = "<group>"; };
 		A28D418F12F5B99E00A16865 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -507,6 +519,7 @@
 		A2EEC63618EF46E2005F91F4 /* passdrop_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = passdrop_57.png; sourceTree = "<group>"; };
 		A2EEC63718EF46E2005F91F4 /* passdrop_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = passdrop_72.png; sourceTree = "<group>"; };
 		A2EEC63818EF46E2005F91F4 /* passdrop_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = passdrop_76.png; sourceTree = "<group>"; };
+		CF5841D1B21A812202F9FA94 /* Pods-PassDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PassDrop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -521,13 +534,20 @@
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				A28D419012F5B99E00A16865 /* Security.framework in Frameworks */,
 				A204B49A12FDD1CB00A4D656 /* AudioToolbox.framework in Frameworks */,
-				A28070031302234400BF5C02 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02F7DBC71E537F270035879B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02F7DBCB1E537F270035879B /* libPods-PassDrop.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,6 +571,15 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		0EADDC5FBC86E39D1C806D30 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CF5841D1B21A812202F9FA94 /* Pods-PassDrop.debug.xcconfig */,
+				6DD326A21A9D5B6DDFFAF4F6 /* Pods-PassDrop.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -564,12 +593,14 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				0205B0451E536FFB009DECC7 /* Podfile */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				A2B6A20115E00E6900E29EC3 /* iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				0EADDC5FBC86E39D1C806D30 /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -601,12 +632,12 @@
 			children = (
 				630886D81E50EE7400C68EAE /* DropboxSDK.framework */,
 				A2E5364815DFF7A800A2008E /* QuartzCore.framework */,
-				A28070011302234400BF5C02 /* libcrypto.a */,
 				A204B49912FDD1CB00A4D656 /* AudioToolbox.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
 				A28D418F12F5B99E00A16865 /* Security.framework */,
+				02F7DBC61E537F270035879B /* Pods.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -976,9 +1007,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "PassDrop" */;
 			buildPhases = (
+				29B237C255694D6510632723 /* [CP] Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				4FAE974B656B4D4200D1A82B /* [CP] Embed Pods Frameworks */,
+				E6E392E728838A29CAC90F1C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1015,13 +1049,30 @@
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 02F7DBC71E537F270035879B /* Products */;
+					ProjectRef = 02F7DBC61E537F270035879B /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* PassDrop */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		02F7DBCB1E537F270035879B /* libPods-PassDrop.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-PassDrop.a";
+			remoteRef = 02F7DBCA1E537F270035879B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
@@ -1187,6 +1238,7 @@
 				A24F3793130360CB00A4AF66 /* 54.png in Resources */,
 				A24F3794130360CB00A4AF66 /* 55.png in Resources */,
 				A24F3795130360CB00A4AF66 /* 56.png in Resources */,
+				0205B0461E536FFB009DECC7 /* Podfile in Resources */,
 				A2CEEDC818EF5C0700BA1341 /* Default.png in Resources */,
 				A24F3796130360CB00A4AF66 /* 57.png in Resources */,
 				A24F3797130360CB00A4AF66 /* 58.png in Resources */,
@@ -1220,6 +1272,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		29B237C255694D6510632723 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4FAE974B656B4D4200D1A82B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6E392E728838A29CAC90F1C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -1269,6 +1369,7 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF5841D1B21A812202F9FA94 /* Pods-PassDrop.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1310,6 +1411,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DD326A21A9D5B6DDFFAF4F6 /* Pods-PassDrop.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
