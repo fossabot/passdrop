@@ -1,23 +1,23 @@
-#passdrop
+# passdrop
 
-*Note: I am no longer actively developing PassDrop, as I no longer use iOS devices or Mac OS X.*
+*This is a modern, updated build of [Rudis Muiznieks](https://github.com/rudism)'s PassDrop application.*
 
-PassDrop is a fully-featured secure password management system, compatible with the free [KeePass 1.x (Classic)](http://keepass.info/) and multi-platform [KeePassX](http://www.keepassx.org/) desktop applications. PassDrop uses the free [DropBox](http://www.dropbox.com) storage service for hassle-free synchronization of your password databases between your iPhone, Windows, OS X, and Linux desktop computers.
+PassDrop is a fully-featured secure password management system, compatible with the free [KeePass 1.x (Classic)](http://keepass.info/) and multi-platform [KeePassX](http://www.keepassx.org/) desktop applications. PassDrop uses the free [Dropbox](http://www.dropbox.com) storage service for hassle-free synchronization of your password databases between your iPhone, Windows, macOS, and Linux computers.
 
 The current version 1.2 is available on the [iOS App Store](http://itunes.apple.com/us/app/passdrop/id431185109).
 
-##PassDrop FAQ
+## PassDrop FAQ
 
 If you are experiencing issues or need help using PassDrop, please check out the [PassDrop FAQ](https://github.com/rudism/passdrop/blob/master/FAQ.md).
 
-##Current Features (1.2)
+## Current Features (2.0)
 
 - Strong emphasis on clean, simple, intuitive user interface
 - Fully optimized for all devices including retina iPhones and iPads
-- Built for iOS 7
-- Load, create, and edit multiple KeePass 1.x databases in your DropBox account
+- Built for iOS 10
+- Load, create, and edit multiple KeePass 1.x databases in your Dropbox account
 - Open KeePass 1.x databases with any file extension
-- Fully integrated two-way syncing to DropBox, with collision detection
+- Fully integrated two-way syncing to Dropbox, with collision detection
 - Lock file utilization when opening databases in edit mode
 - Offline read access to databases when no network is available
 - View, create, move, sort, and edit all groups and entries nested to any level
@@ -28,14 +28,14 @@ If you are experiencing issues or need help using PassDrop, please check out the
 - Optionally clear clipboard whenever PassDrop is re-activated
 - "Lock in background" option to auto-lock your database after a customizable amount of time
 - Hide "Backup" group results when searching entries
-- Encrypted HTTPS communication directly with the official DropBox API for maximum security
+- Encrypted HTTPS communication directly with the official Dropbox API for maximum security
 
-##Commonly Requested Missing Features
+## Commonly Requested Missing Features
 
 - File attachment viewing and sharing
 - Option to visually mark or hide expired entries
 - Add files from other apps via file sharing
-- Ability to unlink DropBox and keep local databases
+- Ability to unlink Dropbox and keep local databases
 - Key file authentication
 - Better UTF16/international character support
 - KeePass 2.x database support
