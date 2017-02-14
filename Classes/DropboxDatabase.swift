@@ -272,23 +272,30 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
         }
     }
 
-    /*
+    func restClient(_ client: DBRestClient!, uploadedFile destPath: String!, from srcPath: String!) {
+        switch mode {
+        case .loadingLockFile:
+            delegate.databaseWasLocked?(forEditing: self)
+        case .sendingDBFile:
+            let tmpFile = localPath.appendingPathExtension("tmp")!
+            let fm = FileManager()
+            do {
+                try fm.removeItem(atPath: localPath)
+                try fm.copyItem(atPath: tmpFile, toPath: localPath)
+                try fm.removeItem(atPath: tmpFile)
 
-    - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath {
-        if(mode == LOADING_LOCK_FILE){
-            [delegate databaseWasLockedForEditing:self];
-        } else if(mode == SENDING_DB_FILE){
-            NSString *tmpFile = [self.localPath stringByAppendingPathExtension:@"tmp"];
-            NSFileManager *fm = [[NSFileManager alloc] init];
-            if(![fm removeItemAtPath:self.localPath error:nil] || ![fm copyItemAtPath:tmpFile toPath:self.localPath error:nil] || ![fm removeItemAtPath:tmpFile error:nil]){
-                [savingDelegate database:self syncFailedWithReason:@"The database was uploaded successfully, but a filesystem error prevented the local copy from being updated."];
-            } else {
-                mode = UPDATING_DB_REVISION;
-                [restClient loadMetadata:[self location]];
+                mode = .updatingDBRevision
+                restClient.loadMetadata(location())
             }
-            [fm release];
+            catch {
+                savingDelegate.database?(self, syncFailedWithReason: "The database was uploaded successfully, but a filesystem error prevented the local copy from being updated.")
+            }
+        default:
+            break
         }
     }
+
+    /*
 
     - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
         if(mode == LOADING_LOCK_FILE){
