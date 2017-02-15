@@ -13,6 +13,7 @@
 		02647BB91E5262A5009051F8 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02647BB81E5262A5009051F8 /* DatabaseManager.swift */; };
 		02647BBB1E527B3B009051F8 /* DropboxDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02647BBA1E527B3B009051F8 /* DropboxDatabase.swift */; };
 		02647BBD1E5289FC009051F8 /* String+NSString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02647BBC1E5289FC009051F8 /* String+NSString.swift */; };
+		02A43B881E54F2AD00358F45 /* Global+Private.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A43B871E54F2AD00358F45 /* Global+Private.swift */; };
 		1D3623260D0F684500981E51 /* PassDropAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* PassDropAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -257,6 +258,7 @@
 		02647BB81E5262A5009051F8 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		02647BBA1E527B3B009051F8 /* DropboxDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxDatabase.swift; sourceTree = "<group>"; };
 		02647BBC1E5289FC009051F8 /* String+NSString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSString.swift"; sourceTree = "<group>"; };
+		02A43B871E54F2AD00358F45 /* Global+Private.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Global+Private.swift"; path = "Classes/Global+Private.swift"; sourceTree = "<group>"; };
 		02F7DBC61E537F270035879B /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* PassDropAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDropAppDelegate.h; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 				28A0AAE50D9B0CCF005BE974 /* PassDrop_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				024185DE1E524BCF005167DE /* Global.swift */,
+				02A43B871E54F2AD00358F45 /* Global+Private.swift */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -1352,6 +1355,7 @@
 				A24F3DD71312206000A4AF66 /* EditGroupViewController.m in Sources */,
 				A26CC63F131A96CB0029A767 /* KdbEntryViewController.m in Sources */,
 				A2001E8413C0C6DC00DD42EA /* ParentGroupPicker.m in Sources */,
+				02A43B881E54F2AD00358F45 /* Global+Private.swift in Sources */,
 				024185C51E5239F6005167DE /* AboutViewController.swift in Sources */,
 				02647BB91E5262A5009051F8 /* DatabaseManager.swift in Sources */,
 				A24790F413EE3EF20017574E /* IconPicker.m in Sources */,

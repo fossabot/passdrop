@@ -1,11 +1,13 @@
-class Globals: NSObject {
-    @objc
-    static var DROPBOX_KEY: String {
-        return ProcessInfo.processInfo.environment["PASSDROP_APP_KEY"]!
-    }
+@objc
+protocol GlobalsProtocol {
+    static var DROPBOX_KEY: String { get }
+    static var DROPBOX_SECRET: String { get }
+}
 
-    @objc
-    static var DROPBOX_SECRET: String {
-        return ProcessInfo.processInfo.environment["PASSDROP_APP_SECRET"]!
-    }
+@objc
+class Globals: NSObject, GlobalsProtocol {
+    static let DROPBOX_KEY = "m2e4d2ht2khynh3"
+
+    // NOTE: For this to compile, you must add a file called Global+Private.swift as a sibling to this file
+    // and define the OAuth 2 app secret with an extension of Globals.
 }

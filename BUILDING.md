@@ -1,5 +1,5 @@
 # Build Notes
 
-The Dropbox application key and secret are set in the build scheme, under Environment Variables.  The two variables are named PASSDROP_APP_KEY and PASSDROP_APP_SECRET.  The app key is also in PassDrop-Info.plist.
+The Dropbox OAuth 2 application key is embedded in the source code, but the secret must be defined in a Global+Private.swift file, sibling to Global.swift.
 
 All third-party dependencies are checked in except OpenSSL.  To obtain that dependency, install CocoaPods and run `pod install`.
