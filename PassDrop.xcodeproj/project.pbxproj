@@ -250,6 +250,20 @@
 			remoteGlobalIDString = 1DEAA807E6094CAA905855B59AABB016;
 			remoteInfo = "Pods-PassDrop";
 		};
+		631DC4D01F817C260032D3EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F7DBC61E537F270035879B /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 88476CC238FA067CA19252CDF742412D;
+			remoteInfo = Alamofire;
+		};
+		631DC4D21F817C260032D3EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F7DBC61E537F270035879B /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FCF46CEA91AEEFE2CB53F79D9052AD9C;
+			remoteInfo = SwiftyDropbox;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -548,7 +562,9 @@
 		02F7DBC71E537F270035879B /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				631DC4D11F817C260032D3EA /* Alamofire.framework */,
 				02F7DBCB1E537F270035879B /* libPods-PassDrop.a */,
+				631DC4D31F817C260032D3EA /* SwiftyDropbox.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -595,7 +611,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				0205B0451E536FFB009DECC7 /* Podfile */,
@@ -1055,7 +1071,7 @@
 				German,
 				en,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1074,9 +1090,23 @@
 /* Begin PBXReferenceProxy section */
 		02F7DBCB1E537F270035879B /* libPods-PassDrop.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-PassDrop.a";
+			fileType = wrapper.framework;
+			path = Pods_PassDrop.framework;
 			remoteRef = 02F7DBCA1E537F270035879B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		631DC4D11F817C260032D3EA /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 631DC4D01F817C260032D3EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		631DC4D31F817C260032D3EA /* SwiftyDropbox.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyDropbox.framework;
+			remoteRef = 631DC4D21F817C260032D3EA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1406,7 +1436,7 @@
 				GCC_PREFIX_HEADER = PassDrop_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PassDrop-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = me.chadaustin.passdrop;
@@ -1442,7 +1472,7 @@
 				GCC_PREFIX_HEADER = PassDrop_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PassDrop-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
