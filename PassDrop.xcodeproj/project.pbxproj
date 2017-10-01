@@ -239,6 +239,7 @@
 		A2EEC64218EF46E2005F91F4 /* passdrop_57.png in Resources */ = {isa = PBXBuildFile; fileRef = A2EEC63618EF46E2005F91F4 /* passdrop_57.png */; };
 		A2EEC64318EF46E2005F91F4 /* passdrop_72.png in Resources */ = {isa = PBXBuildFile; fileRef = A2EEC63718EF46E2005F91F4 /* passdrop_72.png */; };
 		A2EEC64418EF46E2005F91F4 /* passdrop_76.png in Resources */ = {isa = PBXBuildFile; fileRef = A2EEC63818EF46E2005F91F4 /* passdrop_76.png */; };
+		F8AF5CB4ADD9C7D58F474165 /* libPods-PassDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C60145DD16699BDC4927D4F /* libPods-PassDrop.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,6 +271,7 @@
 		28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RootViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		28C286E00D94DF7D0034E888 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RootViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C60145DD16699BDC4927D4F /* libPods-PassDrop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PassDrop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		630886D81E50EE7400C68EAE /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
 		630886DE1E50F81B00C68EAE /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				A28D419012F5B99E00A16865 /* Security.framework in Frameworks */,
 				A204B49A12FDD1CB00A4D656 /* AudioToolbox.framework in Frameworks */,
+				F8AF5CB4ADD9C7D58F474165 /* libPods-PassDrop.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,6 +644,7 @@
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
 				A28D418F12F5B99E00A16865 /* Security.framework */,
 				02F7DBC61E537F270035879B /* Pods.xcodeproj */,
+				2C60145DD16699BDC4927D4F /* libPods-PassDrop.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1283,13 +1287,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PassDrop-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4FAE974B656B4D4200D1A82B /* [CP] Embed Pods Frameworks */ = {
@@ -1397,7 +1404,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.chadaustin.passdrop;
 				PRODUCT_NAME = PassDrop;
 				PROVISIONING_PROFILE = "7b124888-175f-4b6b-aff4-18fdb79057b3";
@@ -1477,7 +1483,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "1504926C-20A3-4ABA-8192-DA11013B4407";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1504926C-20A3-4ABA-8192-DA11013B4407";
 				SDKROOT = iphoneos;
