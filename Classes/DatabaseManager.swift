@@ -33,7 +33,7 @@ class DatabaseManager: NSObject {
             try? fileManager.createDirectory(atPath: dataPath, withIntermediateDirectories: true, attributes: nil)
         }
 
-        configFile = (dataPath as NSString).appendingPathComponent("databases.archive")
+        configFile = (dataPath as NSString).appendingPathComponent("databases2.archive")
 
         super.init()
 
@@ -127,7 +127,7 @@ class DatabaseManager: NSObject {
         database.name = dbData[kDatabaseName] as! String
         database.localPath = (dataPath as NSString).appendingPathComponent((dbData[kDatabaseLocalPath] as! NSString).lastPathComponent)
         database.lastModified = dbData[kDatabaseLastModified] as! Date
-        database.revision = dbData[kDatabaseRevision] as! Int64
+        database.rev = dbData[kDatabaseRevision] as! String
         database.lastSynced = dbData[kDatabaseLastSynced] as! Date
         let fm = FileManager()
         database.isDirty = fm.fileExists(atPath: (database.localPath as NSString).appendingPathExtension("tmp")!)
@@ -151,7 +151,7 @@ class DatabaseManager: NSObject {
                 dbData[kDatabaseName] = database.name
                 dbData[kDatabaseLastModified] = database.lastModified
                 dbData[kDatabaseLastSynced] = database.lastSynced
-                dbData[kDatabaseRevision] = database.revision
+                dbData[kDatabaseRevision] = database.rev
                 databases[i] = dbData
                 save()
                 return

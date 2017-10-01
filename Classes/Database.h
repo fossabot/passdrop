@@ -20,7 +20,6 @@
 @property (retain, nonatomic) NSString *identifier;
 @property (retain, nonatomic) NSString *name;
 @property (retain, nonatomic) NSDate *lastModified;
-@property (nonatomic) long long revision;
 @property (retain, nonatomic) NSDate *lastSynced;
 @property (assign, nonatomic) id<DatabaseDelegate> delegate;
 @property (assign, nonatomic) id<DatabaseDelegate> savingDelegate;

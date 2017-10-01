@@ -28,7 +28,6 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     var pwHash: UnsafeMutablePointer<UInt8>?
     var isDirty = false
     var dbManager: DatabaseManager!
-    var revision: Int64 = 0
     var rev: String?
 
     private var mode = Mode.none
@@ -187,7 +186,6 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     }
 
     func discardChanges() {
-        revision = 0
         rev = nil
         isDirty = false
         dbManager.updateDatabase(self)
@@ -210,7 +208,7 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
             }
         case .loadingDBFile:
             if !metadata.isDeleted {
-                if self.revision != metadata.revision {
+                if self.rev != metadata.rev {
                     if self.isDirty {
                         delegate.databaseUpdateWouldOverwriteChanges?(self)
                     } else {
@@ -227,7 +225,7 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
             }
         case .sendingDBFile:
             if !metadata.isDeleted {
-                if self.revision != metadata.revision {
+                if self.rev != metadata.rev {
                     savingDelegate.databaseSyncWouldOverwriteChanges?(self)
                 } else {
                     self.upload()
@@ -236,7 +234,6 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
                 savingDelegate.databaseWasDeleted?(self)
             }
         case .updatingDBRevision:
-            self.revision = metadata.revision
             self.rev = metadata.rev
             self.isDirty = false
             self.lastSynced = Date()
@@ -317,7 +314,6 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     func restClient(_ client: DBRestClient!, loadedFile destPath: String!) {
         if mode == .loadingDBFile {
             // update local metadata
-            self.revision = tempMeta.revision
             self.rev = tempMeta.rev
             self.lastModified = tempMeta.lastModifiedDate
             self.lastSynced = Date()
