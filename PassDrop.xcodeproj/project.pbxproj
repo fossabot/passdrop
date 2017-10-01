@@ -239,7 +239,7 @@
 		A2EEC64218EF46E2005F91F4 /* passdrop_57.png in Resources */ = {isa = PBXBuildFile; fileRef = A2EEC63618EF46E2005F91F4 /* passdrop_57.png */; };
 		A2EEC64318EF46E2005F91F4 /* passdrop_72.png in Resources */ = {isa = PBXBuildFile; fileRef = A2EEC63718EF46E2005F91F4 /* passdrop_72.png */; };
 		A2EEC64418EF46E2005F91F4 /* passdrop_76.png in Resources */ = {isa = PBXBuildFile; fileRef = A2EEC63818EF46E2005F91F4 /* passdrop_76.png */; };
-		F8AF5CB4ADD9C7D58F474165 /* libPods-PassDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C60145DD16699BDC4927D4F /* libPods-PassDrop.a */; };
+		D2F0C6FB963A0BBA160F9E1E /* Pods_PassDrop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7399FC8996453D7E8DEB613 /* Pods_PassDrop.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,7 +271,6 @@
 		28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RootViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		28C286E00D94DF7D0034E888 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RootViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2C60145DD16699BDC4927D4F /* libPods-PassDrop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PassDrop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		630886D81E50EE7400C68EAE /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
 		630886DE1E50F81B00C68EAE /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
@@ -523,6 +522,7 @@
 		A2EEC63618EF46E2005F91F4 /* passdrop_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = passdrop_57.png; sourceTree = "<group>"; };
 		A2EEC63718EF46E2005F91F4 /* passdrop_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = passdrop_72.png; sourceTree = "<group>"; };
 		A2EEC63818EF46E2005F91F4 /* passdrop_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = passdrop_76.png; sourceTree = "<group>"; };
+		B7399FC8996453D7E8DEB613 /* Pods_PassDrop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PassDrop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF5841D1B21A812202F9FA94 /* Pods-PassDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PassDrop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -538,7 +538,7 @@
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				A28D419012F5B99E00A16865 /* Security.framework in Frameworks */,
 				A204B49A12FDD1CB00A4D656 /* AudioToolbox.framework in Frameworks */,
-				F8AF5CB4ADD9C7D58F474165 /* libPods-PassDrop.a in Frameworks */,
+				D2F0C6FB963A0BBA160F9E1E /* Pods_PassDrop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +595,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
 				0205B0451E536FFB009DECC7 /* Podfile */,
@@ -644,7 +644,7 @@
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
 				A28D418F12F5B99E00A16865 /* Security.framework */,
 				02F7DBC61E537F270035879B /* Pods.xcodeproj */,
-				2C60145DD16699BDC4927D4F /* libPods-PassDrop.a */,
+				B7399FC8996453D7E8DEB613 /* Pods_PassDrop.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1055,7 +1055,7 @@
 				German,
 				en,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1305,9 +1305,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDropbox.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
