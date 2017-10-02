@@ -21,7 +21,6 @@
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */; };
 		630886D91E50EE7400C68EAE /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630886D81E50EE7400C68EAE /* DropboxSDK.framework */; };
-		630886DF1E50F81B00C68EAE /* PassDropAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630886DE1E50F81B00C68EAE /* PassDropAppDelegate.swift */; };
 		A2001E8413C0C6DC00DD42EA /* ParentGroupPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A2001E8313C0C6DC00DD42EA /* ParentGroupPicker.m */; };
 		A204B32E12FD81C200A4D656 /* DropboxBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = A204B32C12FD81C200A4D656 /* DropboxBrowserController.m */; };
 		A204B32F12FD81C200A4D656 /* DropboxBrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A204B32D12FD81C200A4D656 /* DropboxBrowserController.xib */; };
@@ -287,7 +286,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		630886D81E50EE7400C68EAE /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
-		630886DE1E50F81B00C68EAE /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
 		6DD326A21A9D5B6DDFFAF4F6 /* Pods-PassDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PassDrop.release.xcconfig"; path = "Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* PassDrop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PassDrop-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A2001E8213C0C6DB00DD42EA /* ParentGroupPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentGroupPicker.h; sourceTree = "<group>"; };
@@ -563,7 +561,7 @@
 			isa = PBXGroup;
 			children = (
 				631DC4D11F817C260032D3EA /* Alamofire.framework */,
-				02F7DBCB1E537F270035879B /* libPods-PassDrop.a */,
+				02F7DBCB1E537F270035879B /* Pods_PassDrop.framework */,
 				631DC4D31F817C260032D3EA /* SwiftyDropbox.framework */,
 			);
 			name = Products;
@@ -583,7 +581,6 @@
 				A204B64412FE0CBA00A4D656 /* Database.h */,
 				A2620E9C15F3134900C27040 /* HideViewController.h */,
 				A2620E9D15F3134900C27040 /* HideViewController.m */,
-				630886DE1E50F81B00C68EAE /* PassDropAppDelegate.swift */,
 				630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */,
 				02647BB81E5262A5009051F8 /* DatabaseManager.swift */,
 				02647BBA1E527B3B009051F8 /* DropboxDatabase.swift */,
@@ -1088,7 +1085,7 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		02F7DBCB1E537F270035879B /* libPods-PassDrop.a */ = {
+		02F7DBCB1E537F270035879B /* Pods_PassDrop.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Pods_PassDrop.framework;
@@ -1377,7 +1374,6 @@
 				A2E5364C15DFFCA400A2008E /* LoadingView.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* PassDropAppDelegate.m in Sources */,
-				630886DF1E50F81B00C68EAE /* PassDropAppDelegate.swift in Sources */,
 				28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */,
 				A28D44A912F5C73D00A16865 /* SettingsViewController.m in Sources */,
 				A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */,
