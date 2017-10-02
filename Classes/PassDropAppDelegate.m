@@ -7,7 +7,6 @@
 //
 
 #import "PassDropAppDelegate.h"
-#import "RootViewController.h"
 #import "SettingsViewController.h"
 #import "PassDrop-Swift.h"
 
