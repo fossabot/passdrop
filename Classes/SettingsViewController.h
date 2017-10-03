@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <DropboxSDK/DropboxSDK.h>
-#import "PassDropAppDelegate.h"
 
 @interface SettingsViewController : UIViewController<UITableViewDelegate, UIActionSheetDelegate> {
 	IBOutlet UITableView *settingsTable;

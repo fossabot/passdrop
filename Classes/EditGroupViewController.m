@@ -7,7 +7,7 @@
 //
 
 #import "EditGroupViewController.h"
-
+#import "PassDrop-Swift.h"
 
 @implementation EditGroupViewController
 

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PassDropAppDelegate.h"
 #import "LoadingView.h"
+
+@class PassDropAppDelegate;
 
 @protocol GeneratePasswordDelegate;
 

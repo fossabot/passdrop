@@ -7,6 +7,7 @@
 //
 
 #import "EditEntryViewController.h"
+#import "PassDrop-Swift.h"
 
 @implementation EditEntryViewController
 

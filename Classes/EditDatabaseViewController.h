@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Database.h"
-#import "PassDropAppDelegate.h"
 #import "NetworkActivityViewController.h"
 
 @interface EditDatabaseViewController : NetworkActivityViewController<UITextFieldDelegate, DatabaseDelegate, UIActionSheetDelegate> {

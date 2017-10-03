@@ -10,9 +10,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "LoadingView.h"
 #import "UIPullToReloadTableViewController.h"
-#import "PassDropAppDelegate.h"
 #import "NewDatabaseViewController.h"
-
 
 @interface DropboxBrowserController : UIPullToReloadTableViewController<DBRestClientDelegate, NewDatabaseDelegate> {
 	DBRestClient *restClient;

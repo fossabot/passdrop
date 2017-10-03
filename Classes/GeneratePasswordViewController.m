@@ -7,6 +7,7 @@
 //
 
 #import "GeneratePasswordViewController.h"
+#import "PassDrop-Swift.h"
 
 @implementation GeneratePasswordViewController
 
