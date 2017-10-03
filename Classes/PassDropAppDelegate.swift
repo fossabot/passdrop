@@ -17,7 +17,7 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
     var prefs: AppPrefs!
     var dbManager: DatabaseManager!
 
-    var bgTimer: NSDate?
+    var bgTimer: Date?
     var isLocked = false
 
     var hide: HideViewController!
@@ -64,45 +64,31 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
         rootView.dropboxWasReset()
     }
 
-    /*
-        - (void)applicationWillResignActive:(UIApplication *)application {
-            /*
-             Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-             Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-             */
-            BOOL isHidden = [navigationController topViewController] == hide || splitController.presentedViewController == hide;
-            if(!isHidden && dbManager.activeDatabase != nil && prefs.lockInBackgroundSeconds >= 0){
-                bgTimer = [[NSDate date] retain];
-                if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
-                    NSArray *details = [(UINavigationController*)splitController.detailViewController viewControllers];
-                    if(details.count > 1){
-                        if([[details objectAtIndex:1] respondsToSelector:@selector(hideKeyboard)]){
-                            [[details objectAtIndex:1] hideKeyboard];
-                        }
+    func applicationWillResignActive(_ application: UIApplication) {
+        /*
+         Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+         Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+         */
+        let isHidden = navigationController.topViewController == hide || splitController.presentedViewController == hide
+        if !isHidden && dbManager.activeDatabase != nil && prefs.lockInBackgroundSeconds >= 0 {
+            bgTimer = Date()
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                let details = (splitController.detailViewController as! UINavigationController).viewControllers
+                if details.count > 1 {
+                    if details[1].responds(to: Selector("hideKeyboard")) {
+                        details[1].performSelector(onMainThread: Selector("hideKeyboard"), with: nil, waitUntilDone: true)
                     }
-                    [splitController presentViewController:hide animated:NO completion:nil];
-                } else {
-                    [navigationController dismissViewControllerAnimated:NO completion:nil];
-                    [navigationController pushViewController:hide animated:NO];
-                    [navigationController setNavigationBarHidden:YES];
                 }
+                splitController.present(hide, animated: false, completion: nil)
+            } else {
+                navigationController.dismiss(animated: false, completion: nil)
+                navigationController.pushViewController(hide, animated: false)
+                navigationController.setNavigationBarHidden(true, animated: false)
             }
-            }
-            
-            
-            - (void)applicationDidEnterBackground:(UIApplication *)application {
-                /*
-                 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-                 If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
-                 */
-                }
-                
-                - (void)applicationWillEnterForeground:(UIApplication *)application {
-                    /*
-                     Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
-                     */
-                    }
-                    
+        }
+    }
+    
+/*
                     - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
                         if(alertView.tag == 1){
                             if(buttonIndex == 0){
