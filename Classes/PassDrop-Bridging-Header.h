@@ -7,11 +7,12 @@
 #import "HideViewController.h"
 #import "EditDatabaseViewController.h"
 #import "SettingsViewController.h"
-#import "DropboxBrowserController.h"
 #import "KdbGroupViewController.h"
 #import "Database.h"
 #import "KdbGroup.h"
 #import "KdbReader.h"
 #import "KdbWriter.h"
+#import "UIPullToReloadTableViewController.h"
+#import "NewDatabaseViewController.h"
 
 #import <DropboxSDK/DropboxSDK.h>

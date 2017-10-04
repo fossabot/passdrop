@@ -20,8 +20,8 @@
 		630886D91E50EE7400C68EAE /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630886D81E50EE7400C68EAE /* DropboxSDK.framework */; };
 		63B87D8A1F81CC90005262FB /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D891F81CC90005262FB /* RootViewController.swift */; };
 		63B87D921F8211C2005262FB /* PassDropAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */; };
+		63B87DA31F834AEB005262FB /* DropboxBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87DA21F834AEB005262FB /* DropboxBrowserController.swift */; };
 		A2001E8413C0C6DC00DD42EA /* ParentGroupPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A2001E8313C0C6DC00DD42EA /* ParentGroupPicker.m */; };
-		A204B32E12FD81C200A4D656 /* DropboxBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = A204B32C12FD81C200A4D656 /* DropboxBrowserController.m */; };
 		A204B32F12FD81C200A4D656 /* DropboxBrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A204B32D12FD81C200A4D656 /* DropboxBrowserController.xib */; };
 		A204B47812FDD08B00A4D656 /* UIPullToReloadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A204B47512FDD08B00A4D656 /* UIPullToReloadHeaderView.m */; };
 		A204B47912FDD08B00A4D656 /* UIPullToReloadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A204B47712FDD08B00A4D656 /* UIPullToReloadTableViewController.m */; };
@@ -282,12 +282,11 @@
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
 		63B87D891F81CC90005262FB /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
+		63B87DA21F834AEB005262FB /* DropboxBrowserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxBrowserController.swift; sourceTree = "<group>"; };
 		6DD326A21A9D5B6DDFFAF4F6 /* Pods-PassDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PassDrop.release.xcconfig"; path = "Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* PassDrop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PassDrop-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A2001E8213C0C6DB00DD42EA /* ParentGroupPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentGroupPicker.h; sourceTree = "<group>"; };
 		A2001E8313C0C6DC00DD42EA /* ParentGroupPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentGroupPicker.m; sourceTree = "<group>"; };
-		A204B32B12FD81C200A4D656 /* DropboxBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxBrowserController.h; sourceTree = "<group>"; };
-		A204B32C12FD81C200A4D656 /* DropboxBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DropboxBrowserController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		A204B32D12FD81C200A4D656 /* DropboxBrowserController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DropboxBrowserController.xib; path = Classes/DropboxBrowserController.xib; sourceTree = "<group>"; };
 		A204B47412FDD08B00A4D656 /* UIPullToReloadHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPullToReloadHeaderView.h; sourceTree = "<group>"; };
 		A204B47512FDD08B00A4D656 /* UIPullToReloadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPullToReloadHeaderView.m; sourceTree = "<group>"; };
@@ -933,8 +932,7 @@
 				A24790EE13EDBE2E0017574E /* View */,
 				A204B4D112FDD33600A4D656 /* PullToReload */,
 				024185C41E5239F6005167DE /* AboutViewController.swift */,
-				A204B32B12FD81C200A4D656 /* DropboxBrowserController.h */,
-				A204B32C12FD81C200A4D656 /* DropboxBrowserController.m */,
+				63B87DA21F834AEB005262FB /* DropboxBrowserController.swift */,
 				A2A2151212FF06BD007E055A /* EditDatabaseViewController.h */,
 				A2A2151312FF06BD007E055A /* EditDatabaseViewController.m */,
 				A2E5364A15DFFC2F00A2008E /* LoadingView.h */,
@@ -1368,9 +1366,9 @@
 				A2E5364C15DFFCA400A2008E /* LoadingView.m in Sources */,
 				A28D44A912F5C73D00A16865 /* SettingsViewController.m in Sources */,
 				A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */,
-				A204B32E12FD81C200A4D656 /* DropboxBrowserController.m in Sources */,
 				02647BBB1E527B3B009051F8 /* DropboxDatabase.swift in Sources */,
 				A204B47812FDD08B00A4D656 /* UIPullToReloadHeaderView.m in Sources */,
+				63B87DA31F834AEB005262FB /* DropboxBrowserController.swift in Sources */,
 				A204B47912FDD08B00A4D656 /* UIPullToReloadTableViewController.m in Sources */,
 				A2A2151512FF06BD007E055A /* EditDatabaseViewController.m in Sources */,
 				02647BBD1E5289FC009051F8 /* String+NSString.swift in Sources */,
