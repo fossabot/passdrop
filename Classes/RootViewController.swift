@@ -13,7 +13,7 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     var settingsView: SettingsViewController!
     var dbManager: DatabaseManager!
-    var dbRootView: DropboxBrowserController!
+    var dbRootView: DropboxBrowserController?
     var extraRows: Int = 0
     var loadingDb: Database!
     var alertMode: Int = 0
@@ -127,10 +127,10 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
         } else {
             if dbRootView == nil {
                 dbRootView = DropboxBrowserController(path: "/")
-                dbRootView.dbManager = dbManager
-                dbRootView.title = "Dropbox"
+                dbRootView!.dbManager = dbManager
+                dbRootView!.title = "Dropbox"
             }
-            navigationController?.pushViewController(dbRootView, animated: true)
+            navigationController?.pushViewController(dbRootView!, animated: true)
         }
     }
 
@@ -146,7 +146,7 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     func dropboxWasReset() {
         tableView.reloadData()
-        dbRootView.reset()
+        dbRootView?.reset()
     }
     
     func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {

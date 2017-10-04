@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objc(PassDropAppDelegate)
 class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate {
     var window: UIWindow?
     var navigationController: UINavigationController!
@@ -23,7 +24,7 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
     var hide: HideViewController!
     var rootView: RootViewController!
 
-    var settingsView: SettingsViewController!
+    var settingsView: SettingsViewController?
     
     // MARK: Application lifecycle
     
@@ -88,112 +89,102 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
         }
     }
     
-/*
-                    - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-                        if(alertView.tag == 1){
-                            if(buttonIndex == 0){
-                                [self userClosedPasswordModal:[dbManager activeDatabase]];
-                            } else {
-                                if([alertView textFieldAtIndex:0].text.length > 0){
-                                    if([dbManager.activeDatabase loadWithPassword:[alertView textFieldAtIndex:0].text]){
-                                        [self userUnlockedDatabase:[dbManager activeDatabase]];
-                                    } else {
-                                        UIAlertView* dialog = [[UIAlertView alloc] initWithTitle:@"Enter Password" message:@"Please try again." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Unlock", nil];
-                                        dialog.tag = 1;
-                                        dialog.alertViewStyle = UIAlertViewStyleSecureTextInput;
-                                        [dialog show];
-                                        [dialog release];
-                                    }
-                                } else {
-                                    UIAlertView* dialog = [[UIAlertView alloc] initWithTitle:@"Enter Password" message:@"You must enter the password." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Unlock", nil];
-                                    dialog.tag = 1;
-                                    dialog.alertViewStyle = UIAlertViewStyleSecureTextInput;
-                                    [dialog show];
-                                    [dialog release];
-                                }
-                            }
-                        }
-                        }
-                        
-                        - (void)userUnlockedDatabase:(id<Database>)database {
-                            if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
-                                [splitController dismissViewControllerAnimated:NO completion:nil];
-                            } else {
-                                if([navigationController topViewController] == hide){
-                                    [navigationController popViewControllerAnimated:NO];
-                                    [navigationController setNavigationBarHidden:NO];
-                                }
-                            }
-                            }
-                            
-                            - (void)userClosedPasswordModal:(id<Database>)database {
-                                if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
-                                    [(UINavigationController*)splitController.detailViewController popToRootViewControllerAnimated:NO];
-                                    [rootView.navigationController popToRootViewControllerAnimated:NO];
-                                    [rootView.navigationController.view setAlpha:1.0f];
-                                    [splitController dismissViewControllerAnimated:NO completion:nil];
-                                    dbManager.activeDatabase = nil;
-                                    [rootView removeLock:database];
-                                } else {
-                                    if([navigationController topViewController] == hide){
-                                        [navigationController popViewControllerAnimated:NO];
-                                        [navigationController setNavigationBarHidden:NO];
-                                    }
-                                    [navigationController popToRootViewControllerAnimated:NO];
-                                    dbManager.activeDatabase = nil;
-                                    [rootView removeLock:database];
-                                }
-                                }
-                                
-                                - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-                                    [settingsView updateSettingsUI];
-                                    if ([[DBSession sharedSession] handleOpenURL:url]) {
-                                        if ([[DBSession sharedSession] isLinked]) {
-                                            NSLog(@"App linked successfully!");
-                                            // At this point you can start making API calls
-                                        }
-                                        return YES;
-                                    }
-                                    // Add whatever other url handling code your app requires here
-                                    return NO;
-                                    }
-                                    
-                                    - (void)applicationDidBecomeActive:(UIApplication *)application {
-                                        /*
-                                         Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-                                         */
-                                        
-                                        if(bgTimer != nil){
-                                            NSTimeInterval diff = fabs([bgTimer timeIntervalSinceNow]);
-                                            //[navigationController dismissModalViewControllerAnimated:NO];
-                                            if(diff > prefs.lockInBackgroundSeconds){
-                                                UIAlertView* dialog = [[UIAlertView alloc] initWithTitle:@"Enter Password" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Unlock", nil];
-                                                dialog.tag = 1;
-                                                dialog.alertViewStyle = UIAlertViewStyleSecureTextInput;
-                                                [dialog show];
-                                                [dialog release];
-                                            } else {
-                                                if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
-                                                    [splitController dismissViewControllerAnimated:NO completion:nil];
-                                                } else {
-                                                    if([navigationController topViewController] == hide){
-                                                        [navigationController popViewControllerAnimated:NO];
-                                                        [navigationController setNavigationBarHidden:NO];
-                                                    }
-                                                }
-                                            }
-                                            [bgTimer release];
-                                            bgTimer = nil;
-                                        }
-                                        
-                                        if(prefs.autoClearClipboard == YES){
-                                            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                                            pasteboard.string = @"";
-                                        }
-                                        
-                                        [settingsView updateSettingsUI];
-                                        }
-                                        
-                                        
-*/
+    func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+        if alertView.tag == 1 {
+            if buttonIndex == 0 {
+                userClosedPasswordModal(dbManager.activeDatabase!)
+            } else {
+                if !alertView.textField(at: 0)!.text!.isEmpty {
+                    if dbManager.activeDatabase!.load(withPassword: alertView.textField(at: 0)!.text!) {
+                        userUnlockedDatabase(dbManager.activeDatabase!)
+                    } else {
+                        let dialog = UIAlertView(title: "Enter Password", message: "Please try again.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlock")
+                        dialog.tag = 1
+                        dialog.alertViewStyle = .secureTextInput
+                        dialog.show()
+                    }
+                } else {
+                    let dialog = UIAlertView(title: "Enter Password", message: "You must enter the password.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlock")
+                    dialog.tag = 1
+                    dialog.alertViewStyle = .secureTextInput
+                    dialog.show()
+                }
+            }
+        }
+    }
+
+    func userUnlockedDatabase(_ database: Database) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            splitController.dismiss(animated: false, completion: nil)
+        } else {
+            if navigationController.topViewController == hide {
+                navigationController.popViewController(animated: false)
+                navigationController.setNavigationBarHidden(false, animated: false)
+            }
+        }
+    }
+    
+    func userClosedPasswordModal(_ database: Database) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            (splitController.detailViewController as! UINavigationController).popToRootViewController(animated: false)
+            rootView.navigationController?.popToRootViewController(animated: false)
+            rootView.navigationController?.view.alpha = 1.0
+            splitController.dismiss(animated: false, completion: nil)
+            dbManager.activeDatabase = nil
+            rootView.removeLock(database)
+        } else {
+            if navigationController.topViewController == hide {
+                navigationController.popViewController(animated: false)
+                navigationController.setNavigationBarHidden(false, animated: false)
+            }
+            navigationController.popToRootViewController(animated: false)
+            dbManager.activeDatabase = nil
+            rootView.removeLock(database)
+        }
+    }
+
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+        settingsView?.updateSettingsUI()
+        if DBSession.shared().handleOpen(url) {
+            if DBSession.shared().isLinked() {
+                NSLog("App linked successfully!")
+                // At this point you can start making API calls
+            }
+            return true
+        }
+        // Add whatever other url handling code your app requires here
+        return false
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        /*
+         Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+         */
+        if bgTimer != nil {
+            let diff = fabs(bgTimer!.timeIntervalSinceNow)
+            //[navigationController dismissModalViewControllerAnimated:NO];
+            if diff > Double(prefs.lockInBackgroundSeconds) {
+                let dialog = UIAlertView(title: "Enter Password", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlock")
+                dialog.tag = 1
+                dialog.alertViewStyle = .secureTextInput
+                dialog.show()
+            } else {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    splitController.dismiss(animated: false, completion: nil)
+                } else {
+                    if navigationController.topViewController == hide {
+                        navigationController.popViewController(animated: false)
+                        navigationController.setNavigationBarHidden(false, animated: false)
+                    }
+                }
+            }
+            bgTimer = nil
+        }
+        
+        if prefs.autoClearClipboard {
+            UIPasteboard.general.string = ""
+        }
+
+        settingsView?.updateSettingsUI()
+    }
 }
