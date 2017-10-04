@@ -8,6 +8,7 @@
 
 import UIKit
 
+@UIApplicationMain
 @objc(PassDropAppDelegate)
 class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate {
     var window: UIWindow?

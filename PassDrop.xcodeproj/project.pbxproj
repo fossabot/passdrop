@@ -14,7 +14,6 @@
 		02647BBB1E527B3B009051F8 /* DropboxDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02647BBA1E527B3B009051F8 /* DropboxDatabase.swift */; };
 		02647BBD1E5289FC009051F8 /* String+NSString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02647BBC1E5289FC009051F8 /* String+NSString.swift */; };
 		02A43B881E54F2AD00358F45 /* Global+Private.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A43B871E54F2AD00358F45 /* Global+Private.swift */; };
-		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
@@ -279,7 +278,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* PassDrop_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDrop_Prefix.pch; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		630886D81E50EE7400C68EAE /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
 		63B87D891F81CC90005262FB /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -624,7 +622,6 @@
 			isa = PBXGroup;
 			children = (
 				28A0AAE50D9B0CCF005BE974 /* PassDrop_Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
 				024185DE1E524BCF005167DE /* Global.swift */,
 				02A43B871E54F2AD00358F45 /* Global+Private.swift */,
 			);
@@ -1369,7 +1366,6 @@
 				63B87D8A1F81CC90005262FB /* RootViewController.swift in Sources */,
 				A2A1B1AC15E0A52000AECF29 /* MGSplitViewController.m in Sources */,
 				A2E5364C15DFFCA400A2008E /* LoadingView.m in Sources */,
-				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				A28D44A912F5C73D00A16865 /* SettingsViewController.m in Sources */,
 				A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */,
 				A204B32E12FD81C200A4D656 /* DropboxBrowserController.m in Sources */,
