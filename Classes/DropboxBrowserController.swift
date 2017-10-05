@@ -15,7 +15,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, DBRestClientD
     var loadingView: LoadingView!
     var metadataHash: String?
     var dirContents: [DBMetadata]
-    var dirBrowsers: [IndexPath: DropboxBrowserController]
+    var dirBrowsers: [String: DropboxBrowserController]
     var tempDbId: String!
     var tempPath: String!
     var dbManager: DatabaseManager!
@@ -150,78 +150,68 @@ class DropboxBrowserController: UIPullToReloadTableViewController, DBRestClientD
     }
 
     /*
-            /*
-             // Override to support conditional editing of the table view.
-             - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-             // Return NO if you do not want the specified item to be editable.
-             return YES;
-             }
-             */
-            
-            
-            /*
-             // Override to support editing the table view.
-             - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-             
-             if (editingStyle == UITableViewCellEditingStyleDelete) {
-             // Delete the row from the data source.
-             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-             }
-             else if (editingStyle == UITableViewCellEditingStyleInsert) {
-             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-             }
-             }
-             */
-            
-            
-            /*
-             // Override to support rearranging the table view.
-             - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-             }
-             */
-            
-            
-            - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-                return YES;
-}
+     // Override to support conditional editing of the table view.
+     - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+     // Return NO if you do not want the specified item to be editable.
+     return YES;
+     }
+     */
 
--(UIInterfaceOrientationMask)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAll;
-}
-
--(BOOL)shouldAutorotate{
-    return YES;
-}
-
-
-#pragma mark -
-#pragma mark Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DBMetadata *cellData = [dirContents objectAtIndex:[indexPath row]];
-    if(cellData.isDirectory){
-        if([dirBrowsers objectForKey:cellData.path] == nil){
-            DropboxBrowserController *dirBrowser = [[[DropboxBrowserController alloc] initWithPath:cellData.path] autorelease];
-            dirBrowser.dbManager = dbManager;
-            dirBrowser.title = [cellData.path lastPathComponent];
-            [dirBrowsers setValue:dirBrowser forKey:cellData.path];
-        }
-        [self.navigationController pushViewController:[dirBrowsers objectForKey:cellData.path] animated:YES];
-    } else {
-        //if([cellData.path hasSuffix:@".kdb"]){
-        if([dbManager databaseExists:[dbManager getIdentifierForDatabase:cellData.path]]){
-            [self alertMessage:@"That database has already been added. You cannot add the same database more than once." withTitle:@"Oops!"];
-        } else {
-            NSString *localFile = [dbManager getLocalFilenameForDatabase:[dbManager getIdentifierForDatabase:cellData.path] forNewFile:YES];
-            [self networkRequestStarted];
-            self.tempDbId = [NSString stringWithString:cellData.path];
-            [restClient loadFile:cellData.path intoPath:localFile];
-        }
-        //}
+    /*
+     // Override to support editing the table view.
+     - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+     
+     if (editingStyle == UITableViewCellEditingStyleDelete) {
+     // Delete the row from the data source.
+     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+     }
+     else if (editingStyle == UITableViewCellEditingStyleInsert) {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+     }
+     }
+     */
+    
+    
+    /*
+     // Override to support rearranging the table view.
+     - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+     }
+     */
+    
+    override var shouldAutorotate: Bool {
+        return true
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-*/
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
+    // MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellData = dirContents[indexPath.row]
+        if cellData.isDirectory {
+            if dirBrowsers[cellData.path] == nil {
+                let dirBrowser = DropboxBrowserController(path: cellData.path)
+                dirBrowser.dbManager = dbManager
+                dirBrowser.title = cellData.path.lastPathComponent
+                dirBrowsers[cellData.path] = dirBrowser
+            }
+            navigationController?.pushViewController(dirBrowsers[cellData.path]!, animated: true)
+        } else {
+            //if([cellData.path hasSuffix:@".kdb"]){
+            if dbManager.databaseExists(dbManager.getIdentifierForDatabase(cellData.path)) {
+                alertMessage("That database has already been added. You cannot add the same database more than once.", withTitle: "Oops!")
+            } else {
+                let localFile = dbManager.getLocalFilenameForDatabase(dbManager.getIdentifierForDatabase(cellData.path), forNewFile: true)
+                networkRequestStarted()
+                tempDbId = cellData.path
+                restClient.loadFile(cellData.path, intoPath: localFile)
+            }
+            //}
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
     // MARK: Dropbox/RestClient
     func setWorking(_ working: Bool) {
