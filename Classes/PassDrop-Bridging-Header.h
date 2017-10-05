@@ -13,6 +13,5 @@
 #import "KdbReader.h"
 #import "KdbWriter.h"
 #import "UIPullToReloadTableViewController.h"
-#import "NewDatabaseViewController.h"
 
 #import <DropboxSDK/DropboxSDK.h>

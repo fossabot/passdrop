@@ -21,6 +21,7 @@
 		63B87D8A1F81CC90005262FB /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D891F81CC90005262FB /* RootViewController.swift */; };
 		63B87D921F8211C2005262FB /* PassDropAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */; };
 		63B87DA31F834AEB005262FB /* DropboxBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87DA21F834AEB005262FB /* DropboxBrowserController.swift */; };
+		63B87D9D1F8348C7005262FB /* NewDatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */; };
 		A2001E8413C0C6DC00DD42EA /* ParentGroupPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A2001E8313C0C6DC00DD42EA /* ParentGroupPicker.m */; };
 		A204B32F12FD81C200A4D656 /* DropboxBrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A204B32D12FD81C200A4D656 /* DropboxBrowserController.xib */; };
 		A204B47812FDD08B00A4D656 /* UIPullToReloadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A204B47512FDD08B00A4D656 /* UIPullToReloadHeaderView.m */; };
@@ -38,7 +39,6 @@
 		A24790F413EE3EF20017574E /* IconPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A24790F313EE3EF10017574E /* IconPicker.m */; };
 		A24790F713EF2C480017574E /* KdbWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A24790F613EF2C470017574E /* KdbWriter.m */; };
 		A24C3660141E3DDE001BB5D3 /* template.kdb in Resources */ = {isa = PBXBuildFile; fileRef = A24C365F141E3DDE001BB5D3 /* template.kdb */; };
-		A24C3663141E3F9C001BB5D3 /* NewDatabaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A24C3662141E3F9B001BB5D3 /* NewDatabaseViewController.m */; };
 		A24F371C130360CB00A4AF66 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24F3691130360CB00A4AF66 /* 0@2x.png */; };
 		A24F371D130360CB00A4AF66 /* 10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24F3692130360CB00A4AF66 /* 10@2x.png */; };
 		A24F371E130360CB00A4AF66 /* 11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24F3693130360CB00A4AF66 /* 11@2x.png */; };
@@ -283,6 +283,7 @@
 		63B87D891F81CC90005262FB /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
 		63B87DA21F834AEB005262FB /* DropboxBrowserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxBrowserController.swift; sourceTree = "<group>"; };
+		63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDatabaseViewController.swift; sourceTree = "<group>"; };
 		6DD326A21A9D5B6DDFFAF4F6 /* Pods-PassDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PassDrop.release.xcconfig"; path = "Pods/Target Support Files/Pods-PassDrop/Pods-PassDrop.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* PassDrop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PassDrop-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A2001E8213C0C6DB00DD42EA /* ParentGroupPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentGroupPicker.h; sourceTree = "<group>"; };
@@ -309,8 +310,6 @@
 		A24790F513EF2C470017574E /* KdbWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KdbWriter.h; sourceTree = "<group>"; };
 		A24790F613EF2C470017574E /* KdbWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KdbWriter.m; sourceTree = "<group>"; };
 		A24C365F141E3DDE001BB5D3 /* template.kdb */ = {isa = PBXFileReference; lastKnownFileType = file; path = template.kdb; sourceTree = "<group>"; };
-		A24C3661141E3F9B001BB5D3 /* NewDatabaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewDatabaseViewController.h; sourceTree = "<group>"; };
-		A24C3662141E3F9B001BB5D3 /* NewDatabaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NewDatabaseViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		A24F3691130360CB00A4AF66 /* 0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "0@2x.png"; sourceTree = "<group>"; };
 		A24F3692130360CB00A4AF66 /* 10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10@2x.png"; sourceTree = "<group>"; };
 		A24F3693130360CB00A4AF66 /* 11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11@2x.png"; sourceTree = "<group>"; };
@@ -939,8 +938,7 @@
 				A2E5364B15DFFC2F00A2008E /* LoadingView.m */,
 				A24F3B3C1306CB3800A4AF66 /* NetworkActivityViewController.h */,
 				A24F3B3D1306CB3900A4AF66 /* NetworkActivityViewController.m */,
-				A24C3661141E3F9B001BB5D3 /* NewDatabaseViewController.h */,
-				A24C3662141E3F9B001BB5D3 /* NewDatabaseViewController.m */,
+				63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */,
 				63B87D891F81CC90005262FB /* RootViewController.swift */,
 				A28D44A612F5C73D00A16865 /* SettingsViewController.h */,
 				A28D44A712F5C73D00A16865 /* SettingsViewController.m */,
@@ -1363,6 +1361,7 @@
 				A2A1B1AB15E0A52000AECF29 /* MGSplitDividerView.m in Sources */,
 				63B87D8A1F81CC90005262FB /* RootViewController.swift in Sources */,
 				A2A1B1AC15E0A52000AECF29 /* MGSplitViewController.m in Sources */,
+				63B87D9D1F8348C7005262FB /* NewDatabaseViewController.swift in Sources */,
 				A2E5364C15DFFCA400A2008E /* LoadingView.m in Sources */,
 				A28D44A912F5C73D00A16865 /* SettingsViewController.m in Sources */,
 				A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */,
@@ -1391,7 +1390,6 @@
 				A20B81B6140DB8FE004E3449 /* EditEntryViewController.m in Sources */,
 				A286D2D214198B9200B30F79 /* GeneratePasswordViewController.m in Sources */,
 				A2961322141D8C3B004E538E /* SyncButtonView.m in Sources */,
-				A24C3663141E3F9C001BB5D3 /* NewDatabaseViewController.m in Sources */,
 				A2620E9E15F3134900C27040 /* HideViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
