@@ -1,3 +1,5 @@
+import SwiftyDropbox
+
 fileprivate enum Mode: Int {
     case none = 0
     case loadingLockFile = 1
@@ -12,8 +14,8 @@ extension Error {
     }
 }
 
-class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
-    let restClient: DBRestClient
+class DropboxDatabase: NSObject, Database {
+    let dropboxClient: DropboxClient
     var localPath: String!
     var identifier: String!
     var name: String!
@@ -31,12 +33,13 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     var rev: String?
 
     private var mode = Mode.none
-    private var tempMeta: DBMetadata!
 
     override init() {
-        restClient = DBRestClient(session: DBSession.shared())
+        guard let dbClient = DropboxClientsManager.authorizedClient else {
+            fatalError("DropboxDatabase needs an authorized client")
+        }
+        dropboxClient = dbClient
         super.init()
-        restClient.delegate = self
     }
 
     deinit {
@@ -78,7 +81,18 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
 
     func lockForEditing() {
         mode = .loadingLockFile
-        restClient.loadMetadata(location() + ".lock")
+        dropboxClient.files.getMetadata(
+            path: location() + ".lock",
+            includeMediaInfo: false,
+            includeDeleted: true,
+            includeHasExplicitSharedMembers: false
+        ).response { [weak self] response, error in
+            if let response = response {
+                self?.restClient(loadedMetadata: response)
+            } else if let error = error {
+                self?.restClient(loadMetadataFailedWithError: error)
+            }
+        }
     }
 
     func rootGroup() -> KdbGroup {
@@ -88,33 +102,58 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
     func uploadLockFile() {
         let dataPath = DatabaseManager.dataPath
         let fileManager = FileManager()
-        let fname = location().lastPathComponent + ".lock"
         let localLock = dataPath.appendingPathComponent("lock")
         if !fileManager.fileExists(atPath: localLock) {
             fileManager.createFile(atPath: localLock, contents: Data(), attributes: nil)
         }
 
         mode = .loadingLockFile
-        restClient.uploadFile(fname, toPath:location().deletingLastPathComponent, fromPath: localLock)
+        dropboxClient.files.upload(path: location() + ".lock", input: URL(fileURLWithPath: localLock)).response {
+            [weak self] response, error in
+            if let _ = response {
+                self?.restClient(uploadedFile: ())
+            } else if let error = error {
+                self?.restClient(uploadFileFailedWithError: error)
+            }
+        }
     }
 
     func removeLock() {
-        restClient.deletePath(location() + ".lock")
+        dropboxClient.files.delete(path: location() + ".lock").response { [weak self] response, error in
+            if let _ = response {
+                self?.restClient(deletedPath: ())
+            } else if let error = error {
+                self?.restClient(deletePathFailedWithError: error)
+            }
+        }
     }
 
     func update() {
-        // get metedata for last modified date
+        // get metadata for last modified date
         mode = .loadingDBFile
         let fm = FileManager()
         isDirty = fm.fileExists(atPath: (localPath as NSString).appendingPathExtension("tmp")!)
-        restClient.loadMetadata(location())
+        dropboxClient.files.getMetadata(path: location()).response { [weak self] response, error in
+            if let response = response {
+                self?.restClient(loadedMetadata: response)
+            } else if let error = error {
+                self?.restClient(loadMetadataFailedWithError: error)
+            }
+        }
     }
 
     func upload() {
         let fileManager = FileManager()
         let newDb = localPath.appendingPathExtension("tmp")!
         if fileManager.fileExists(atPath: newDb) {
-            restClient.uploadFile(location().lastPathComponent, toPath: location().deletingLastPathComponent, fromPath: newDb)
+            dropboxClient.files.upload(path: location(), input: URL(fileURLWithPath: newDb)).response {
+                [weak self] response, error in
+                if let _ = response {
+                    self?.restClient(uploadedFile: ())
+                } else if let error = error {
+                    self?.restClient(uploadFileFailedWithError: error)
+                }
+            }
         } else {
             savingDelegate.database?(self, saveFailedWithReason: "The modified database could not be found.")
         }
@@ -124,7 +163,13 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
         if !force {
             // check if we're overwriting other changes
             mode = .sendingDBFile
-            restClient.loadMetadata(location())
+            dropboxClient.files.getMetadata(path: location()).response { [weak self] response, error in
+                if let response = response {
+                    self?.restClient(loadedMetadata: response)
+                } else if let error = error {
+                    self?.restClient(loadMetadataFailedWithError: error)
+                }
+            }
         } else {
             mode = .sendingDBFile
             upload()
@@ -196,45 +241,56 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
 
     // MARK: DBRestClientDelegate
 
-    func restClient(_ client: DBRestClient, loadedMetadata metadata: DBMetadata) {
+    func restClient(loadedMetadata metadata: Files.Metadata) {
         switch mode {
         case .none:
             break
         case .loadingLockFile:
-            if !metadata.isDeleted {
-                delegate.databaseWasAlreadyLocked?(self)
-            } else {
+            if let _ = metadata as? Files.DeletedMetadata {
                 uploadLockFile()
+            } else {
+                delegate.databaseWasAlreadyLocked?(self)
             }
         case .loadingDBFile:
-            if !metadata.isDeleted {
-                if self.rev != metadata.rev {
+            if let _ = metadata as? Files.DeletedMetadata {
+                delegate.databaseWasDeleted?(self)
+            } else if let fileMetadata = metadata as? Files.FileMetadata {
+                if self.rev != fileMetadata.rev {
                     if self.isDirty {
                         delegate.databaseUpdateWouldOverwriteChanges?(self)
                     } else {
                         // need to download newer revision
-                        tempMeta = metadata
-                        restClient.loadFile(location(), intoPath: localPath)
+                        let destURL = URL(fileURLWithPath: localPath)
+                        let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
+                            return destURL
+                        }
+                        dropboxClient.files.download(path: location(), overwrite: true, destination: destination).response {
+                            [weak self] response, error in
+                            if let _ = response {
+                                self?.restClient(loadedFile: fileMetadata)
+                            } else if let error = error {
+                                self?.restClient(loadFileFailedWithError: error)
+                            }
+                        }
+                        //dropboxClient.loadFile(location(), intoPath: localPath)
                     }
                 } else {
                     // already have latest revision
                     delegate.databaseUpdateComplete?(self)
                 }
-            } else {
-                delegate.databaseWasDeleted?(self)
             }
         case .sendingDBFile:
-            if !metadata.isDeleted {
-                if self.rev != metadata.rev {
+            if let _ = metadata as? Files.DeletedMetadata {
+                savingDelegate.databaseWasDeleted?(self)
+            } else if let fileMetadata = metadata as? Files.FileMetadata {
+                if self.rev != fileMetadata.rev {
                     savingDelegate.databaseSyncWouldOverwriteChanges?(self)
                 } else {
                     self.upload()
                 }
-            } else {
-                savingDelegate.databaseWasDeleted?(self)
             }
         case .updatingDBRevision:
-            self.rev = metadata.rev
+            self.rev = (metadata as? Files.FileMetadata)?.rev
             self.isDirty = false
             self.lastSynced = Date()
             dbManager.updateDatabase(self)
@@ -242,31 +298,30 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
         }
     }
 
-    func restClient(_ client: DBRestClient!, loadMetadataFailedWithError error: Error!) {
-        let err = error as NSError
+    func restClient(loadMetadataFailedWithError error: CallError<Files.GetMetadataError>) {
         switch mode {
         case .none:
             break
         case .loadingLockFile:
-            if err.code == 404 {
-                self.uploadLockFile()
-            } else {
-                let msg = error.errorMsg ?? "There was an error locking the database."
-                delegate.database?(self, failedToLockWithReason: msg)
+            switch error {
+            case .routeError(let lookupErrorBox, /*userMessage*/_, /*errorSummary*/_, /*requestId*/_):
+                if case .path(.notFound) = lookupErrorBox.unboxed {
+                    self.uploadLockFile()
+                    return
+                }
+            default:
+                delegate.database?(self, failedToLockWithReason: error.description)
             }
         case .loadingDBFile:
-            let msg = error.errorMsg ?? "There was an error updating the database."
-            delegate.database?(self, updateFailedWithReason: msg)
+            delegate.database?(self, updateFailedWithReason: error.description)
         case .sendingDBFile:
-            let msg = error.errorMsg ?? "There was an error uploading the database."
-            savingDelegate.database?(self, syncFailedWithReason: msg)
+            savingDelegate.database?(self, syncFailedWithReason: error.description)
         case .updatingDBRevision:
-            let msg = error.errorMsg ?? "The database was uploaded to Dropbox, but there was an error retrieving the revision number afterwards.";
-            savingDelegate.database?(self, syncFailedWithReason: msg)
+            savingDelegate.database?(self, syncFailedWithReason: error.description)
         }
     }
-
-    func restClient(_ client: DBRestClient!, uploadedFile destPath: String!, from srcPath: String!) {
+    
+    func restClient(uploadedFile: ()) {
         switch mode {
         case .loadingLockFile:
             delegate.databaseWasLocked?(forEditing: self)
@@ -279,7 +334,13 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
                 try fm.removeItem(atPath: tmpFile)
 
                 mode = .updatingDBRevision
-                restClient.loadMetadata(location())
+                dropboxClient.files.getMetadata(path: location()).response { [weak self] response, error in
+                    if let response = response {
+                        self?.restClient(loadedMetadata: response)
+                    } else if let error = error {
+                        self?.restClient(loadMetadataFailedWithError: error)
+                    }
+                }
             }
             catch {
                 savingDelegate.database?(self, syncFailedWithReason: "The database was uploaded successfully, but a filesystem error prevented the local copy from being updated.")
@@ -289,44 +350,39 @@ class DropboxDatabase: NSObject, Database, DBRestClientDelegate {
         }
     }
 
-    func restClient(_ client: DBRestClient!, uploadFileFailedWithError error: Error!) {
+    func restClient(uploadFileFailedWithError error: CallError<Files.UploadError>) {
         switch mode {
         case .loadingLockFile:
-            let msg = error.errorMsg ?? "There was an error uploading the lock file."
-            delegate.database?(self, failedToLockWithReason: msg)
+            delegate.database?(self, failedToLockWithReason: error.description)
         case .sendingDBFile:
-            let msg = error.errorMsg ?? "There was an error uploading the database file."
-            savingDelegate.database?(self, syncFailedWithReason: msg)
+            savingDelegate.database?(self, syncFailedWithReason: error.description)
         default:
             break
         }
     }
 
-    func restClient(_ client: DBRestClient!, deletedPath path: String!) {
+    func restClient(deletedPath path: ()) {
         delegate.databaseLockWasRemoved?(self)
     }
 
-    func restClient(_ client: DBRestClient!, deletePathFailedWithError error: Error!) {
-        let msg = error.errorMsg ?? "There was an error removing the lock file."
-        delegate.database?(self, failedToRemoveLockWithReason: msg)
+    func restClient(deletePathFailedWithError error: CallError<Files.DeleteError>) {
+        delegate.database?(self, failedToRemoveLockWithReason: error.description)
     }
-
-    func restClient(_ client: DBRestClient!, loadedFile destPath: String!) {
+ 
+    func restClient(loadedFile metadata: Files.FileMetadata) {
         if mode == .loadingDBFile {
             // update local metadata
-            self.rev = tempMeta.rev
-            self.lastModified = tempMeta.lastModifiedDate
+            self.rev = metadata.rev
+            self.lastModified = metadata.serverModified
             self.lastSynced = Date()
             dbManager.updateDatabase(self)
             delegate.databaseUpdateComplete?(self)
         }
     }
 
-    func restClient(_ client: DBRestClient!, loadFileFailedWithError error: Error!) {
+    func restClient(loadFileFailedWithError error: CallError<Files.DownloadError>) {
         if mode == .loadingDBFile { // loading latest revision
-            tempMeta = nil
-            let msg = error.errorMsg ?? "There was an error removing the lock file."
-            delegate.database?(self, updateFailedWithReason: msg)
+            delegate.database?(self, updateFailedWithReason: error.description)
         }
     }
 
