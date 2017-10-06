@@ -15,7 +15,6 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
     var navigationController: UINavigationController!
     var splitController: MGSplitViewController!
 
-    var dbSession: DBSession!
     var prefs: AppPrefs!
     var dbManager: DatabaseManager!
 
