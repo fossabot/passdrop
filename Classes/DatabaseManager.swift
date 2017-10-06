@@ -1,3 +1,5 @@
+import SwiftyDropbox
+
 let kDatabaseName = "name"
 let kDatabaseId = "id"
 let kDatabaseLocalPath = "path"
@@ -44,7 +46,7 @@ class DatabaseManager: NSObject {
 
         self.databases = NSKeyedUnarchiver.unarchiveObject(withFile: configFile) as? [[String: Any]] ?? []
 
-        if !DBSession.shared().isLinked() && databases.count > 0 {
+        if DropboxClientsManager.authorizedClient != nil && databases.count > 0 {
             self.dropboxWasReset()
         }
     }

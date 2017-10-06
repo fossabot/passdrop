@@ -13,8 +13,8 @@ protocol NewDatabaseDelegate {
     func newDatabaseCreated(_ path: String) -> Void
 }
 
-class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, DBRestClientDelegate {
-    var restClient: DBRestClient!
+class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+    var restClient: DropboxClient!
     var dbName: String = ""
     var password: String!
     var verifyPassword: String!

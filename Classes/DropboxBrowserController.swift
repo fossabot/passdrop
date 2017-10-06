@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
-class DropboxBrowserController: UIPullToReloadTableViewController, DBRestClientDelegate, NewDatabaseDelegate {
-    var restClient: DBRestClient!
+class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDelegate {
+    var dropboxClient: DropboxClient!
     var myPath: String
     var isLoaded = false
     var loadingView: LoadingView!
     var metadataHash: String?
-    var dirContents: [DBMetadata]
+    var dirContents: [Files.Metadata]
     var dirBrowsers: [String: DropboxBrowserController]
     var tempDbId: String!
     var tempPath: String!
@@ -44,7 +45,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, DBRestClientD
         navigationController?.pushViewController(ndbvc, animated: true)
     }
     
-    func newDatabaseCreated(_ path: String!) {
+    func newDatabaseCreated(_ path: String) {
         let localFile = dbManager.getLocalFilenameForDatabase(dbManager.getIdentifierForDatabase(path), forNewFile: true)
         networkRequestStarted()
         tempDbId = path
