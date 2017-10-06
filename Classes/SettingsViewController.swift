@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, UIAlertViewDelegate {
     @IBOutlet var settingsTable: UITableView!
     var autoClearSwitch: UISwitch!
     var ignoreBackupSwitch: UISwitch!
@@ -87,271 +87,227 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UIActionShe
         app.prefs.save()
     }
 
-    /*
-#pragma mark -
-#pragma mark dropbox delegate
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-
--(UIInterfaceOrientationMask)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAll;
-}
-
--(BOOL)shouldAutorotate{
-    return YES;
-}
-
-#pragma mark -
-#pragma mark table delegate
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
-    return 3;
+    // MARK: dropbox delegate
+    
+    override var shouldAutorotate: Bool {
+        return true
     }
     
-    - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section {
-        switch (section) {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
+    // MARK: table delegate
+   
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
         case 0:
-            return @"Database Sources";
+            return "Database Sources"
+        case 1:
+            return "PassDrop Settings"
+        case 2:
+            return nil
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0: return 1
+        case 1: return 4
+        case 2: return 1
+        default: return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var actionSheet: UIActionSheet?
+        switch indexPath.section {
+        case 0:
+            dbButtonClicked()
             break;
         case 1:
-            return @"PassDrop Settings";
-            break;
-        case 2:
-            return nil;
-            break;
-        default:
-            break;
-        }
-        return nil;
-        }
-        
-        - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section {
-            switch (section) {
+            switch indexPath.row {
+            case 2:
+                // clear clipboard
+                break;
             case 0:
-                return 1;
+                // lock in background
+                pickerViewMode = 1
+                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Immediately", "10 secs", "30 secs", "1 min", "5 mins", "10 mins", "30 mins", "1 hour", "2 hours", "Never")
+                //[actionSheet showInView:self.view];
+                actionSheet?.show(from: tableView.cellForRow(at: indexPath)!.frame, in: view, animated: true)
                 break;
             case 1:
-                return 4;
+                pickerViewMode = 2
+                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Writable", "Read Only", "Always Ask")
+                //[actionSheet showInView:self.view];
+                actionSheet?.show(from: tableView.cellForRow(at: indexPath)!.frame, in: view, animated: true)
                 break;
-            case 2:
-                return 1;
+            case 4:
+                // ignore backups
                 break;
             default:
                 break;
             }
-            return 0;
-            }
-            
-            - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
-                UIActionSheet *actionSheet;
-                switch ([indexPath section]) {
-                case 0:
-                    [self dbButtonClicked];
-                    break;
-                case 1:
-                    switch ([indexPath row]) {
-                    case 2:
-                        // clear clipboard
-                        break;
-                    case 0:
-                        // lock in background
-                        pickerViewMode = 1;
-                        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Immediately", @"10 secs", @"30 secs", @"1 min", @"5 mins", @"10 mins", @"30 mins", @"1 hour", @"2 hours", @"Never", nil];
-                        //[actionSheet showInView:self.view];
-                        [actionSheet showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:self.view animated:YES];
-                        [actionSheet release];
-                        break;
-                    case 1:
-                        pickerViewMode = 2;
-                        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Writable", @"Read Only", @"Always Ask", nil];
-                        //[actionSheet showInView:self.view];
-                        [actionSheet showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:self.view animated:YES];
-                        [actionSheet release];
-                        break;
-                    case 4:
-                        // ignore backups
-                        break;
-                    default:
-                        break;
-                    }
-                    break;
-                case 2:
-                    // show about screen
-                    [[self navigationController] pushViewController:aboutView animated:YES];
-                    break;
-                default:
-                    break;
-                }
-                
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark -
-#pragma mark table data source
-
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath {
-    static NSString *cellIdentifier = @"Cell";
-    static NSString *switchCellIdentifier = @"SwitchCell";
-    static NSString *valueCellIdentifier = @"ValueCell";
-    
-    UITableViewCell *cell;
-    PassDropAppDelegate *app = (PassDropAppDelegate*)[[UIApplication sharedApplication] delegate];
-    
-    if(indexPath.section == 0 || (indexPath.section == 1 && indexPath.row < 2)){
-        cell = [tableView dequeueReusableCellWithIdentifier:valueCellIdentifier];
-        if(cell == nil){
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:valueCellIdentifier] autorelease];
-        }
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        if(indexPath.section == 0){
-            cell.textLabel.text = @"Dropbox";
-            if([[DBSession sharedSession] isLinked]){
-                cell.detailTextLabel.text = @"Linked";
-            } else {
-                cell.detailTextLabel.text = @"Not Linked";
-            }
-        } else {
-            switch ([indexPath row]) {
-            case 0:
-                cell.textLabel.text = @"Lock In Background";
-                cell.detailTextLabel.text = [self convertSecondsToString:app.prefs.lockInBackgroundSeconds];
-                break;
-            case 1:
-                cell.textLabel.text = @"Open Databases";
-                cell.detailTextLabel.text = [self openModeStringForMode:app.prefs.databaseOpenMode];
-                break;
-            }
-        }
-    } else if(indexPath.section == 1 && (indexPath.row == 2 || indexPath.row == 3)){
-        cell = [tableView dequeueReusableCellWithIdentifier:switchCellIdentifier];
-        if(cell == nil){
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:switchCellIdentifier] autorelease];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        if(indexPath.row == 2){
-            cell.textLabel.text = @"Auto-Clear Clipboard";
-            cell.accessoryView = autoClearSwitch;
-        } else {
-            cell.textLabel.text = @"Search Ignores Backup";
-            cell.accessoryView = ignoreBackupSwitch;
-        }
-    } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if(cell == nil){
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
-        }
-        cell.textLabel.text = @"About PassDrop";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
-    return cell;
-}
-
-#pragma mark -
-#pragma mark pref data conversion helpers
-
-- (NSString*)openModeStringForMode:(int)openMode {
-    switch (openMode) {
-    case kOpenModeWritable:
-        return @"Writable";
-        break;
-    case kOpenModeReadOnly:
-        return @"Read Only";
-        break;
-    case kOpenModeAlwaysAsk:
-        return @"Always Ask";
-        break;
-    }
-    return nil;
-    }
-    
-    - (int)convertArrayTimesIndexToSeconds:(int)index {
-        switch(index){
-        case 0:
-            return 0;
-            break;
-        case 1:
-            return 10;
             break;
         case 2:
-            return 30;
+            // show about screen
+            navigationController?.pushViewController(aboutView, animated: true)
             break;
-        case 3:
-            return 60;
-            break;
-        case 4:
-            return 300;
-            break;
-        case 5:
-            return 600;
-            break;
-        case 6:
-            return 1800;
-            break;
-        case 7:
-            return 3600;
-            break;
-        case 8:
-            return 7200;
+        default:
             break;
         }
-        return -1;
+
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // MARK: table data source
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        struct Static {
+            static let cellIdentifier = "Cell"
+            static let switchCellIdentifier = "SwitchCell"
+            static let valueCellIdentifier = "ValueCell"
         }
         
-        - (NSString*)convertSecondsToString:(int)seconds {
-            switch(seconds){
-            case -1:
-                return @"Never";
-                break;
-            case 0:
-                return @"Immediately";
-                break;
-            case 10:
-                return @"10 secs";
-                break;
-            case 30:
-                return @"30 secs";
-                break;
-            case 60:
-                return @"1 min";
-                break;
-            case 300:
-                return @"5 mins";
-                break;
-            case 600:
-                return @"10 mins";
-                break;
-            case 1800:
-                return @"30 mins";
-                break;
-            case 3600:
-                return @"1 hour";
-                break;
-            case 7200:
-                return @"2 hours";
-                break;
+        var cell: UITableViewCell!
+        let app = UIApplication.shared.delegate as! PassDropAppDelegate
+        
+        if indexPath.section == 0 || (indexPath.section == 1 && indexPath.row < 2) {
+            cell = tableView.dequeueReusableCell(withIdentifier: Static.valueCellIdentifier)
+            if cell == nil {
+                cell = UITableViewCell(style: .value1, reuseIdentifier: Static.valueCellIdentifier)
             }
-            return [NSString stringWithFormat:@"%d secs", seconds];
-}
+            cell.accessoryType = .none
+            if indexPath.section == 0 {
+                cell.textLabel?.text = "Dropbox"
+                if DBSession.shared().isLinked() {
+                    cell.detailTextLabel?.text = "Linked"
+                } else {
+                    cell.detailTextLabel?.text = "Not Linked"
+                }
+            } else {
+                switch indexPath.row {
+                case 0:
+                    cell.textLabel?.text = "Lock In Background"
+                    cell.detailTextLabel?.text = convertSecondsToString(app.prefs.lockInBackgroundSeconds)
+                    break;
+                case 1:
+                    cell.textLabel?.text = "Open Databases"
+                    cell.detailTextLabel?.text = openModeStringForMode(app.prefs.databaseOpenMode)
+                    break;
+                default:
+                    fatalError("unexpected")
+                }
+            }
+        } else if indexPath.section == 1 && (indexPath.row == 2 || indexPath.row == 3) {
+            cell = tableView.dequeueReusableCell(withIdentifier: Static.switchCellIdentifier)
+            if cell == nil {
+                cell = UITableViewCell(style: .default, reuseIdentifier: Static.switchCellIdentifier)
+                cell.selectionStyle = .none
+            }
+            if indexPath.row == 2 {
+                cell.textLabel?.text = "Auto-Clear Clipboard"
+                cell.accessoryView = autoClearSwitch
+            } else {
+                cell.textLabel?.text = "Search Ignores Backup"
+                cell.accessoryView = ignoreBackupSwitch
+            }
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: Static.cellIdentifier)
+            if cell == nil {
+                cell = UITableViewCell(style: .default, reuseIdentifier: Static.cellIdentifier)
+            }
+            cell.textLabel?.text = "About PassDrop"
+            cell.accessoryType = .disclosureIndicator
+        }
+        
+        return cell
+    }
 
-#pragma mark -
-#pragma mark picker view stuff
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    PassDropAppDelegate *app = (PassDropAppDelegate*)[[UIApplication sharedApplication] delegate];
-    if(pickerViewMode == 1 && buttonIndex < 10){
-        app.prefs.lockInBackgroundSeconds = [self convertArrayTimesIndexToSeconds:buttonIndex];
-    } else {
-        if(buttonIndex < 3){
-            app.prefs.databaseOpenMode = buttonIndex;
+    // MARK: pref data conversion helpers
+    
+    func openModeStringForMode(_ openMode: Int32) -> String? {
+        switch openMode {
+        case kOpenModeWritable: return "Writable"
+        case kOpenModeReadOnly: return "Read Only"
+        case kOpenModeAlwaysAsk: return "Always Ask"
+        default: return nil
         }
     }
-    [app.prefs savePrefs];
-    [self updateSettingsUI];
-}
 
-*/
+    func convertArrayTimesIndexToSeconds(_ index: Int) -> Int32 {
+        switch index {
+        case 0:
+            return 0;
+        case 1:
+            return 10;
+        case 2:
+            return 30;
+        case 3:
+            return 60;
+        case 4:
+            return 300;
+        case 5:
+            return 600;
+        case 6:
+            return 1800;
+        case 7:
+            return 3600;
+        case 8:
+            return 7200;
+        default:
+            return -1
+        }
+    }
+    
+    func convertSecondsToString(_ seconds: Int32) -> String {
+        switch seconds {
+        case -1:
+            return "Never";
+        case 0:
+            return "Immediately";
+        case 10:
+            return "10 secs";
+        case 30:
+            return "30 secs";
+        case 60:
+            return "1 min";
+        case 300:
+            return "5 mins";
+        case 600:
+            return "10 mins";
+        case 1800:
+            return "30 mins";
+        case 3600:
+            return "1 hour";
+        case 7200:
+            return "2 hours";
+        default:
+            return String(format: "%d secs", seconds)
+        }
+    }
 
+    // MARK: picker view stuff
+   
+    func actionSheet(_ actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex_: Int) {
+        let buttonIndex = buttonIndex_ - 1 // some kind of swift thing maybe
+        let app = UIApplication.shared.delegate as! PassDropAppDelegate
+        if pickerViewMode == 1 && buttonIndex < 10 {
+            app.prefs.lockInBackgroundSeconds = convertArrayTimesIndexToSeconds(buttonIndex)
+        } else {
+            if buttonIndex < 3 {
+                app.prefs.databaseOpenMode = Int32(buttonIndex)
+            }
+        }
+        app.prefs.save()
+        updateSettingsUI()
+    }
+    
 }
