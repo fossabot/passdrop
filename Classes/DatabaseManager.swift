@@ -5,7 +5,7 @@ let kDatabaseId = "id"
 let kDatabaseLocalPath = "path"
 let kDatabaseLastModified = "lastmod"
 let kDatabaseLastSynced = "synced"
-let kDatabaseRevision = "rev"
+let kDatabaseRev = "rev"
 
 @objc
 class DatabaseManager: NSObject {
@@ -86,13 +86,13 @@ class DatabaseManager: NSObject {
         return (dataPath as NSString).appendingPathComponent(fileName)
     }
 
-    func createNewDatabaseNamed(_ name: String, withId dbId: String, withLocalPath localPath: String, lastModified: Date, revision: Int64) {
+    func createNewDatabaseNamed(_ name: String, withId dbId: String, withLocalPath localPath: String, lastModified: Date, rev: String) {
         let dbData: [String: Any] = [
             kDatabaseName: name,
             kDatabaseId: dbId,
             kDatabaseLocalPath: (localPath as NSString).lastPathComponent,
             kDatabaseLastModified: lastModified,
-            kDatabaseRevision: revision as NSNumber,
+            kDatabaseRev: rev,
             kDatabaseLastSynced: Date(), // assume that new database was just downloaded prior to creation
         ]
         databases.append(dbData)
@@ -129,7 +129,7 @@ class DatabaseManager: NSObject {
         database.name = dbData[kDatabaseName] as! String
         database.localPath = (dataPath as NSString).appendingPathComponent((dbData[kDatabaseLocalPath] as! NSString).lastPathComponent)
         database.lastModified = dbData[kDatabaseLastModified] as! Date
-        database.rev = dbData[kDatabaseRevision] as! String
+        database.rev = dbData[kDatabaseRev] as! String
         database.lastSynced = dbData[kDatabaseLastSynced] as! Date
         let fm = FileManager()
         database.isDirty = fm.fileExists(atPath: (database.localPath as NSString).appendingPathExtension("tmp")!)
@@ -153,7 +153,7 @@ class DatabaseManager: NSObject {
                 dbData[kDatabaseName] = database.name
                 dbData[kDatabaseLastModified] = database.lastModified
                 dbData[kDatabaseLastSynced] = database.lastSynced
-                dbData[kDatabaseRevision] = database.rev
+                dbData[kDatabaseRev] = database.rev
                 databases[i] = dbData
                 save()
                 return

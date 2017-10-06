@@ -17,7 +17,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
-		630886D91E50EE7400C68EAE /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630886D81E50EE7400C68EAE /* DropboxSDK.framework */; };
 		63B87D8A1F81CC90005262FB /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D891F81CC90005262FB /* RootViewController.swift */; };
 		63B87D921F8211C2005262FB /* PassDropAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */; };
 		63B87D9D1F8348C7005262FB /* NewDatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */; };
@@ -262,6 +261,13 @@
 			remoteGlobalIDString = FCF46CEA91AEEFE2CB53F79D9052AD9C;
 			remoteInfo = SwiftyDropbox;
 		};
+		FE8A4E6A1F881CC2007146AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F7DBC61E537F270035879B /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FA350F8A3F106F199ED110EC6661FC0;
+			remoteInfo = ObjectiveDropboxOfficial;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -278,7 +284,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* PassDrop_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDrop_Prefix.pch; sourceTree = "<group>"; };
-		630886D81E50EE7400C68EAE /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
 		63B87D891F81CC90005262FB /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
@@ -539,7 +544,6 @@
 				A2E5364915DFF7A800A2008E /* QuartzCore.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
-				630886D91E50EE7400C68EAE /* DropboxSDK.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				A28D419012F5B99E00A16865 /* Security.framework in Frameworks */,
 				A204B49A12FDD1CB00A4D656 /* AudioToolbox.framework in Frameworks */,
@@ -554,6 +558,7 @@
 			isa = PBXGroup;
 			children = (
 				631DC4D11F817C260032D3EA /* Alamofire.framework */,
+				FE8A4E6B1F881CC2007146AD /* ObjectiveDropboxOfficial.framework */,
 				02F7DBCB1E537F270035879B /* Pods_PassDrop.framework */,
 				631DC4D31F817C260032D3EA /* SwiftyDropbox.framework */,
 			);
@@ -600,7 +605,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				0205B0451E536FFB009DECC7 /* Podfile */,
@@ -640,7 +645,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				630886D81E50EE7400C68EAE /* DropboxSDK.framework */,
 				A2E5364815DFF7A800A2008E /* QuartzCore.framework */,
 				A204B49912FDD1CB00A4D656 /* AudioToolbox.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -1055,7 +1059,7 @@
 				German,
 				en,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1091,6 +1095,13 @@
 			fileType = wrapper.framework;
 			path = SwiftyDropbox.framework;
 			remoteRef = 631DC4D21F817C260032D3EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE8A4E6B1F881CC2007146AD /* ObjectiveDropboxOfficial.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ObjectiveDropboxOfficial.framework;
+			remoteRef = FE8A4E6A1F881CC2007146AD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1363,7 +1374,6 @@
 				A2A1B1AC15E0A52000AECF29 /* MGSplitViewController.m in Sources */,
 				63B87D9D1F8348C7005262FB /* NewDatabaseViewController.swift in Sources */,
 				A2E5364C15DFFCA400A2008E /* LoadingView.m in Sources */,
-				A28D44A912F5C73D00A16865 /* SettingsViewController.m in Sources */,
 				A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */,
 				02647BBB1E527B3B009051F8 /* DropboxDatabase.swift in Sources */,
 				A204B47812FDD08B00A4D656 /* UIPullToReloadHeaderView.m in Sources */,
@@ -1372,7 +1382,6 @@
 				A2A2151512FF06BD007E055A /* EditDatabaseViewController.m in Sources */,
 				02647BBD1E5289FC009051F8 /* String+NSString.swift in Sources */,
 				024185DF1E524BCF005167DE /* Global.swift in Sources */,
-				63B87D7B1F81BCAB005262FB /* SettingsViewController.swift in Sources */,
 				A2806B281300C5E600BF5C02 /* KdbGroupViewController.m in Sources */,
 				A2806FE91302198A00BF5C02 /* KdbReader.m in Sources */,
 				63B87D921F8211C2005262FB /* PassDropAppDelegate.swift in Sources */,

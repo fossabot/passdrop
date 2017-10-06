@@ -14,11 +14,8 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     var myPath: String
     var isLoaded = false
     var loadingView: LoadingView!
-    var metadataHash: String?
     var dirContents: [Files.Metadata]
     var dirBrowsers: [String: DropboxBrowserController]
-    var tempDbId: String!
-    var tempPath: String!
     var dbManager: DatabaseManager!
     
     static var networkIndicatorReq = 0
@@ -29,7 +26,6 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
         self.dirBrowsers = [:]
         super.init(nibName: nil, bundle: nil)
         DropboxBrowserController.networkIndicatorReq = 0
-        self.metadataHash = nil
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,19 +42,28 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     }
     
     func newDatabaseCreated(_ path: String) {
+        // rather than fast-pathing new database creation, let's just refresh the entire directory
+        refreshDirectory()
+        /*
         let localFile = dbManager.getLocalFilenameForDatabase(dbManager.getIdentifierForDatabase(path), forNewFile: true)
         networkRequestStarted()
-        tempDbId = path
-        restClient.loadFile(path, intoPath: localFile)
+        
+        dropboxClient.files.download(path: path, rev: nil, overwrite: true, destination: { temporaryURL, response in
+            return URL(fileURLWithPath: localFile)
+        }).response { response, error in
+            fatalError("TODO")
+            if let response = response {
+                
+            }
+        }*/
     }
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
-        restClient = DBRestClient(session: DBSession.shared())
-        restClient.delegate = self
+        
+        dropboxClient = DropboxClientsManager.authorizedClient!
         let newButton = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(newButtonClicked))
         navigationItem.rightBarButtonItem = newButton
         
@@ -77,13 +82,25 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     override func pullDownToReloadAction() {
         refreshDirectory()
     }
-
+    
     func refreshDirectory() {
         networkRequestStarted()
-        if let metadataHash = metadataHash {
-            restClient.loadMetadata(myPath, withHash: metadataHash)
-        } else {
-            restClient.loadMetadata(myPath)
+        dropboxClient.files.listFolder(path: myPath).response { [weak self] response, error in
+            guard let ss = self else { return }
+            ss.networkRequestStopped()
+            if let response = response {
+                // TODO: response.hasMore support
+                // dropboxClient.files.listFolderContinue(cursor: response.cursor)
+                ss.isLoaded = true
+                ss.dirContents = response.entries
+                
+            } else if let error = error {
+                ss.isLoaded = false
+                ss.alertError(error.description)
+                ss.dirContents = []
+                
+            }
+            ss.tableView.reloadData()
         }
     }
 
@@ -94,8 +111,8 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
         alert.show()
     }
 
-    func alertError(_ error: Error!) {
-        let msg = ((error as NSError).userInfo["error"] as? String) ?? "Dropbox reported an unknown error."
+    func alertError(_ errorMessage: String?) {
+        let msg = errorMessage ?? "Dropbox reported an unknown error."
         let alert = UIAlertView(title: "Dropbox Error", message: msg, delegate: nil, cancelButtonTitle: "OK")
         alert.show()
     }
@@ -128,8 +145,8 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
         }
         
         let cellData = dirContents[indexPath.row]
-        let fileName = cellData.path.lastPathComponent
-        if cellData.isDirectory {
+        let fileName = cellData.pathDisplay?.lastPathComponent ?? ""
+        if let _ = cellData as? Files.FolderMetadata {
             cell.accessoryType = .disclosureIndicator
             cell.imageView?.image = UIImage(named: "folder_icon.png")
             cell.isUserInteractionEnabled = true
@@ -150,35 +167,6 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
         return cell
     }
 
-    /*
-     // Override to support conditional editing of the table view.
-     - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-     // Return NO if you do not want the specified item to be editable.
-     return YES;
-     }
-     */
-
-    /*
-     // Override to support editing the table view.
-     - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-     
-     if (editingStyle == UITableViewCellEditingStyleDelete) {
-     // Delete the row from the data source.
-     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-     }
-     else if (editingStyle == UITableViewCellEditingStyleInsert) {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-     }
-     }
-     */
-    
-    
-    /*
-     // Override to support rearranging the table view.
-     - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-     }
-     */
-    
     override var shouldAutorotate: Bool {
         return true
     }
@@ -191,23 +179,39 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellData = dirContents[indexPath.row]
-        if cellData.isDirectory {
-            if dirBrowsers[cellData.path] == nil {
-                let dirBrowser = DropboxBrowserController(path: cellData.path)
+        let cellPath = cellData.pathDisplay!
+        if let _ = cellData as? Files.FolderMetadata {
+            if dirBrowsers[cellPath] == nil {
+                let dirBrowser = DropboxBrowserController(path: cellPath)
                 dirBrowser.dbManager = dbManager
-                dirBrowser.title = cellData.path.lastPathComponent
-                dirBrowsers[cellData.path] = dirBrowser
+                dirBrowser.title = cellPath.lastPathComponent
+                dirBrowsers[cellPath] = dirBrowser
             }
-            navigationController?.pushViewController(dirBrowsers[cellData.path]!, animated: true)
+            navigationController?.pushViewController(dirBrowsers[cellPath]!, animated: true)
         } else {
             //if([cellData.path hasSuffix:@".kdb"]){
-            if dbManager.databaseExists(dbManager.getIdentifierForDatabase(cellData.path)) {
+            if dbManager.databaseExists(dbManager.getIdentifierForDatabase(cellPath)) {
                 alertMessage("That database has already been added. You cannot add the same database more than once.", withTitle: "Oops!")
             } else {
-                let localFile = dbManager.getLocalFilenameForDatabase(dbManager.getIdentifierForDatabase(cellData.path), forNewFile: true)
+                let localFile = dbManager.getLocalFilenameForDatabase(dbManager.getIdentifierForDatabase(cellPath), forNewFile: true)
                 networkRequestStarted()
-                tempDbId = cellData.path
-                restClient.loadFile(cellData.path, intoPath: localFile)
+                dropboxClient.files.download(path: cellPath, rev: nil, overwrite: true, destination: { temporaryURL, response in
+                    return URL(fileURLWithPath: localFile)
+                }).response { [weak self] response, error in
+                    guard let ss = self else { return }
+                    if let (metadata, _) = response {
+                        let dbId = ss.dbManager.getIdentifierForDatabase(cellPath)
+                        ss.dbManager.createNewDatabaseNamed(
+                            dbId.lastPathComponent,
+                            withId: dbId,
+                            withLocalPath: localFile,
+                            lastModified: metadata.serverModified,
+                            rev: metadata.rev)
+                    } else if let error = error {
+                        ss.networkRequestStopped()
+                        ss.alertError(error.description)
+                    }
+                }
             }
             //}
         }
@@ -246,57 +250,15 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
         }
     }
     
-    func restClient(_ client: DBRestClient!, loadedFile destPath: String!) {
-        // now that we downloaded the file, we need to get the hash value for it
-        self.tempPath = destPath
-        restClient.loadMetadata(tempDbId)
-    }
-    
-    func restClient(_ client: DBRestClient!, loadFileFailedWithError error: Error!) {
-        networkRequestStopped()
-        alertError(error)
-        tempDbId = nil
-    }
-    
-    func restClient(_ client: DBRestClient!, loadedMetadata metadata: DBMetadata!) {
-        networkRequestStopped()
-        if metadata.isDirectory {
-            // if it was a directory it means we refreshed this view
-            isLoaded = true
-            metadataHash = metadata.hash
-            dirContents = metadata.contents as! [DBMetadata]
-            tableView.reloadData()
-        } else {
-            // otherwise it means we justdownloaded a database for the lastmod date
-            let dbId = dbManager.getIdentifierForDatabase(tempDbId)
-            dbManager.createNewDatabaseNamed(dbId.lastPathComponent, withId: dbId, withLocalPath: tempPath, lastModified: metadata.lastModifiedDate, revision: metadata.revision)
-            tempDbId = nil
-            tempPath = nil
-        }
-    }
-
-    func restClient(_ client: DBRestClient!, metadataUnchangedAtPath path: String!) {
-        isLoaded = true
-        networkRequestStopped()
-    }
-    
-    func restClient(_ client: DBRestClient!, loadMetadataFailedWithError error: Error!) {
-        isLoaded = false
-        alertError(error)
-        dirContents = []
-        tableView.reloadData()
-        networkRequestStopped()
-    }
-
     // MARK: Memory management
     
+    // TODO(chadaustin): this does not feel necessary to me
     func reset() {
         for browser in dirBrowsers.values {
             browser.reset()
         }
         dirBrowsers = [:]
         isLoaded = false
-        metadataHash = nil
         dirContents = []
         tableView.reloadData()
     }

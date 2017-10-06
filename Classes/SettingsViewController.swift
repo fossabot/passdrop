@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, UIAlertViewDelegate {
     @IBOutlet var settingsTable: UITableView!
@@ -52,20 +53,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction
     func dbButtonClicked() {
-        if DBSession.shared().isLinked() {
+        if DropboxClientsManager.authorizedClient != nil {
             let unlinkConfirm = UIAlertView(title: "Unlink Dropbox", message: "Are you sure you want to unlink your Dropbox account? This will also remove all databases from your device.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlink")
             unlinkConfirm.show()
         } else {
-            //DBLoginController *dbLoginController = [[DBLoginController new] autorelease];
-            //[dbLoginController presentFromController:self];
-            DBSession.shared().link(from: self)
+            DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self) { [weak self] url in
+                UIApplication.shared.openURL(url)
+            }
         }
     }
 
     func alertView(_ alertView: UIAlertView, clickedButtonAt index: Int) {
         if index == 1 {
             let app = UIApplication.shared.delegate as! PassDropAppDelegate
-            DBSession.shared().unlinkAll()
+            DropboxClientsManager.unlinkClients()
             app.dropboxWasReset()
             updateSettingsUI()
         }
@@ -187,7 +188,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             cell.accessoryType = .none
             if indexPath.section == 0 {
                 cell.textLabel?.text = "Dropbox"
-                if DBSession.shared().isLinked() {
+                if DropboxClientsManager.authorizedClient != nil {
                     cell.detailTextLabel?.text = "Linked"
                 } else {
                     cell.detailTextLabel?.text = "Not Linked"

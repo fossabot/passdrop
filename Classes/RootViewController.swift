@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
 @objc(RootViewController)
 class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate, DatabaseDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate {
@@ -51,10 +52,14 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
         }
     }
     
+    var dropboxIsLinked: Bool {
+        return DropboxClientsManager.authorizedClient != nil
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.rightBarButtonItem?.isEnabled = DBSession.shared().isLinked()
-        self.view.viewWithTag(1)?.isHidden = DBSession.shared().isLinked()
+        self.navigationItem.rightBarButtonItem?.isEnabled = dropboxIsLinked
+        self.view.viewWithTag(1)?.isHidden = dropboxIsLinked
         
         // hack to fix issue with disappearing insert/delete control icons
         if tableView.isEditing {
@@ -74,7 +79,7 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
             app.prefs.save() // sets version
             tutorialShown = false
             if dbManager.databases.count == 0 {
-                if !DBSession.shared().isLinked() {
+                if !dropboxIsLinked {
                     alertMode = 1
                     let helpView = UIAlertView(title: "Tutorial", message: "Welcome to PassDrop! Since this is your first time using PassDrop, you will need enter your Dropbox credentials on the settings screen.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Settings")
                     helpView.show()
@@ -120,7 +125,7 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     }
     
     func gotoDropbox() {
-        if !DBSession.shared().isLinked() {
+        if !dropboxIsLinked {
             alertMode = 1
             let notLinked = UIAlertView(title: "Dropbox Not Linked", message: "Before you can add databases, you must link your Dropbox account from the settings screen. Do you want to do that now?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Settings")
             notLinked.show()

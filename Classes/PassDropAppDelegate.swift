@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
 @UIApplicationMain
 @objc(PassDropAppDelegate)
@@ -36,11 +37,8 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
         prefs = AppPrefs()
         prefs.load()
         
-        let appKey = Globals.DROPBOX_KEY
-        let appSecret = Globals.DROPBOX_SECRET
+        DropboxClientsManager.setupWithAppKey(Globals.DROPBOX_KEY)
         
-        DBSession.setShared(DBSession(appKey: appKey, appSecret: appSecret, root: kDBRootDropbox))
-
         dbManager = DatabaseManager()
         
         // Add the navigation controller's view to the window and display.
@@ -142,20 +140,23 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
             rootView.removeLock(database)
         }
     }
-
-    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
-        settingsView?.updateSettingsUI()
-        if DBSession.shared().handleOpen(url) {
-            if DBSession.shared().isLinked() {
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if let authResult = DropboxClientsManager.handleRedirectURL(url) {
+            settingsView?.updateSettingsUI()
+            switch authResult {
+            case .success:
                 NSLog("App linked successfully!")
-                // At this point you can start making API calls
+            case .cancel:
+                NSLog("Dropbox authentication flow cancelled")
+            case .error(_, let description):
+                NSLog("Failed to authenticate with Dropbox", description)
             }
             return true
         }
-        // Add whatever other url handling code your app requires here
         return false
     }
-    
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         /*
          Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.

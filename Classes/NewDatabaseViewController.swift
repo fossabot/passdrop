@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
 @objc
 protocol NewDatabaseDelegate {
@@ -14,7 +15,7 @@ protocol NewDatabaseDelegate {
 }
 
 class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
-    var restClient: DropboxClient!
+    var dropboxClient: DropboxClient!
     var dbName: String = ""
     var password: String!
     var verifyPassword: String!
@@ -77,7 +78,9 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         
         self.loadingMessage = "Creating"
         networkRequestStarted()
-        restClient.loadMetadata(location.appendingPathComponent(dbName.appendingPathExtension("kdb")!))
+        
+        fatalError("TODO")
+        //restClient.loadMetadata(location.appendingPathComponent(dbName.appendingPathExtension("kdb")!))
     }
     
     func alertError(_ error: NSError) {
@@ -106,7 +109,8 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
                 let error = UIAlertView(title: "Error", message: writer.lastError, delegate: nil, cancelButtonTitle: "Cancel")
                 error.show()
             } else {
-                restClient.uploadFile(dbName.appendingPathExtension("kdb")!, toPath: self.location, withParentRev: nil, fromPath: tempFile)
+                fatalError("TODO")
+                //restClient.uploadFile(dbName.appendingPathExtension("kdb")!, toPath: self.location, withParentRev: nil, fromPath: tempFile)
             }
         }
     }
@@ -130,8 +134,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         let saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveButtonClicked))
         navigationItem.rightBarButtonItem = saveButton
 
-        restClient = DBRestClient(session: DBSession.shared())
-        restClient.delegate = self
+        dropboxClient = DropboxClientsManager.authorizedClient!
         
         currentFirstResponder = 0
         
@@ -208,7 +211,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
     }
 
     // MARK: Rest client delegate
-    
+/*
     func restClient(_ client: DBRestClient!, loadedMetadata metadata: DBMetadata!) {
         if metadata.isDeleted {
             networkRequestStopped()
@@ -241,7 +244,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         networkRequestStopped()
         alertError(error as NSError)
     }
-    
+*/
     // MARK: tableviewdatasource
     
     func numberOfSections(in tableView: UITableView) -> Int {
