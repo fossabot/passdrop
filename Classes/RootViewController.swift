@@ -95,7 +95,7 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
 
     override func viewDidDisappear(_ animated: Bool) {
         if tableView.isEditing {
-            tableView.setEditing(false, animated: false)
+            setEditing(false, animated: false)
         }
         super.viewDidDisappear(animated)
     }
@@ -131,7 +131,7 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
             notLinked.show()
         } else {
             if dbRootView == nil {
-                dbRootView = DropboxBrowserController(path: "/")
+                dbRootView = DropboxBrowserController(path: "")
                 dbRootView!.dbManager = dbManager
                 dbRootView!.title = "Dropbox"
             }

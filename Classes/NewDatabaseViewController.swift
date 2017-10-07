@@ -109,7 +109,9 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
                 let error = UIAlertView(title: "Error", message: writer.lastError, delegate: nil, cancelButtonTitle: "Cancel")
                 error.show()
             } else {
-                fatalError("TODO")
+                dropboxClient.files.upload(
+                    path: self.location.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
+                    input: URL(fileURLWithPath: tempFile))
                 //restClient.uploadFile(dbName.appendingPathExtension("kdb")!, toPath: self.location, withParentRev: nil, fromPath: tempFile)
             }
         }
@@ -233,17 +235,6 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         }
     }
     
-    func restClient(_ client: DBRestClient!, uploadedFile destPath: String!, from srcPath: String!) {
-        cleanup()
-        networkRequestStopped()
-        delegate?.newDatabaseCreated(destPath)
-    }
-
-    func restClient(_ client: DBRestClient!, uploadFileFailedWithError error: Error!) {
-        cleanup()
-        networkRequestStopped()
-        alertError(error as NSError)
-    }
 */
     // MARK: tableviewdatasource
     

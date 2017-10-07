@@ -199,6 +199,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
                     return URL(fileURLWithPath: localFile)
                 }).response { [weak self] response, error in
                     guard let ss = self else { return }
+                    ss.networkRequestStopped()
                     if let (metadata, _) = response {
                         let dbId = ss.dbManager.getIdentifierForDatabase(cellPath)
                         ss.dbManager.createNewDatabaseNamed(
@@ -208,7 +209,6 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
                             lastModified: metadata.serverModified,
                             rev: metadata.rev)
                     } else if let error = error {
-                        ss.networkRequestStopped()
                         ss.alertError(error.description)
                     }
                 }
