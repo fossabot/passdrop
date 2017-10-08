@@ -92,7 +92,17 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
                 // TODO: response.hasMore support
                 // dropboxClient.files.listFolderContinue(cursor: response.cursor)
                 ss.isLoaded = true
-                ss.dirContents = response.entries
+                ss.dirContents = response.entries.sorted { lhs, rhs in
+                    let lhsIsDir = lhs as? Files.FolderMetadata != nil
+                    let rhsIsDir = rhs as? Files.FolderMetadata != nil
+                    if lhsIsDir && !rhsIsDir {
+                        return true
+                    } else if !lhsIsDir && rhsIsDir {
+                        return false
+                    } else {
+                        return (lhs.pathLower ?? "") < (rhs.pathLower ?? "")
+                    }
+                }
                 
             } else if let error = error {
                 ss.isLoaded = false
