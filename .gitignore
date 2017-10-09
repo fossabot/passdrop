@@ -15,4 +15,3 @@ build/
 xcuserdata
 *.moved-aside
 /Pods/
-/Classes/Global+Private.swift
