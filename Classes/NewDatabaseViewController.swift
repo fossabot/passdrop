@@ -136,10 +136,11 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
                 let error = UIAlertView(title: "Error", message: writer.lastError, delegate: nil, cancelButtonTitle: "Cancel")
                 error.show()
             } else {
+                // TODO(chadaustin): should this UI wait until the template is uploaded before closing?
+                
                 dropboxClient.files.upload(
                     path: self.location.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
                     input: URL(fileURLWithPath: tempFile))
-                fatalError("TEST")
             }
         }
     }

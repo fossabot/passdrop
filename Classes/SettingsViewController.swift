@@ -204,7 +204,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     cell.detailTextLabel?.text = openModeStringForMode(app.prefs.databaseOpenMode)
                     break;
                 default:
-                    fatalError("unexpected")
+                    break
                 }
             }
         } else if indexPath.section == 1 && (indexPath.row == 2 || indexPath.row == 3) {
