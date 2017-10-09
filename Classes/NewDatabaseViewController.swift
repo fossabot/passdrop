@@ -79,12 +79,39 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         self.loadingMessage = "Creating"
         networkRequestStarted()
         
-        fatalError("TODO")
-        //restClient.loadMetadata(location.appendingPathComponent(dbName.appendingPathExtension("kdb")!))
+        // TODO: manually test this
+        
+        dropboxClient.files.getMetadata(
+            path: location.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
+            includeMediaInfo: false,
+            includeDeleted: false
+            //includeHasExplicitSharedMembers: false
+        ).response {
+            [weak self] response, error in
+            guard let ss = self else { return }
+            ss.networkRequestStopped()
+            if let _ = response {
+                let alert = UIAlertView(title: "Error", message: "That file already exists. Please choose a different file name.", delegate: nil, cancelButtonTitle: "Cancel")
+                alert.show()
+            } else if let error = error {
+                switch error {
+                case .routeError(let box, _, _, _):
+                    switch box.unboxed {
+                    case .path(.notFound):
+                        // file not found, means we're good to create it
+                        ss.uploadTemplate()
+                    default:
+                        ss.alertError(error.description)
+                    }
+                default:
+                    ss.alertError(error.description)
+                }
+            }
+        }
     }
     
-    func alertError(_ error: NSError) {
-        let msg = (error.userInfo["error"] as? String) ?? "Dropbox reported an unknown error."
+    func alertError(_ errorMessage: String?) {
+        let msg = errorMessage ?? "Dropbox reported an unknown error."
         let alert = UIAlertView(title: "Dropbox Error", message: msg, delegate: nil, cancelButtonTitle: "OK")
         alert.show()
     }
@@ -112,7 +139,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
                 dropboxClient.files.upload(
                     path: self.location.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
                     input: URL(fileURLWithPath: tempFile))
-                //restClient.uploadFile(dbName.appendingPathExtension("kdb")!, toPath: self.location, withParentRev: nil, fromPath: tempFile)
+                fatalError("TEST")
             }
         }
     }
@@ -211,31 +238,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
             UIView.commitAnimations()
         }
     }
-
-    // MARK: Rest client delegate
-/*
-    func restClient(_ client: DBRestClient!, loadedMetadata metadata: DBMetadata!) {
-        if metadata.isDeleted {
-            networkRequestStopped()
-            let alert = UIAlertView(title: "Error", message: "That file already exists. Please choose a different file name.", delegate: nil, cancelButtonTitle: "Cancel")
-            alert.show()
-        } else {
-            // file was found, but was deleted, we're good to create it
-            uploadTemplate()
-        }
-    }
     
-    func restClient(_ client: DBRestClient!, loadMetadataFailedWithError error: Error!) {
-        if (error as NSError).code == 404 {
-            // file not found, means we're good to create it
-            uploadTemplate()
-        } else {
-            networkRequestStopped()
-            alertError(error as NSError)
-        }
-    }
-    
-*/
     // MARK: tableviewdatasource
     
     func numberOfSections(in tableView: UITableView) -> Int {
