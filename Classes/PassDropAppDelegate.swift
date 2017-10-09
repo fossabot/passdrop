@@ -40,6 +40,10 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
         DropboxClientsManager.setupWithAppKey(Globals.DROPBOX_KEY)
         
         dbManager = DatabaseManager()
+        // If there is no linked DropboxClient, then clear the database.
+        if DropboxClientsManager.authorizedClient == nil {
+            dbManager.dropboxWasReset()
+        }
         
         // Add the navigation controller's view to the window and display.
         if UIDevice.current.userInterfaceIdiom == .pad {

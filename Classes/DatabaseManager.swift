@@ -45,10 +45,6 @@ class DatabaseManager: NSObject {
         }
 
         self.databases = NSKeyedUnarchiver.unarchiveObject(withFile: configFile) as? [[String: Any]] ?? []
-
-        if DropboxClientsManager.authorizedClient != nil && databases.count > 0 {
-            self.dropboxWasReset()
-        }
     }
 
     func save() {
