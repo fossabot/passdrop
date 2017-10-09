@@ -42,6 +42,8 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     }
     
     func newDatabaseCreated(_ path: String) {
+        // TODO(chadaustin): manually test this
+        
         // rather than fast-pathing new database creation, let's just refresh the entire directory
         refreshDirectory()
         /*

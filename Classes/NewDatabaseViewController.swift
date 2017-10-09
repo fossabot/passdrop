@@ -79,7 +79,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         self.loadingMessage = "Creating"
         networkRequestStarted()
         
-        // TODO: manually test this
+        // TODO(chadaustin): manually test this
         
         dropboxClient.files.getMetadata(
             path: location.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
