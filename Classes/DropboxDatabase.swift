@@ -132,7 +132,7 @@ class DropboxDatabase: NSObject, Database {
         // get metadata for last modified date
         mode = .loadingDBFile
         let fm = FileManager()
-        isDirty = fm.fileExists(atPath: (localPath as NSString).appendingPathExtension("tmp")!)
+        isDirty = fm.fileExists(atPath: localPath.appendingPathExtension("tmp")!)
         dropboxClient.files.getMetadata(path: location()).response { [weak self] response, error in
             if let response = response {
                 self?.restClient(loadedMetadata: response)

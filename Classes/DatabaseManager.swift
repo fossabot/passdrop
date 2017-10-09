@@ -35,7 +35,7 @@ class DatabaseManager: NSObject {
             try? fileManager.createDirectory(atPath: dataPath, withIntermediateDirectories: true, attributes: nil)
         }
 
-        configFile = (dataPath as NSString).appendingPathComponent("databases2.archive")
+        configFile = dataPath.appendingPathComponent("databases2.archive")
 
         super.init()
 
@@ -69,24 +69,24 @@ class DatabaseManager: NSObject {
     @objc
     func getLocalFilenameForDatabase(_ dbId: String, forNewFile isNew: Bool) -> String {
         let fileManager = FileManager()
-        var fileName = (dbId as NSString).lastPathComponent
+        var fileName = dbId.lastPathComponent
         if isNew {
             var count = 0
             let baseFileName = NSString(string: fileName)
-            while fileManager.fileExists(atPath: (dataPath as NSString).appendingPathComponent(fileName)) {
+            while fileManager.fileExists(atPath: dataPath.appendingPathComponent(fileName)) {
                 fileName = NSString(format: "%d_%@", count, baseFileName) as String
                 count += 1
             }
         }
 
-        return (dataPath as NSString).appendingPathComponent(fileName)
+        return dataPath.appendingPathComponent(fileName)
     }
 
     func createNewDatabaseNamed(_ name: String, withId dbId: String, withLocalPath localPath: String, lastModified: Date, rev: String) {
         let dbData: [String: Any] = [
             kDatabaseName: name,
             kDatabaseId: dbId,
-            kDatabaseLocalPath: (localPath as NSString).lastPathComponent,
+            kDatabaseLocalPath: localPath.lastPathComponent,
             kDatabaseLastModified: lastModified,
             kDatabaseRev: rev,
             kDatabaseLastSynced: Date(), // assume that new database was just downloaded prior to creation
@@ -105,8 +105,8 @@ class DatabaseManager: NSObject {
 
     func deleteDatabaseAtIndex(_ index: Int) {
         // delete the local file
-        let filePath = (dataPath as NSString).appendingPathComponent((databases[index][kDatabaseLocalPath] as! NSString).lastPathComponent)
-        let tmpPath = (filePath as NSString).appendingPathExtension("tmp")!
+        let filePath = dataPath.appendingPathComponent((databases[index][kDatabaseLocalPath] as! NSString).lastPathComponent)
+        let tmpPath = filePath.appendingPathExtension("tmp")!
         let fileManager = FileManager()
         if fileManager.fileExists(atPath: filePath) {
             try? fileManager.removeItem(atPath: filePath)
@@ -123,12 +123,12 @@ class DatabaseManager: NSObject {
         let database = DropboxDatabase()
         database.identifier = dbData[kDatabaseId] as! String
         database.name = dbData[kDatabaseName] as! String
-        database.localPath = (dataPath as NSString).appendingPathComponent((dbData[kDatabaseLocalPath] as! NSString).lastPathComponent)
+        database.localPath = dataPath.appendingPathComponent((dbData[kDatabaseLocalPath] as! NSString).lastPathComponent)
         database.lastModified = dbData[kDatabaseLastModified] as! Date
         database.rev = dbData[kDatabaseRev] as! String
         database.lastSynced = dbData[kDatabaseLastSynced] as! Date
         let fm = FileManager()
-        database.isDirty = fm.fileExists(atPath: (database.localPath as NSString).appendingPathExtension("tmp")!)
+        database.isDirty = fm.fileExists(atPath: database.localPath.appendingPathExtension("tmp")!)
         database.dbManager = self
         return database
     }
