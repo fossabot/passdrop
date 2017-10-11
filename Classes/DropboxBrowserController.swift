@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyDropbox
 
-class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDelegate {
+class DropboxBrowserController: UIPullToReloadTableViewController {
     var dropboxClient: DropboxClient!
     var myPath: String
     var loadingView: LoadingView!
@@ -36,27 +36,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     func newButtonClicked() {
         let ndbvc = NewDatabaseViewController(nibName: "EditViewController", bundle: nil)
         ndbvc.location = myPath
-        ndbvc.delegate = self
         navigationController?.pushViewController(ndbvc, animated: true)
-    }
-    
-    func newDatabaseCreated(_ path: String) {
-        // TODO(chadaustin): manually test this
-        
-        // rather than fast-pathing new database creation, let's just refresh the entire directory
-        refreshDirectory()
-        /*
-        let localFile = dbManager.getLocalFilenameForDatabase(dbManager.getIdentifierForDatabase(path), forNewFile: true)
-        networkRequestStarted()
-        
-        dropboxClient.files.download(path: path, rev: nil, overwrite: true, destination: { temporaryURL, response in
-            return URL(fileURLWithPath: localFile)
-        }).response { response, error in
-            fatalError("TODO")
-            if let response = response {
-                
-            }
-        }*/
     }
     
     // MARK: View lifecycle
