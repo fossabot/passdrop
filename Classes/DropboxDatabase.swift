@@ -146,7 +146,13 @@ class DropboxDatabase: NSObject, Database {
         let fileManager = FileManager()
         let newDb = localPath.appendingPathExtension("tmp")!
         if fileManager.fileExists(atPath: newDb) {
-            dropboxClient.files.upload(path: location(), input: URL(fileURLWithPath: newDb)).response {
+            dropboxClient.files.upload(
+                path: location(),
+                mode: .overwrite,
+                autorename: false,
+                mute: false,
+                input: URL(fileURLWithPath: newDb)
+            ).response {
                 [weak self] response, error in
                 if let _ = response {
                     self?.restClient(uploadedFile: ())

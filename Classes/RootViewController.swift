@@ -456,10 +456,10 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
                 databaseWasLocked(forEditing: loadingDb)
             }
         } else if actionSheet.tag == 3 { // read only or writable mode database load
-            if buttonIndex == 0 { // read-only
+            if buttonIndex == 1 { // read-only
                 loadingDb.isReadOnly = true
                 completeLoad()
-            } else if buttonIndex == 1 { // writable
+            } else if buttonIndex == 2 { // writable
                 completeLoad()
             }
         } else if actionSheet.tag == 4 { // database was deleted

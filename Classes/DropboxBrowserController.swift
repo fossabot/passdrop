@@ -41,23 +41,9 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
         navigationController?.pushViewController(ndbvc, animated: true)
     }
     
-    func newDatabaseCreated(_ path: String) {
-        // TODO(chadaustin): manually test this
-        
+    func newDatabaseCreated() {
         // rather than fast-pathing new database creation, let's just refresh the entire directory
         refreshDirectory()
-        /*
-        let localFile = dbManager.getLocalFilenameForDatabase(dbManager.getIdentifierForDatabase(path), forNewFile: true)
-        networkRequestStarted()
-        
-        dropboxClient.files.download(path: path, rev: nil, overwrite: true, destination: { temporaryURL, response in
-            return URL(fileURLWithPath: localFile)
-        }).response { response, error in
-            fatalError("TODO")
-            if let response = response {
-                
-            }
-        }*/
     }
     
     // MARK: View lifecycle
