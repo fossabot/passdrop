@@ -260,13 +260,6 @@
 			remoteGlobalIDString = FCF46CEA91AEEFE2CB53F79D9052AD9C;
 			remoteInfo = SwiftyDropbox;
 		};
-		FE8A4E6A1F881CC2007146AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 02F7DBC61E537F270035879B /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3FA350F8A3F106F199ED110EC6661FC0;
-			remoteInfo = ObjectiveDropboxOfficial;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -556,7 +549,6 @@
 			isa = PBXGroup;
 			children = (
 				631DC4D11F817C260032D3EA /* Alamofire.framework */,
-				FE8A4E6B1F881CC2007146AD /* ObjectiveDropboxOfficial.framework */,
 				02F7DBCB1E537F270035879B /* Pods_PassDrop.framework */,
 				631DC4D31F817C260032D3EA /* SwiftyDropbox.framework */,
 			);
@@ -603,7 +595,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				0205B0451E536FFB009DECC7 /* Podfile */,
@@ -1056,7 +1048,7 @@
 				German,
 				en,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1092,13 +1084,6 @@
 			fileType = wrapper.framework;
 			path = SwiftyDropbox.framework;
 			remoteRef = 631DC4D21F817C260032D3EA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FE8A4E6B1F881CC2007146AD /* ObjectiveDropboxOfficial.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ObjectiveDropboxOfficial.framework;
-			remoteRef = FE8A4E6A1F881CC2007146AD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
