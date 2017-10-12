@@ -82,15 +82,15 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         // TODO(chadaustin): manually test this
         
         dropboxClient.files.getMetadata(
-            path: pathRoot.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
+            path: location.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
             includeMediaInfo: false,
             includeDeleted: false
             //includeHasExplicitSharedMembers: false
         ).response {
             [weak self] response, error in
             guard let ss = self else { return }
+            ss.networkRequestStopped()
             if let _ = response {
-                ss.networkRequestStopped()
                 let alert = UIAlertView(title: "Error", message: "That file already exists. Please choose a different file name.", delegate: nil, cancelButtonTitle: "Cancel")
                 alert.show()
             } else if let error = error {
@@ -101,19 +101,13 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
                         // file not found, means we're good to create it
                         ss.uploadTemplate()
                     default:
-                        ss.networkRequestStopped()
                         ss.alertError(error.description)
                     }
                 default:
-                    ss.networkRequestStopped()
                     ss.alertError(error.description)
                 }
             }
         }
-    }
-    
-    var pathRoot: String {
-        return location.isEmpty ? "/" : location
     }
     
     func alertError(_ errorMessage: String?) {
@@ -135,27 +129,18 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
             let writer = KdbWriter()
             
             let cPw = password.cString(using: .utf8)
-            
             let pwH = UnsafeMutablePointer<UInt8>.allocate(capacity: 32)
             kpass_hash_pw(kpdb, cPw, pwH)
-            if !writer.saveDatabase(kpdb, withPassword: pwH, toFile: tempFile) {
+            if writer.saveDatabase(kpdb, withPassword: pwH, toFile: tempFile) {
                 networkRequestStopped()
                 let error = UIAlertView(title: "Error", message: writer.lastError, delegate: nil, cancelButtonTitle: "Cancel")
                 error.show()
             } else {
+                // TODO(chadaustin): should this UI wait until the template is uploaded before closing?
+                
                 dropboxClient.files.upload(
-                    path: pathRoot.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
-                    input: URL(fileURLWithPath: tempFile)
-                ).response { [weak self] response, error in
-                    guard let ss = self else { return }
-                    ss.networkRequestStopped()
-                    if let _ = response {
-                        ss.navigationController?.popViewController(animated: true)
-                    } else if let error = error {
-                        let error = UIAlertView(title: "Error", message: error.description, delegate: nil, cancelButtonTitle: "OK")
-                        error.show()
-                    }
-                }
+                    path: self.location.appendingPathComponent(dbName.appendingPathExtension("kdb")!),
+                    input: URL(fileURLWithPath: tempFile))
             }
         }
     }

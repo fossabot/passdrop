@@ -12,6 +12,7 @@ import SwiftyDropbox
 class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDelegate {
     var dropboxClient: DropboxClient!
     var myPath: String
+    var isLoaded = false
     var loadingView: LoadingView!
     var dirContents: [Files.Metadata]
     var dirBrowsers: [String: DropboxBrowserController]
@@ -73,7 +74,9 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        refreshDirectory()
+        if !isLoaded {
+            refreshDirectory()
+        }
     }
     
     // MARK: PullDown implementation
@@ -90,6 +93,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
             if let response = response {
                 // TODO: response.hasMore support
                 // dropboxClient.files.listFolderContinue(cursor: response.cursor)
+                ss.isLoaded = true
                 ss.dirContents = response.entries.sorted { lhs, rhs in
                     let lhsIsDir = lhs as? Files.FolderMetadata != nil
                     let rhsIsDir = rhs as? Files.FolderMetadata != nil
@@ -103,6 +107,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
                 }
                 
             } else if let error = error {
+                ss.isLoaded = false
                 ss.alertError(error.description)
                 ss.dirContents = []
                 
@@ -265,6 +270,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
             browser.reset()
         }
         dirBrowsers = [:]
+        isLoaded = false
         dirContents = []
         tableView.reloadData()
     }
