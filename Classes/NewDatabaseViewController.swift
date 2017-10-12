@@ -9,6 +9,11 @@
 import UIKit
 import SwiftyDropbox
 
+@objc
+protocol NewDatabaseDelegate {
+    func newDatabaseCreated(_ path: String) -> Void
+}
+
 class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     var dropboxClient: DropboxClient!
     var dbName: String = ""
@@ -16,6 +21,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
     var verifyPassword: String!
     var location: String!
     var currentFirstResponder: Int = 0
+    var delegate: NewDatabaseDelegate?
     var oldKeyboardHeight: CGFloat = 0
     var keyboardShowing: Bool = false
     var scrollToPath: IndexPath!
