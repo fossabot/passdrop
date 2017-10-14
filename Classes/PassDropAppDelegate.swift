@@ -14,7 +14,7 @@ import SwiftyDropbox
 class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate {
     var window: UIWindow?
     var navigationController: UINavigationController!
-    var splitController: MGSplitViewController!
+    var splitController: MGSplitViewController?
 
     var prefs: AppPrefs!
     var dbManager: DatabaseManager!
@@ -47,8 +47,8 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
         
         // Add the navigation controller's view to the window and display.
         if UIDevice.current.userInterfaceIdiom == .pad {
-            splitController.showsMasterInLandscape = true
-            splitController.showsMasterInPortrait = true
+            splitController?.showsMasterInLandscape = true
+            splitController?.showsMasterInPortrait = true
             window?.rootViewController = splitController
         } else {
             window?.rootViewController = navigationController
@@ -72,17 +72,17 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
          Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
          Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
          */
-        let isHidden = navigationController.topViewController == hide || splitController.presentedViewController == hide
+        let isHidden = navigationController.topViewController == hide || splitController?.presentedViewController == hide
         if !isHidden && dbManager.activeDatabase != nil && prefs.lockInBackgroundSeconds >= 0 {
             bgTimer = Date()
             if UIDevice.current.userInterfaceIdiom == .pad {
-                let details = (splitController.detailViewController as! UINavigationController).viewControllers
+                let details = (splitController?.detailViewController as! UINavigationController).viewControllers
                 if details.count > 1 {
                     if details[1].responds(to: Selector("hideKeyboard")) {
                         details[1].performSelector(onMainThread: Selector("hideKeyboard"), with: nil, waitUntilDone: true)
                     }
                 }
-                splitController.present(hide, animated: false, completion: nil)
+                splitController?.present(hide, animated: false, completion: nil)
             } else {
                 navigationController.dismiss(animated: false, completion: nil)
                 navigationController.pushViewController(hide, animated: false)
@@ -117,7 +117,7 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
 
     func userUnlockedDatabase(_ database: Database) {
         if UIDevice.current.userInterfaceIdiom == .pad {
-            splitController.dismiss(animated: false, completion: nil)
+            splitController?.dismiss(animated: false, completion: nil)
         } else {
             if navigationController.topViewController == hide {
                 navigationController.popViewController(animated: false)
@@ -128,10 +128,10 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
     
     func userClosedPasswordModal(_ database: Database) {
         if UIDevice.current.userInterfaceIdiom == .pad {
-            (splitController.detailViewController as! UINavigationController).popToRootViewController(animated: false)
+            (splitController?.detailViewController as! UINavigationController).popToRootViewController(animated: false)
             rootView.navigationController?.popToRootViewController(animated: false)
             rootView.navigationController?.view.alpha = 1.0
-            splitController.dismiss(animated: false, completion: nil)
+            splitController?.dismiss(animated: false, completion: nil)
             dbManager.activeDatabase = nil
             rootView.removeLock(database)
         } else {
@@ -175,7 +175,7 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
                 dialog.show()
             } else {
                 if UIDevice.current.userInterfaceIdiom == .pad {
-                    splitController.dismiss(animated: false, completion: nil)
+                    splitController?.dismiss(animated: false, completion: nil)
                 } else {
                     if navigationController.topViewController == hide {
                         navigationController.popViewController(animated: false)
