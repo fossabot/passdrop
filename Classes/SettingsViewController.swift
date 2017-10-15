@@ -57,7 +57,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             let unlinkConfirm = UIAlertView(title: "Unlink Dropbox", message: "Are you sure you want to unlink your Dropbox account? This will also remove all databases from your device.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlink")
             unlinkConfirm.show()
         } else {
-            DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self) { [weak self] url in
+            DropboxClientsManager.authorizeFromController(
+                UIApplication.shared,
+                controller: UIApplication.shared.keyWindow?.rootViewController
+            ) { url in
                 UIApplication.shared.openURL(url)
             }
         }
