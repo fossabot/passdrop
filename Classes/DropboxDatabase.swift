@@ -418,10 +418,17 @@ class DropboxDatabase: NSObject, Database {
     func pack(_ date: Date!, toBuffer buffer: UnsafeMutablePointer<UInt8>!) {
         let cal = NSCalendar(calendarIdentifier: .gregorian)!
         var com = cal.components([.year, .month, .day, .hour, .minute, .second], from: date)
-        let y = com.year!, mon = com.month!, d=com.day!, h=com.hour!, min=com.minute!, s=com.second!
+        let y: Int = com.year!
+        let mon: Int = com.month!
+        let d: Int = com.day!
+        let h: Int = com.hour!
+        let min: Int = com.minute!
+        let s: Int = com.second!
         buffer[0] = UInt8((y >> 6) & 0x0000003F)
         buffer[1] = UInt8(((y & 0x0000003F) << 2) | ((mon >> 2) & 0x00000003))
-        buffer[2] = UInt8(((mon & 0x00000003) << 6) | ((d & 0x0000001F) << 1) | ((h >> 4) & 0x00000001))
+        // Swift 4 thinks this is too complicated and asked for it to be moved to another expression.
+        let watSwift: Int = ((h >> 4) & 0x00000001)
+        buffer[2] = UInt8(((mon & 0x00000003) << 6) | ((d & 0x0000001F) << 1) | watSwift)
         buffer[3] = UInt8(((h & 0x0000000F) << 4) | ((min >> 2) & 0x0000000F))
         buffer[4] = UInt8(((min & 0x00000003) << 6) | (s & 0x0000003F))
     }

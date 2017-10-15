@@ -13,17 +13,18 @@ import SwiftyDropbox
 @objc(PassDropAppDelegate)
 class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate {
     var window: UIWindow?
-    var navigationController: UINavigationController!
-    var splitController: MGSplitViewController?
+    @objc dynamic var navigationController: UINavigationController!
+    @objc var splitController: MGSplitViewController?
 
-    var prefs: AppPrefs!
-    var dbManager: DatabaseManager!
+    @objc var prefs: AppPrefs!
+    @objc var dbManager: DatabaseManager!
 
     var bgTimer: Date?
     var isLocked = false
 
     var hide: HideViewController!
-    var rootView: RootViewController!
+    
+    @objc dynamic var rootView: RootViewController!
 
     var settingsView: SettingsViewController?
     
@@ -78,8 +79,8 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
             if UIDevice.current.userInterfaceIdiom == .pad {
                 let details = (splitController?.detailViewController as! UINavigationController).viewControllers
                 if details.count > 1 {
-                    if details[1].responds(to: Selector("hideKeyboard")) {
-                        details[1].performSelector(onMainThread: Selector("hideKeyboard"), with: nil, waitUntilDone: true)
+                    if details[1].responds(to: #selector(EditGroupViewController.hideKeyboard)) {
+                        details[1].performSelector(onMainThread: #selector(EditGroupViewController.hideKeyboard), with: nil, waitUntilDone: true)
                     }
                 }
                 splitController?.present(hide, animated: false, completion: nil)

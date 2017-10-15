@@ -40,12 +40,12 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
 
     // MARK: Actions
 
-    func hideKeyboard() {
+    @objc func hideKeyboard() {
         let fld = view.viewWithTag(currentFirstResponder)
         fld?.resignFirstResponder()
     }
     
-    func saveButtonClicked() {
+    @objc func saveButtonClicked() {
         hideKeyboard()
         if dbName.isEmpty {
             let error = UIAlertView(title: "Error", message: "You must enter a file name.", delegate: nil, cancelButtonTitle: "Cancel")
@@ -196,7 +196,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         NotificationCenter.default.removeObserver(self)
     }
     
-    func keyboardWillShow(_ note: NSNotification) {
+    @objc func keyboardWillShow(_ note: NSNotification) {
         let keyboardBounds = (note.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)!.cgRectValue
         let keyboardHeight = UIInterfaceOrientationIsPortrait(UIApplication.shared.statusBarOrientation)
             ? keyboardBounds.size.height
@@ -231,7 +231,7 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
         }
     }
 
-    func keyboardWillHide(_ note: NSNotification) {
+    @objc func keyboardWillHide(_ note: NSNotification) {
         let keyboardBounds = (note.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)!.cgRectValue
         let keyboardHeight = UIInterfaceOrientationIsPortrait(UIApplication.shared.statusBarOrientation)
             ? keyboardBounds.size.height

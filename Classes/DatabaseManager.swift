@@ -25,7 +25,7 @@ class DatabaseManager: NSObject {
     let configFile: String
     var databases: [[String: Any]] = []
     var delegate: DatabaseManagerDelegate? = nil
-    var activeDatabase: Database? = nil
+    @objc var activeDatabase: Database? = nil
 
     override init() {
         let fileManager = FileManager()
@@ -125,7 +125,7 @@ class DatabaseManager: NSObject {
         database.name = dbData[kDatabaseName] as! String
         database.localPath = dataPath.appendingPathComponent((dbData[kDatabaseLocalPath] as! NSString).lastPathComponent)
         database.lastModified = dbData[kDatabaseLastModified] as! Date
-        database.rev = dbData[kDatabaseRev] as! String
+        database.rev = (dbData[kDatabaseRev] as! String)
         database.lastSynced = dbData[kDatabaseLastSynced] as! Date
         let fm = FileManager()
         database.isDirty = fm.fileExists(atPath: database.localPath.appendingPathExtension("tmp")!)
@@ -142,6 +142,7 @@ class DatabaseManager: NSObject {
         return -1
     }
 
+    @objc
     func updateDatabase(_ database: Database) {
         for (i, var dbData) in databases.enumerated() {
             // find the database in our array

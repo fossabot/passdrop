@@ -120,7 +120,7 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     // MARK: Actions
     
-    func settingsButtonClicked() {
+    @objc func settingsButtonClicked() {
         navigationController?.pushViewController(settingsView, animated: true)
     }
     

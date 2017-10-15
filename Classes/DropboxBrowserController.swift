@@ -34,7 +34,7 @@ class DropboxBrowserController: UIPullToReloadTableViewController, NewDatabaseDe
     
     // MARK: Actions
 
-    func newButtonClicked() {
+    @objc func newButtonClicked() {
         let ndbvc = NewDatabaseViewController(nibName: "EditViewController", bundle: nil)
         ndbvc.location = myPath
         ndbvc.delegate = self

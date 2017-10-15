@@ -79,13 +79,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         settingsTable.reloadData()
     }
 
-    func openLastSwitched() {
+    @objc func openLastSwitched() {
         let app = UIApplication.shared.delegate as! PassDropAppDelegate
         app.prefs.autoClearClipboard = autoClearSwitch.isOn
         app.prefs.save()
     }
     
-    func ignoreBackupSwitched() {
+    @objc func ignoreBackupSwitched() {
         let app = UIApplication.shared.delegate as! PassDropAppDelegate
         app.prefs.ignoreBackup = ignoreBackupSwitch.isOn
         app.prefs.save()
