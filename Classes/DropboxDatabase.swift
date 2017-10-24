@@ -188,7 +188,7 @@ class DropboxDatabase: NSObject, Database {
         // save to temp file
         let writer = KdbWriter()
         let tmpPath = localPath + ".tmp"
-        if writer.saveDatabase(kpDatabase, withPassword: pwHash, toFile: tmpPath) {
+        if writer.saveDatabase(kpDatabase, withPassword: pwHash!, toFile: tmpPath) {
             // call success method on delegate
             if let cb = savingDelegate.databaseSaveComplete {
                 cb(self)

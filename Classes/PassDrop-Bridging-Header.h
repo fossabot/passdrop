@@ -10,5 +10,4 @@
 #import "Database.h"
 #import "KdbGroup.h"
 #import "KdbReader.h"
-#import "KdbWriter.h"
 #import "UIPullToReloadTableViewController.h"

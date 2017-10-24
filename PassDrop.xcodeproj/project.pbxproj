@@ -16,6 +16,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
+		6370B4301F9F0683004F27BF /* KdbWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6370B42F1F9F0683004F27BF /* KdbWriter.swift */; };
 		63B87D8A1F81CC90005262FB /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D891F81CC90005262FB /* RootViewController.swift */; };
 		63B87D921F8211C2005262FB /* PassDropAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */; };
 		63B87D9D1F8348C7005262FB /* NewDatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */; };
@@ -36,7 +37,6 @@
 		A20B81B6140DB8FE004E3449 /* EditEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A20B81B5140DB8FE004E3449 /* EditEntryViewController.m */; };
 		A213BFF712FA6D2B00F37B28 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A213BFF612FA6D2B00F37B28 /* SettingsViewController.xib */; };
 		A24790F413EE3EF20017574E /* IconPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A24790F313EE3EF10017574E /* IconPicker.m */; };
-		A24790F713EF2C480017574E /* KdbWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A24790F613EF2C470017574E /* KdbWriter.m */; };
 		A24C3660141E3DDE001BB5D3 /* template.kdb in Resources */ = {isa = PBXBuildFile; fileRef = A24C365F141E3DDE001BB5D3 /* template.kdb */; };
 		A24F371C130360CB00A4AF66 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24F3691130360CB00A4AF66 /* 0@2x.png */; };
 		A24F371D130360CB00A4AF66 /* 10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24F3692130360CB00A4AF66 /* 10@2x.png */; };
@@ -276,6 +276,7 @@
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* PassDrop_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDrop_Prefix.pch; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
+		6370B42F1F9F0683004F27BF /* KdbWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KdbWriter.swift; sourceTree = "<group>"; };
 		63B87D891F81CC90005262FB /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
 		63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDatabaseViewController.swift; sourceTree = "<group>"; };
@@ -304,8 +305,6 @@
 		A213BFF612FA6D2B00F37B28 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Classes/SettingsViewController.xib; sourceTree = "<group>"; };
 		A24790F213EE3EF10017574E /* IconPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconPicker.h; sourceTree = "<group>"; };
 		A24790F313EE3EF10017574E /* IconPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconPicker.m; sourceTree = "<group>"; };
-		A24790F513EF2C470017574E /* KdbWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KdbWriter.h; sourceTree = "<group>"; };
-		A24790F613EF2C470017574E /* KdbWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KdbWriter.m; sourceTree = "<group>"; };
 		A24C365F141E3DDE001BB5D3 /* template.kdb */ = {isa = PBXFileReference; lastKnownFileType = file; path = template.kdb; sourceTree = "<group>"; };
 		A24F3691130360CB00A4AF66 /* 0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "0@2x.png"; sourceTree = "<group>"; };
 		A24F3692130360CB00A4AF66 /* 10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10@2x.png"; sourceTree = "<group>"; };
@@ -972,8 +971,7 @@
 			children = (
 				A2806FE71302198A00BF5C02 /* KdbReader.h */,
 				A2806FE81302198A00BF5C02 /* KdbReader.m */,
-				A24790F513EF2C470017574E /* KdbWriter.h */,
-				A24790F613EF2C470017574E /* KdbWriter.m */,
+				6370B42F1F9F0683004F27BF /* KdbWriter.swift */,
 				A24F37D01303635A00A4AF66 /* KdbGroup.h */,
 				A24F37D11303635A00A4AF66 /* KdbGroup.m */,
 				A24F37D31303637400A4AF66 /* KdbEntry.h */,
@@ -1376,8 +1374,8 @@
 				024185C51E5239F6005167DE /* AboutViewController.swift in Sources */,
 				02647BB91E5262A5009051F8 /* DatabaseManager.swift in Sources */,
 				A24790F413EE3EF20017574E /* IconPicker.m in Sources */,
-				A24790F713EF2C480017574E /* KdbWriter.m in Sources */,
 				A20B81B6140DB8FE004E3449 /* EditEntryViewController.m in Sources */,
+				6370B4301F9F0683004F27BF /* KdbWriter.swift in Sources */,
 				A286D2D214198B9200B30F79 /* GeneratePasswordViewController.m in Sources */,
 				A2961322141D8C3B004E538E /* SyncButtonView.m in Sources */,
 				A2620E9E15F3134900C27040 /* HideViewController.m in Sources */,
