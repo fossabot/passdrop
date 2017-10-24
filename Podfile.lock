@@ -1,18 +1,18 @@
 PODS:
   - Alamofire (4.4.0)
   - OpenSSL (1.0.210)
-  - SwiftyDropbox (4.1.2):
+  - SwiftyDropbox (4.2.0):
     - Alamofire (~> 4.4.0)
 
 DEPENDENCIES:
   - OpenSSL (~> 1.0)
-  - SwiftyDropbox (~> 4.1.2)
+  - SwiftyDropbox (~> 4.2)
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   OpenSSL: 246ffb948e9d56466727fd318134af35f5aa764e
-  SwiftyDropbox: eb79d166c2850e50eed01c280c7c64b4b69c50a5
+  SwiftyDropbox: 6e7ecc3f3d7bf7c664888b0319d4e818f864a758
 
-PODFILE CHECKSUM: 263c49a322099526b0929ab766f02f5107e3e52d
+PODFILE CHECKSUM: 6f3e9ddc3a01fcf7179dc0e815740df5b0bf8d15
 
 COCOAPODS: 1.3.1

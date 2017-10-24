@@ -119,7 +119,7 @@ class DropboxDatabase: NSObject, Database {
     }
 
     func removeLock() {
-        dropboxClient.files.delete(path: location() + ".lock").response { [weak self] response, error in
+        dropboxClient.files.deleteV2(path: location() + ".lock").response { [weak self] response, error in
             if let _ = response {
                 self?.restClient(deletedPath: ())
             } else if let error = error {
