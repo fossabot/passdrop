@@ -13,7 +13,6 @@
 #import "ParentGroupPicker.h"
 #import "IconPicker.h"
 #import "NetworkActivityViewController.h"
-#import "KdbGroupViewController.h"
 
 @class KdbGroupViewController;
 

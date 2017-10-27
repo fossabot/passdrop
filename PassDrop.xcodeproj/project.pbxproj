@@ -16,7 +16,9 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
+		63471BF11FA03A6A006BCFF8 /* KdbGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63471BED1FA03A6A006BCFF8 /* KdbGroupViewController.swift */; };
 		6370B4301F9F0683004F27BF /* KdbWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6370B42F1F9F0683004F27BF /* KdbWriter.swift */; };
+		6370B4381F9F0CE2004F27BF /* KdbGroup+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6370B4371F9F0CE2004F27BF /* KdbGroup+Ext.swift */; };
 		63B87D8A1F81CC90005262FB /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D891F81CC90005262FB /* RootViewController.swift */; };
 		63B87D921F8211C2005262FB /* PassDropAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */; };
 		63B87D9D1F8348C7005262FB /* NewDatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */; };
@@ -185,7 +187,6 @@
 		A26CC640131A96CB0029A767 /* KdbEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A26CC63E131A96CB0029A767 /* KdbEntryViewController.xib */; };
 		A26CC6EA131ACE140029A767 /* clipboard.png in Resources */ = {isa = PBXBuildFile; fileRef = A26CC6E8131ACE140029A767 /* clipboard.png */; };
 		A26CC6EB131ACE140029A767 /* clipboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A26CC6E9131ACE140029A767 /* clipboard@2x.png */; };
-		A2806B281300C5E600BF5C02 /* KdbGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2806B261300C5E600BF5C02 /* KdbGroupViewController.m */; };
 		A2806B291300C5E600BF5C02 /* KdbGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2806B271300C5E600BF5C02 /* KdbGroupViewController.xib */; };
 		A2806FE91302198A00BF5C02 /* KdbReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A2806FE81302198A00BF5C02 /* KdbReader.m */; };
 		A2806FF713021AF400BF5C02 /* kpass.c in Sources */ = {isa = PBXBuildFile; fileRef = A2806FF513021AF400BF5C02 /* kpass.c */; };
@@ -276,7 +277,9 @@
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* PassDrop_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassDrop_Prefix.pch; sourceTree = "<group>"; };
 		630886DD1E50F81B00C68EAE /* PassDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PassDrop-Bridging-Header.h"; sourceTree = "<group>"; };
+		63471BED1FA03A6A006BCFF8 /* KdbGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KdbGroupViewController.swift; path = /Users/chad/projects/passdrop/Classes/KdbGroupViewController.swift; sourceTree = "<absolute>"; };
 		6370B42F1F9F0683004F27BF /* KdbWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KdbWriter.swift; sourceTree = "<group>"; };
+		6370B4371F9F0CE2004F27BF /* KdbGroup+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KdbGroup+Ext.swift"; sourceTree = "<group>"; };
 		63B87D891F81CC90005262FB /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		63B87D911F8211C2005262FB /* PassDropAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDropAppDelegate.swift; sourceTree = "<group>"; };
 		63B87D9C1F8348C7005262FB /* NewDatabaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDatabaseViewController.swift; sourceTree = "<group>"; };
@@ -459,8 +462,6 @@
 		A26CC63E131A96CB0029A767 /* KdbEntryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = KdbEntryViewController.xib; path = Classes/KdbEntryViewController.xib; sourceTree = "<group>"; };
 		A26CC6E8131ACE140029A767 /* clipboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clipboard.png; path = images/clipboard.png; sourceTree = "<group>"; };
 		A26CC6E9131ACE140029A767 /* clipboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clipboard@2x.png"; path = "images/clipboard@2x.png"; sourceTree = "<group>"; };
-		A2806B251300C5E600BF5C02 /* KdbGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KdbGroupViewController.h; sourceTree = "<group>"; };
-		A2806B261300C5E600BF5C02 /* KdbGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KdbGroupViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		A2806B271300C5E600BF5C02 /* KdbGroupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = KdbGroupViewController.xib; path = Classes/KdbGroupViewController.xib; sourceTree = "<group>"; };
 		A2806FE71302198A00BF5C02 /* KdbReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KdbReader.h; sourceTree = "<group>"; };
 		A2806FE81302198A00BF5C02 /* KdbReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KdbReader.m; sourceTree = "<group>"; };
@@ -698,8 +699,7 @@
 		A24790EE13EDBE2E0017574E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A2806B251300C5E600BF5C02 /* KdbGroupViewController.h */,
-				A2806B261300C5E600BF5C02 /* KdbGroupViewController.m */,
+				63471BED1FA03A6A006BCFF8 /* KdbGroupViewController.swift */,
 				A26CC63C131A96CB0029A767 /* KdbEntryViewController.h */,
 				A26CC63D131A96CB0029A767 /* KdbEntryViewController.m */,
 			);
@@ -974,6 +974,7 @@
 				6370B42F1F9F0683004F27BF /* KdbWriter.swift */,
 				A24F37D01303635A00A4AF66 /* KdbGroup.h */,
 				A24F37D11303635A00A4AF66 /* KdbGroup.m */,
+				6370B4371F9F0CE2004F27BF /* KdbGroup+Ext.swift */,
 				A24F37D31303637400A4AF66 /* KdbEntry.h */,
 				A24F37D41303637400A4AF66 /* KdbEntry.m */,
 			);
@@ -1353,14 +1354,15 @@
 				63B87D9D1F8348C7005262FB /* NewDatabaseViewController.swift in Sources */,
 				A2E5364C15DFFCA400A2008E /* LoadingView.m in Sources */,
 				A2ADED3512FCD6F60082EEA4 /* AppPrefs.m in Sources */,
+				6370B4381F9F0CE2004F27BF /* KdbGroup+Ext.swift in Sources */,
 				02647BBB1E527B3B009051F8 /* DropboxDatabase.swift in Sources */,
 				A204B47812FDD08B00A4D656 /* UIPullToReloadHeaderView.m in Sources */,
+				63471BF11FA03A6A006BCFF8 /* KdbGroupViewController.swift in Sources */,
 				63B87DA31F834AEB005262FB /* DropboxBrowserController.swift in Sources */,
 				A204B47912FDD08B00A4D656 /* UIPullToReloadTableViewController.m in Sources */,
 				A2A2151512FF06BD007E055A /* EditDatabaseViewController.m in Sources */,
 				02647BBD1E5289FC009051F8 /* String+NSString.swift in Sources */,
 				024185DF1E524BCF005167DE /* Global.swift in Sources */,
-				A2806B281300C5E600BF5C02 /* KdbGroupViewController.m in Sources */,
 				A2806FE91302198A00BF5C02 /* KdbReader.m in Sources */,
 				63B87D921F8211C2005262FB /* PassDropAppDelegate.swift in Sources */,
 				A2806FF713021AF400BF5C02 /* kpass.c in Sources */,

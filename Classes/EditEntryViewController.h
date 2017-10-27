@@ -14,7 +14,6 @@
 #import "IconPicker.h"
 #import "NetworkActivityViewController.h"
 #import "GeneratePasswordViewController.h"
-#import "KdbGroupViewController.h"
 
 @class KdbGroupViewController;
 
