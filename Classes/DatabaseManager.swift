@@ -125,7 +125,7 @@ class DatabaseManager: NSObject {
         database.name = dbData[kDatabaseName] as! String
         database.localPath = dataPath.appendingPathComponent((dbData[kDatabaseLocalPath] as! NSString).lastPathComponent)
         database.lastModified = dbData[kDatabaseLastModified] as! Date
-        database.rev = (dbData[kDatabaseRev] as! String)
+        database.rev = (dbData[kDatabaseRev] as? String)
         database.lastSynced = dbData[kDatabaseLastSynced] as! Date
         let fm = FileManager()
         database.isDirty = fm.fileExists(atPath: database.localPath.appendingPathExtension("tmp")!)

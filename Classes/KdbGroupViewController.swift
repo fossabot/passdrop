@@ -143,13 +143,13 @@ class KdbGroupViewController: NetworkActivityViewController, DatabaseDelegate,
                 confirm.tag = 2
                 confirm.show()
                 break;
-            case 1: // upload
+            case 2: // upload
                 self.loadingMessage = "Uploading"
                 networkRequestStarted()
                 kdbGroup.database.savingDelegate = self
                 kdbGroup.database.sync(withForce: false)
                 break;
-            case 2: // cancel
+            case 1: // cancel
                 showSyncButton()
                 break;
             default:
@@ -524,6 +524,7 @@ class KdbGroupViewController: NetworkActivityViewController, DatabaseDelegate,
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    @objc
     func reloadSection(_ section: Int) {
         // reset the extrasections variable before reloading the section (in case it was on a delete or new group/entry)
         if self.isEditing {
