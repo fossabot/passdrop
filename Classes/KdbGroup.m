@@ -105,7 +105,7 @@
     return self;
 }
 
-- (id)initRootGroupWithCount:(int)subGroupCount subGroups:(kpass_group**)groups andCount:(int)entryCount groupEntries:(kpass_entry**)groupEntries forDatabase:(id<Database>)db {
+- (id)initRootGroupWithCount:(unsigned)subGroupCount subGroups:(kpass_group**)groups andCount:(unsigned)entryCount groupEntries:(kpass_entry**)groupEntries forDatabase:(id<Database>)db {
 	NSMutableArray *tempGroups = [[NSMutableArray alloc] initWithCapacity:subGroupCount];
 	NSMutableArray *levels = [[NSMutableArray alloc] initWithCapacity:subGroupCount];
 	NSMutableDictionary *groupLookup = [[NSMutableDictionary alloc] initWithCapacity:subGroupCount];
@@ -164,6 +164,34 @@
 			[parentGroup.entries addObject:entry];
 		}
 	}
+
+    for(int i = 0; i < subGroupCount; ++i) {
+        KdbGroup* subGroup = [tempGroups objectAtIndex:i];
+        [subGroup->subGroups sortUsingComparator:^NSComparisonResult(id lhs_, id rhs_) {
+            KdbGroup* lhs = lhs_;
+            KdbGroup* rhs = rhs_;
+            int r = strcasecmp([lhs kpGroup]->name, [rhs kpGroup]->name);
+            if (r < 0) {
+                return NSOrderedAscending;
+            } else if (r == 0) {
+                return NSOrderedSame;
+            } else {
+                return NSOrderedDescending;
+            }
+        }];
+        [subGroup->entries sortUsingComparator:^NSComparisonResult(id lhs_, id rhs_) {
+            KdbEntry* lhs = lhs_;
+            KdbEntry* rhs = rhs_;
+            int r = strcasecmp([lhs kpEntry]->title, [rhs kpEntry]->title);
+            if (r < 0) {
+                return NSOrderedAscending;
+            } else if (r == 0) {
+                return NSOrderedSame;
+            } else {
+                return NSOrderedDescending;
+            }
+        }];
+    }
 	
 	// release temporary vars
 	while([tempGroups count] > 0){

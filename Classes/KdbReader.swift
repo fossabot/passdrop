@@ -46,8 +46,9 @@ class KdbReader: NSObject {
     }
     
     deinit {
-        kpassDb.deallocate(capacity: 1)
-        kpassPw?.deallocate(capacity: 32)
+        // this causes a segfault in Database destruction
+        //kpassDb.deallocate(capacity: 1)
+        //kpassPw?.deallocate(capacity: 32)
     }
     
     var hasError: Bool {
@@ -62,45 +63,7 @@ class KdbReader: NSObject {
         database.kpDatabase = kpassDb
         database.pwHash = kpassPw
         
-        //qsort(kpassDb->groups, kpassDb->groups_len, sizeof(kpassDb->groups[0]), compareGroup);
-        //qsort(kpassDb->entries, kpassDb->entries_len, sizeof(kpassDb->entries[0]), compareEntry);
-
         return KdbGroup(rootGroupWithCount: kpassDb.pointee.groups_len, subGroups: kpassDb.pointee.groups, andCount: kpassDb.pointee.entries_len, groupEntries: kpassDb.pointee.entries, for: database)
     }
 }
 
-
-/*
- 
-        /*
-         static int compareGroup(const void* lhs_, const void* rhs_) {
-         const kpass_group* lhs = *(const kpass_group**)lhs_;
-         const kpass_group* rhs = *(const kpass_group**)rhs_;
-         if (lhs->name == NULL && rhs->name == NULL) {
-         return 0;
-         } else if (lhs->name == NULL) {
-         return -1;
-         } else if (rhs->name == NULL) {
-         return 1;
-         } else {
-         return strcasecmp(lhs->name, rhs->name);
-         }
-         }
-         
-         static int compareEntry(const void* lhs_, const void* rhs_) {
-         const kpass_entry* lhs = *(const kpass_entry**)lhs_;
-         const kpass_entry* rhs = *(const kpass_entry**)rhs_;
-         if (lhs->title == NULL && rhs->title == NULL) {
-         return 0;
-         } else if (lhs->title == NULL) {
-         return -1;
-         } else if (rhs->title == NULL) {
-         return 1;
-         } else {
-         return strcasecmp(lhs->title, rhs->title);
-         }
-         }
-         */
-        
-
-*/
