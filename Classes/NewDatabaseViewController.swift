@@ -117,15 +117,15 @@ class NewDatabaseViewController: NetworkActivityViewController, UITextFieldDeleg
     }
     
     func uploadTemplate() {
-        let path = Bundle.main.path(forResource: "template", ofType: "kdb")
+        let path = Bundle.main.path(forResource: "template", ofType: "kdb")!
         let reader = KdbReader(kdbFile: path, usingPassword: "password")
-        if reader?.hasError() != .some(false) {
+        if reader.hasError != .some(false) {
             networkRequestStopped()
             let error = UIAlertView(title: "Error", message: "There was a fatal error loading the database template. You may need to reinstall PassDrop.", delegate: nil, cancelButtonTitle: "Cancel")
             error.show()
         } else {
             let tempFile = NSTemporaryDirectory().appendingPathComponent(dbName.appendingPathExtension("kdb")!)
-            let kpdb = reader!.kpDatabase()
+            let kpdb = reader.kpDatabase
             let writer = KdbWriter()
             
             let cPw = password.cString(using: .utf8)

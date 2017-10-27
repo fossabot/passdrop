@@ -65,8 +65,8 @@ class DropboxDatabase: NSObject, Database {
         let fm = FileManager()
         isDirty = fm.fileExists(atPath: localPathTmp)
 
-        let kdb = KdbReader(kdbFile: isDirty ? localPathTmp : localPath, usingPassword: password)!
-        if kdb.hasError() {
+        let kdb = KdbReader(kdbFile: isDirty ? localPathTmp : localPath, usingPassword: password)
+        if kdb.hasError {
             lastError_ = kdb.lastError
             success = false
         } else {

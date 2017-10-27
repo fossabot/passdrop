@@ -8,7 +8,6 @@
 #import "EditDatabaseViewController.h"
 #import "Database.h"
 #import "KdbGroup.h"
-#import "KdbReader.h"
 #import "UIPullToReloadTableViewController.h"
 #import "EditGroupViewController.h"
 #import "EditEntryViewController.h"

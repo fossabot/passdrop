@@ -42,7 +42,7 @@ struct kpass_entry_item {
 - (id)initForDatabase:(id<Database>)db;
 - (id)initWithGroup:(kpass_group*)group forDatabase:(id<Database>)db;
 - (id)initWithParent:(KdbGroup*)parentGroup withTitle:(NSString*)title withIcon:(uint32_t)icon forDatabase:(id<Database>)db;
-- (id)initRootGroupWithCount:(int)subGroupCount subGroups:(kpass_group**)groups andCount:(int)entryCount groupEntries:(kpass_entry**)groupEntries forDatabase:(id<Database>)db;
+- (id)initRootGroupWithCount:(unsigned)subGroupCount subGroups:(kpass_group**)groups andCount:(unsigned)entryCount groupEntries:(kpass_entry**)groupEntries forDatabase:(id<Database>)db;
 - (kpass_group*)kpGroup;
 
 - (void)updateWithParent:(KdbGroup*)parent withTitle:(NSString*)title withIcon:(uint32_t)icon;
