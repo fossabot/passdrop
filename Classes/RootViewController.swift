@@ -10,15 +10,13 @@ import UIKit
 import SwiftyDropbox
 
 @objc(RootViewController)
-class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate, DatabaseDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate, DatabaseDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate {
     
     var settingsView: SettingsViewController!
     var dbManager: DatabaseManager!
     var dbRootView: DropboxBrowserController?
     var extraRows: Int = 0
     var loadingDb: Database!
-    var alertMode: Int = 0
-    var unlocking: Database!
     var tutorialShown: Bool = false
     
     // MARK: View lifecycle
@@ -30,7 +28,6 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.title = "Databases"
         
-        let app = UIApplication.shared.delegate as! PassDropAppDelegate
         dbManager = app.dbManager
         dbManager.delegate = self
  
@@ -42,6 +39,10 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
         
         extraRows = 0
         tutorialShown = false
+    }
+    
+    var app: PassDropAppDelegate {
+        return UIApplication.shared.delegate as! PassDropAppDelegate
     }
     
     // hack to fix weird bug with the leftbarbuttonitems disappearing
@@ -74,19 +75,26 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let app = UIApplication.shared.delegate as! PassDropAppDelegate
         if app.prefs.firstLoad && tutorialShown == false {
             app.prefs.save() // sets version
             tutorialShown = false
             if dbManager.databases.count == 0 {
                 if !dropboxIsLinked {
-                    alertMode = 1
-                    let helpView = UIAlertView(title: "Tutorial", message: "Welcome to PassDrop! Since this is your first time using PassDrop, you will need enter your Dropbox credentials on the settings screen.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Settings")
-                    helpView.show()
+                    let helpView = UIAlertController(title: "Tutorial", message: "Welcome to PassDrop! Since this is your first time using PassDrop, you will need enter your Dropbox credentials on the settings screen.", preferredStyle: .alert)
+                    helpView.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                    helpView.addAction(UIAlertAction(title: "Settings", style: .default) { [weak self] _ in
+                        self?.settingsButtonClicked()
+                        self?.tutorialShown = false
+                    })
+                    present(helpView, animated: true)
                 } else {
-                    alertMode = 2
-                    let helpView = UIAlertView(title: "Tutorial", message: "Now that you have linked your Dropbox account, you need to create or choose a KeePass 1.x database to use with PassDrop.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Dropbox");
-                    helpView.show()
+                    let helpView = UIAlertController(title: "Tutorial", message: "Now that you have linked your Dropbox account, you need to create or choose a KeePass 1.x database to use with PassDrop.", preferredStyle: .alert)
+                    helpView.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                    helpView.addAction(UIAlertAction(title: "Dropbox", style: .default) { [weak self] _ in
+                        self?.gotoDropbox()
+                        self?.tutorialShown = false
+                    })
+                    present(helpView, animated: true)
                 }
             }
         }
@@ -126,9 +134,13 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     func gotoDropbox() {
         if !dropboxIsLinked {
-            alertMode = 1
-            let notLinked = UIAlertView(title: "Dropbox Not Linked", message: "Before you can add databases, you must link your Dropbox account from the settings screen. Do you want to do that now?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Settings")
-            notLinked.show()
+            let notified = UIAlertController(title: "Dropbox Not Linked", message: "Before you can add databases, you must link your Dropbox account from the settings screen. Do you want to do that now?", preferredStyle: .alert)
+            notified.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            notified.addAction(UIAlertAction(title: "Settings", style: .default) { [weak self] _ in
+                self?.settingsButtonClicked()
+                self?.tutorialShown = false;
+            })
+            present(notified, animated: true)
         } else {
             if dbRootView == nil {
                 dbRootView = DropboxBrowserController(path: "")
@@ -140,7 +152,6 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     }
 
     func databaseWasAdded(_ databaseName: String) {
-        let app = UIApplication.shared.delegate as! PassDropAppDelegate
         app.prefs.firstLoad = false
         app.prefs.save()
         while navigationController!.viewControllers.count > 1 {
@@ -152,36 +163,6 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     func dropboxWasReset() {
         tableView.reloadData()
         dbRootView?.reset()
-    }
-    
-    func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
-        if alertMode == 1 && buttonIndex == 1 {
-            // means they clicked the settings button
-            settingsButtonClicked()
-            tutorialShown = false
-        } else if alertMode == 2 && buttonIndex == 1 {
-            // clicked the dropbox button
-            gotoDropbox()
-            tutorialShown = false
-        } else if alertMode == 3 && buttonIndex == 1 {
-            if alertView.textField(at: 0)!.text != "" {
-                if unlocking.load(withPassword: alertView.textField(at: 0)!.text!) {
-                    self.userUnlockedDatabase(unlocking)
-                } else {
-                    let alert = UIAlertView(title: "Error", message: unlocking.lastError(), delegate: nil, cancelButtonTitle: "Okay")
-                    alert.show()
-                }
-            } else {
-                let alert = UIAlertView(title: "Error", message: "You must enter your password.", delegate: nil, cancelButtonTitle: "Okay")
-                alert.show()
-            }
-        } else if alertMode == 4 {
-            databaseUpdateComplete(unlocking)
-        } else if buttonIndex == 0 {
-            let app = UIApplication.shared.delegate as! PassDropAppDelegate
-            app.prefs.firstLoad = false
-            app.prefs.save()
-        }
     }
     
     func removeLock(_ database: Database) {
@@ -327,8 +308,6 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
                 gotoDropbox()
             }
         } else {
-            let app = UIApplication.shared.delegate as! PassDropAppDelegate
-        
             self.loadingDb = dbManager.getDatabaseAtIndex(indexPath.row)
             self.loadingDb.delegate = self
             
@@ -390,20 +369,38 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     func databaseUpdateComplete(_ database: Database!) {
         networkRequestStopped()
-        alertMode = 3
-        unlocking = database
-        let nillish: String = "" // the objective-c passed nil for the message
-        let dialog = UIAlertView(title: "Enter Password", message: nillish, delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlock")
-        dialog.alertViewStyle = .secureTextInput
-        dialog.show()
+        let unlocking: Database = database
+        
+        let dialog = UIAlertController(title: "Enter Password", message: nil, preferredStyle: .alert)
+        dialog.addTextField { textField in
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
+        }
+        dialog.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        dialog.addAction(UIAlertAction(title: "Unlock", style: .default) { [weak self] _ in
+            let password = dialog.textFields?[0].text ?? ""
+            if password != "" {
+                if unlocking.load(withPassword: password) {
+                    self?.userUnlockedDatabase(unlocking)
+                } else {
+                    let alert = UIAlertView(title: "Error", message: unlocking.lastError(), delegate: nil, cancelButtonTitle: "Okay")
+                    alert.show()
+                }
+            } else {
+                let alert = UIAlertView(title: "Error", message: "You must enter your password.", delegate: nil, cancelButtonTitle: "Okay")
+                alert.show()
+            }
+        })
+        present(dialog, animated: true)
     }
 
     func databaseUpdateWouldOverwriteChanges(_ database: Database!) {
         networkRequestStopped()
-        alertMode = 4
-        unlocking = database
-        let alert = UIAlertView(title: "Update Cancelled", message: "The database on Dropbox has changes that would overwrite changes in your local copy. Open the database in writable mode and use the sync button to choose which copy to keep.", delegate: self, cancelButtonTitle: "Okay")
-        alert.show()
+        let unlocking: Database = database
+        let alert = UIAlertController(title: "Update Cancelled", message: "The database on Dropbox has changes that would overwrite changes in your local copy. Open the database in writable mode and use the sync button to choose which copy to keep.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel) { [weak self] _ in
+            self?.databaseUpdateComplete(unlocking)
+        })
     }
     
     func databaseWasDeleted(_ database: Database!) {
