@@ -407,10 +407,8 @@ class KdbGroupViewController: NetworkActivityViewController, DatabaseDelegate,
             } else {
                 return indexPath.row < kdbGroup.entries.count
             }
-            break
         case 1:
             return indexPath.row < kdbGroup.entries.count
-            break
         default:
             break
         }
@@ -569,14 +567,12 @@ class KdbGroupViewController: NetworkActivityViewController, DatabaseDelegate,
                 } else {
                     return kdbGroup.entries.count + extraRows
                 }
-                break
             case 1:
                 if kdbGroup.isRoot == false {
                     return kdbGroup.entries.count + extraRows
                 } else {
                     return 0
                 }
-                break
             default:
                 break
             }
@@ -593,10 +589,8 @@ class KdbGroupViewController: NetworkActivityViewController, DatabaseDelegate,
                 } else {
                     return "Entries"
                 }
-                break
             case 1:
                 return "Entries"
-                break
             default:
                 break;
             }
