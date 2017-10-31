@@ -387,7 +387,7 @@ PassDropAppDelegate *app;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     static NSString *NoteCellIdentifier = @"NoteCell";
-    NSString *TextCellIdentifier = [@"TextCell" stringByAppendingFormat:@"%d%d", indexPath.section, indexPath.row];
+    NSString *TextCellIdentifier = [@"TextCell" stringByAppendingFormat:@"%ld%ld", indexPath.section, indexPath.row];
     
 	UITableViewCell *cell;
     UITextField *field;

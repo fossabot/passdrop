@@ -363,8 +363,9 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     func database(_ database: Database!, failedToLockWithReason reason: String!) {
         networkRequestStopped()
-        let alert = UIAlertView(title: "Error", message: reason, delegate: nil, cancelButtonTitle: "Okay")
-        alert.show()
+        let alert = UIAlertController(title: "Error", message: reason, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel))
+        present(alert, animated: true)
     }
     
     func databaseUpdateComplete(_ database: Database!) {
@@ -383,12 +384,14 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
                 if unlocking.load(withPassword: password) {
                     self?.userUnlockedDatabase(unlocking)
                 } else {
-                    let alert = UIAlertView(title: "Error", message: unlocking.lastError(), delegate: nil, cancelButtonTitle: "Okay")
-                    alert.show()
+                    let alert = UIAlertController(title: "Error", message: unlocking.lastError(), preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .cancel))
+                    self?.present(alert, animated: true)
                 }
             } else {
-                let alert = UIAlertView(title: "Error", message: "You must enter your password.", delegate: nil, cancelButtonTitle: "Okay")
-                alert.show()
+                let alert = UIAlertController(title: "Error", message: "You must enter your password.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: .cancel))
+                self?.present(alert, animated: true)
             }
         })
         present(dialog, animated: true)
@@ -433,8 +436,9 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     func database(_ database: Database!, failedToRemoveLockWithReason reason: String!) {
         networkRequestStopped()
-        let error = UIAlertView(title: "Error", message: "The database lock was missing. It's possible that another instance recovered the lock and removed it already.", delegate: nil, cancelButtonTitle: "Okay")
-        error.show()
+        let error = UIAlertController(title: "Error", message: "The database lock was missing. It's possible that another instance recovered the lock and removed it already.", preferredStyle: .alert)
+        error.addAction(UIAlertAction(title: "Okay", style: .cancel))
+        present(error, animated: true)
     }
     
     // MARK: ActionSheetDelegate
