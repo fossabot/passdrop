@@ -319,7 +319,16 @@ class DropboxDatabase: NSObject, Database {
                 delegate.database?(self, failedToLockWithReason: error.description)
             }
         case .loadingDBFile:
-            delegate.database?(self, updateFailedWithReason: error.description)
+            switch error {
+            case .routeError(let lookupErrorBox, /*errorMessage*/_, /*errorSummary*/_, /*requestId*/_):
+                if case .path(.notFound) = lookupErrorBox.unboxed {
+                    delegate.databaseWasDeleted?(self)
+                } else {
+                    fallthrough
+                }
+            default:
+                delegate.database?(self, updateFailedWithReason: error.description)
+            }
         case .sendingDBFile:
             savingDelegate.database?(self, syncFailedWithReason: error.description)
         case .updatingDBRevision:

@@ -10,7 +10,7 @@ import UIKit
 import SwiftyDropbox
 
 @objc(RootViewController)
-class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate, DatabaseDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate {
+class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate, DatabaseDelegate, UITableViewDataSource, UITableViewDelegate {
     
     var settingsView: SettingsViewController!
     var dbManager: DatabaseManager!
@@ -247,9 +247,17 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if dbManager.getDatabaseAtIndex(indexPath.row).isDirty {
-                let deleteSheet = UIActionSheet(title: "You have unsaved changes to this database that haven't been synced to Dropbox yet. Are you sure you want to delete it?", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: "Delete")
-                deleteSheet.tag = 100 + indexPath.row
-                deleteSheet.show(in: view)
+                let deleteSheet = UIAlertController(title: "You have unsaved changes to this database that haven't been synced to Dropbox yet. Are you sure you want to delete it?", message: nil, preferredStyle: .actionSheet)
+                deleteSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                deleteSheet.addAction(UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
+                    self?.dbManager.deleteDatabaseAtIndex(indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                })
+                
+                deleteSheet.popoverPresentationController?.sourceView = view
+                deleteSheet.popoverPresentationController?.sourceRect = tableView.cellForRow(at: indexPath)!.frame
+
+                present(deleteSheet, animated: true)
             } else {
                 dbManager.deleteDatabaseAtIndex(indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
@@ -320,9 +328,20 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
                 self.completeLoad()
                 break;
             case kOpenModeAlwaysAsk:
-                let openMode = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Open Read-Only", "Open Writable")
-                openMode.tag = 3
-                openMode.show(from: tableView.cellForRow(at: indexPath)!.frame, in: view, animated: true)
+                let openMode = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                openMode.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                openMode.addAction(UIAlertAction(title: "Open Read-Only", style: .default) { [weak self] _ in
+                    self?.loadingDb.isReadOnly = true
+                    self?.completeLoad()
+                })
+                openMode.addAction(UIAlertAction(title: "Open Writable", style: .default) { [weak self] _ in
+                    self?.completeLoad()
+                })
+                
+                openMode.popoverPresentationController?.sourceView = view
+                openMode.popoverPresentationController?.sourceRect = tableView.cellForRow(at: indexPath)!.frame
+                
+                present(openMode, animated: true)
                 break;
             default:
                 break
@@ -351,14 +370,26 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     func databaseWasAlreadyLocked(_ database: Database!) {
         networkRequestStopped()
-        let sheet = UIActionSheet(title: "This database has already been locked by another process.", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: "Recover Lock", otherButtonTitles: "Open Read-Only")
-        sheet.tag = 2
+        
+        let sheet = UIAlertController(title: "This database has already been locked by another process.", message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        sheet.addAction(UIAlertAction(title: "Recover Lock", style: .destructive) { [weak self] _ in
+            guard let ss = self else { return }
+            ss.databaseWasLocked(forEditing: ss.loadingDb)
+        })
+        sheet.addAction(UIAlertAction(title: "Open Read-Only", style: .default) { [weak self] _ in
+            guard let ss = self else { return }
+            ss.loadingDb.isReadOnly = true
+            ss.databaseWasLocked(forEditing: ss.loadingDb)
+        })
+        
         let row = dbManager.getIndexOfDatabase(database)
         if row >= 0 {
-            sheet.show(from: self.tableView.cellForRow(at: IndexPath(row: row, section: 0))!.frame, in: view, animated: true)
-        } else {
-            sheet.show(in: view)
+            sheet.popoverPresentationController?.sourceView = view
+            sheet.popoverPresentationController?.sourceRect = tableView.cellForRow(at: IndexPath(row: row, section: 0))!.frame
         }
+        
+        present(sheet, animated: true)
     }
     
     func database(_ database: Database!, failedToLockWithReason reason: String!) {
@@ -408,26 +439,39 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
     
     func databaseWasDeleted(_ database: Database!) {
         networkRequestStopped()
-        let sheet = UIActionSheet(title: "This database has been deleted from your Dropbox account. What would you like to do?", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Open Local Copy")
-        sheet.tag = 4
+        let sheet = UIAlertController(title: "This database has been deleted from your Dropbox account. What would you like to do?", message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        sheet.addAction(UIAlertAction(title: "Open Local Copy", style: .default) { [weak self] _ in
+            guard let ss = self else { return }
+            ss.databaseUpdateComplete(ss.loadingDb)
+        })
+
         let row = dbManager.getIndexOfDatabase(database)
         if row >= 0 {
-            sheet.show(from: tableView.cellForRow(at: IndexPath(row: row, section: 0))!.frame, in: view, animated: true)
-        } else {
-            sheet.show(in: view)
+            sheet.popoverPresentationController?.sourceView = view
+            sheet.popoverPresentationController?.sourceRect = tableView.cellForRow(at: IndexPath(row: row, section: 0))!.frame
         }
+        
+        present(sheet, animated: true)
     }
     
     func database(_ database: Database!, updateFailedWithReason error: String!) {
         networkRequestStopped()
-        let openMode = UIActionSheet(title: error, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Read Local Copy")
-        openMode.tag = 1
+
+        let openMode = UIAlertController(title: error, message: nil, preferredStyle: .actionSheet)
+        openMode.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        openMode.addAction(UIAlertAction(title: "Read Local Copy", style: .default) { [weak self] _ in
+            guard let ss = self else { return }
+            ss.loadingDb.isReadOnly = true
+            ss.databaseUpdateComplete(ss.loadingDb)
+        })
+        
         let row = dbManager.getIndexOfDatabase(database)
         if row >= 0 {
-            openMode.show(from: tableView.cellForRow(at: IndexPath(row: row, section: 0))!.frame, in: view, animated: true)
-        } else {
-            openMode.show(in: view)
+            openMode.popoverPresentationController?.sourceView = view
+            openMode.popoverPresentationController?.sourceRect = tableView.cellForRow(at: IndexPath(row: row, section: 0))!.frame
         }
+        present(openMode, animated: true)
     }
     
     func databaseLockWasRemoved(_ database: Database!) {
@@ -441,41 +485,6 @@ class RootViewController: NetworkActivityViewController, DatabaseManagerDelegate
         present(error, animated: true)
     }
     
-    // MARK: ActionSheetDelegate
-    
-    func actionSheet(_ actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex: Int) {
-        if actionSheet.tag == 1 { //database update failed
-            if buttonIndex == 0 { // open read-only
-                loadingDb.isReadOnly = true
-                databaseUpdateComplete(loadingDb)
-            }
-        } else if actionSheet.tag == 2 { // database was already locked
-            if buttonIndex == 0 { // recover lock
-                databaseWasLocked(forEditing: loadingDb)
-            } else if buttonIndex == 1 { // open read-only
-                loadingDb.isReadOnly = true
-                databaseWasLocked(forEditing: loadingDb)
-            }
-        } else if actionSheet.tag == 3 { // read only or writable mode database load
-            if buttonIndex == 1 { // read-only
-                loadingDb.isReadOnly = true
-                completeLoad()
-            } else if buttonIndex == 2 { // writable
-                completeLoad()
-            }
-        } else if actionSheet.tag == 4 { // database was deleted
-            if buttonIndex == 0 {
-                databaseUpdateComplete(loadingDb)
-            }
-        } else if actionSheet.tag >= 100 {
-            if buttonIndex == 0 {
-                let index = actionSheet.tag - 100
-                dbManager.deleteDatabaseAtIndex(index)
-                tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-            }
-        }
-    }
-
     // MARK: EnterPasswordDelegate
     
     func userUnlockedDatabase(_ database: Database) {
