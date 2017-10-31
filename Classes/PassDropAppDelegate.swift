@@ -11,7 +11,7 @@ import SwiftyDropbox
 
 @UIApplicationMain
 @objc(PassDropAppDelegate)
-class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate {
+class PassDropAppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
     @objc dynamic var navigationController: UINavigationController!
     @objc var splitController: MGSplitViewController?
@@ -92,30 +92,6 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
         }
     }
     
-    func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
-        if alertView.tag == 1 {
-            if buttonIndex == 0 {
-                userClosedPasswordModal(dbManager.activeDatabase!)
-            } else {
-                if !alertView.textField(at: 0)!.text!.isEmpty {
-                    if dbManager.activeDatabase!.load(withPassword: alertView.textField(at: 0)!.text!) {
-                        userUnlockedDatabase(dbManager.activeDatabase!)
-                    } else {
-                        let dialog = UIAlertView(title: "Enter Password", message: "Please try again.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlock")
-                        dialog.tag = 1
-                        dialog.alertViewStyle = .secureTextInput
-                        dialog.show()
-                    }
-                } else {
-                    let dialog = UIAlertView(title: "Enter Password", message: "You must enter the password.", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlock")
-                    dialog.tag = 1
-                    dialog.alertViewStyle = .secureTextInput
-                    dialog.show()
-                }
-            }
-        }
-    }
-
     func userUnlockedDatabase(_ database: Database) {
         if UIDevice.current.userInterfaceIdiom == .pad {
             splitController?.dismiss(animated: false, completion: nil)
@@ -170,10 +146,7 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
             let diff = fabs(bgTimer!.timeIntervalSinceNow)
             //[navigationController dismissModalViewControllerAnimated:NO];
             if diff > Double(prefs.lockInBackgroundSeconds) {
-                let dialog = UIAlertView(title: "Enter Password", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Unlock")
-                dialog.tag = 1
-                dialog.alertViewStyle = .secureTextInput
-                dialog.show()
+                showPasswordPrompt(message: nil)
             } else {
                 if UIDevice.current.userInterfaceIdiom == .pad {
                     splitController?.dismiss(animated: false, completion: nil)
@@ -192,5 +165,33 @@ class PassDropAppDelegate: NSObject, UIApplicationDelegate, UIAlertViewDelegate 
         }
 
         settingsView?.updateSettingsUI()
+    }
+    
+    func showPasswordPrompt(message: String?) {
+        let dialog = UIAlertController(title: "Enter Password", message: message, preferredStyle: .alert)
+        dialog.addTextField { textField in
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
+        }
+        dialog.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak self] _ in
+            guard let ss = self else { return }
+            guard let activeDatabase = ss.dbManager.activeDatabase else { return }
+            ss.userClosedPasswordModal(activeDatabase)
+        })
+        dialog.addAction(UIAlertAction(title: "Unlock", style: .default) { [weak self] _ in
+            guard let ss = self else { return }
+            guard let activeDatabase = ss.dbManager.activeDatabase else { return }
+            let password = dialog.textFields?[0].text ?? ""
+            if !password.isEmpty {
+                if activeDatabase.load(withPassword: password) {
+                    ss.userUnlockedDatabase(activeDatabase)
+                } else {
+                    ss.showPasswordPrompt(message: "Please try again.")
+                }
+            } else {
+                ss.showPasswordPrompt(message: "You must enter the password.")
+            }
+        })
+        self.rootView.present(dialog, animated: true)
     }
 }
