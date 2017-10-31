@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/chad/projects/passdrop/Classes/KdbGroupViewController.swift">
-   </FileRef>
-   <FileRef
       location = "group:PassDrop.xcodeproj">
    </FileRef>
    <FileRef
