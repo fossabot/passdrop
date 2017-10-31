@@ -9,14 +9,12 @@
 import UIKit
 import SwiftyDropbox
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, UIAlertViewDelegate {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate {
     @IBOutlet var settingsTable: UITableView!
     var autoClearSwitch: UISwitch!
     var ignoreBackupSwitch: UISwitch!
     var aboutView: UIViewController!
 
-    var pickerViewMode = 0
-    
     // MARK: view lifecycle
     
     // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -130,7 +128,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var actionSheet: UIActionSheet?
         switch indexPath.section {
         case 0:
             dbButtonClicked()
@@ -142,30 +139,56 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 break;
             case 0:
                 // lock in background
-                pickerViewMode = 1
-                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Immediately", "10 secs", "30 secs", "1 min", "5 mins", "10 mins", "30 mins", "1 hour", "2 hours", "Never")
-                //[actionSheet showInView:self.view];
-                actionSheet?.show(from: tableView.cellForRow(at: indexPath)!.frame, in: view, animated: true)
-                break;
+                let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+                let times = ["Immediately", "10 secs", "30 secs", "1 min", "5 mins", "10 mins", "30 mins", "1 hour", "2 hours", "Never"]
+                for (buttonIndex, name) in times.enumerated() {
+                    actionSheet.addAction(UIAlertAction(title: name, style: .default) { [weak self] _ in
+                        guard let ss = self else { return }
+                        let app = UIApplication.shared.delegate as! PassDropAppDelegate
+                        app.prefs.lockInBackgroundSeconds = ss.convertArrayTimesIndexToSeconds(buttonIndex)
+                        app.prefs.save()
+                        ss.updateSettingsUI()
+                    })
+                }
+
+                actionSheet.popoverPresentationController?.sourceView = view
+                actionSheet.popoverPresentationController?.sourceRect = tableView.cellForRow(at: indexPath)!.frame
+                
+                present(actionSheet, animated: true)
+                break
             case 1:
-                pickerViewMode = 2
-                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Writable", "Read Only", "Always Ask")
-                //[actionSheet showInView:self.view];
-                actionSheet?.show(from: tableView.cellForRow(at: indexPath)!.frame, in: view, animated: true)
-                break;
+                let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                
+                for (buttonIndex, name) in ["Writable", "Read Only", "Always Ask"].enumerated() {
+                    actionSheet.addAction(UIAlertAction(title: name, style: .default) { [weak self] _ in
+                        let app = UIApplication.shared.delegate as! PassDropAppDelegate
+                        app.prefs.databaseOpenMode = Int32(buttonIndex)
+                        app.prefs.save()
+                        self?.updateSettingsUI()
+                    })
+                }
+                
+                actionSheet.popoverPresentationController?.sourceView = view
+                actionSheet.popoverPresentationController?.sourceRect = tableView.cellForRow(at: indexPath)!.frame
+                
+                present(actionSheet, animated: true)
+                break
             case 4:
                 // ignore backups
-                break;
+                break
             default:
-                break;
+                break
             }
             break;
         case 2:
             // show about screen
             navigationController?.pushViewController(aboutView, animated: true)
-            break;
+            break
         default:
-            break;
+            break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -298,20 +321,4 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
 
-    // MARK: picker view stuff
-   
-    func actionSheet(_ actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex_: Int) {
-        let buttonIndex = buttonIndex_ - 1 // some kind of swift thing maybe
-        let app = UIApplication.shared.delegate as! PassDropAppDelegate
-        if pickerViewMode == 1 && buttonIndex < 10 {
-            app.prefs.lockInBackgroundSeconds = convertArrayTimesIndexToSeconds(buttonIndex)
-        } else {
-            if buttonIndex < 3 {
-                app.prefs.databaseOpenMode = Int32(buttonIndex)
-            }
-        }
-        app.prefs.save()
-        updateSettingsUI()
-    }
-    
 }
