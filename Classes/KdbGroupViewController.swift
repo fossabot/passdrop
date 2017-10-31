@@ -36,7 +36,7 @@ class KdbGroupViewController: NetworkActivityViewController, DatabaseDelegate,
         }
         
         if kdbGroup.isRoot {
-            let backButton = UIBarButtonItem(title: "Close", style: .bordered, target: self, action: #selector(removeLock))
+            let backButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(removeLock))
             self.navigationItem.leftBarButtonItem = backButton
         }
         //self.tableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
