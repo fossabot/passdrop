@@ -64,14 +64,6 @@ class KdbGroupViewController: NetworkActivityViewController, DatabaseDelegate,
         tableView.contentOffset = CGPoint(x: 0, y: tableView.contentOffset.y + 44.0)
         //self.searchDisplayController.searchBar.frame.size.height);
     }
-        
-    // hack to fix weird bug with the leftbarbuttonitems disappearing
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            let sb = navigationItem.leftBarButtonItem!
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: sb.title, style: sb.style, target: sb.target, action: sb.action)
-        }
-    }
 
     override var shouldAutorotate: Bool {
         return true
