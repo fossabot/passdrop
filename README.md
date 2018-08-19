@@ -1,4 +1,6 @@
 # passdrop
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fazadbotan%2Fpassdrop.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fazadbotan%2Fpassdrop?ref=badge_shield)
+
 
 *This is a modern, updated build of [Rudis Muiznieks](https://github.com/rudism)'s PassDrop application.*
 
@@ -39,3 +41,7 @@ If you are experiencing issues or need help using PassDrop, please check out the
 - KeePass 2.x database support
 - KeePass 2.x is not an improved version of KeePass 1.x, but rather an entirely new product with completely unrelated file formats. Both KeePass 1.x and 2.x are actively developed and maintained and are viable password storage solutions. I chose to support KeePass 1.x with PassDrop due to the higher portability and multi-platform support for the KeePass 1.x file format.
 - Twofish encryption
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fazadbotan%2Fpassdrop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fazadbotan%2Fpassdrop?ref=badge_large)
